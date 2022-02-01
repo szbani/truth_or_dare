@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_LVL_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/btn</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/cardview_dark_background</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+    <style name="item_LVL_2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+    <style name="player_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:maxLength">20</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="player_image">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+</resources>
