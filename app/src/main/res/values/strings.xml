@@ -7,6 +7,9 @@
     <string name="menu_settings">Beállítások</string>
     <string name="menu_player">Player</string>
 
+    //query
+    <string name="player">Játékos</string>
+
     //home
     <string name="felelsz">Felelsz</string>
     <string name="mersz">Mersz</string>
@@ -14,7 +17,8 @@
     //players
     <string name="title_player">Játékosok</string>
     <string name="player_add">Új játékos</string>
-    <string name="dialog">Dialog test</string>
+    <string name="player_delete">Törlés</string>
+    <string name="player_edit">módosít</string>
 
     //dialog
     <string name="dialog_add">Kész</string>
@@ -35,5 +39,6 @@
     <string name="option2">Kimaradás(4 főtől)</string>
     <string name="textview">Test</string>
     <string name="other">Egyéb</string>
+
 
 </resources>

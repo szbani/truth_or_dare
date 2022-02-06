@@ -35,27 +35,15 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+                style="@style/player_line">
 
                 <TextView
-                    android:id="@+id/textView2"
                     style="@style/player_text"
                     android:text="Testplayer" />
 
-                <ImageButton
-                    android:id="@+id/button"
-                    style="@style/player_image"
-                    android:background="@drawable/ic_edit"
-                    android:contentDescription="edit"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <ImageButton style="@style/player_image_e" />
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    style="@style/player_image"
-                    android:background="@drawable/ic_delete_player"
-                    android:contentDescription="delete"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <ImageButton style="@style/player_image_d" />
 
             </LinearLayout>
 
