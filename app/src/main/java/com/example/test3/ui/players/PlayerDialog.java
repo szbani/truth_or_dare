@@ -22,7 +22,7 @@ import com.example.test3.R;
 import com.example.test3.ui.query.query;
 
 public class PlayerDialog extends DialogFragment {
-
+    query query = new query();
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -42,11 +42,12 @@ public class PlayerDialog extends DialogFragment {
 
                 Spinner spinner = (Spinner) view.findViewById(R.id.dialog_gender);
                 int gender = 1;
-                if (spinner.getSelectedItem().toString() == "Fiú"){
+                if (spinner.getSelectedItem().toString().equals("Fiú")){
                     gender = 0;
                 }
                 if (!name.isEmpty()){
-                    //add_player(name,gender);
+                    LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
+                    p_layout.addView(add_player(inflater,name,gender));
                     query.player_up(getActivity(),name,gender);
                 }
 
@@ -65,12 +66,8 @@ public class PlayerDialog extends DialogFragment {
     return builder.create();
     }
 
-    query query = new query();
-
-    public void add_player(String name,int gender){
-
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
+    public View add_player(LayoutInflater inflater,String name,int gender){
+        //LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
 
         View child = inflater.inflate(R.layout.player_temp,null);
         //line
@@ -94,8 +91,7 @@ public class PlayerDialog extends DialogFragment {
                 delete_player(line);
             }
         });
-
-        p_layout.addView(child);
+        return child;
     }
 
     public void edit_player(LinearLayout layout){

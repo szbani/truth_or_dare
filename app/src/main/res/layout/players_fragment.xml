@@ -32,22 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                style="@style/player_line">
-
-                <TextView
-                    style="@style/player_text"
-                    android:text="Testplayer" />
-
-                <ImageButton style="@style/player_image_e" />
-
-                <ImageButton style="@style/player_image_d" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:orientation="vertical"/>
     </ScrollView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

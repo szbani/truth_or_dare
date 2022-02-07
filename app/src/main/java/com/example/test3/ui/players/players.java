@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 import com.example.test3.R;
@@ -42,14 +43,15 @@ public class players extends Fragment {
                 new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);
             }
         });
-        //        players = dialog.query.player_down(getActivity());
-//        for (int i = 0; i < players.size();i++){
-//            String name = players.get(i);
-//            int gender = Integer.parseInt(name.substring(name.length()-1));
-//            name = name.replace(" "+gender,"");
-//
-            //dialog.add_player(inflater,getActivity(),"teast",0);
-//        }
+
+        players = dialog.query.player_down(view.getContext());
+        for (int i = 0; i < players.size();i++){
+            String name = players.get(i);
+            int gender = Integer.parseInt(name.substring(name.length()-1));
+            name = name.replace(" "+gender,"");
+            View child = dialog.add_player(inflater,name,gender);
+            binding.players.addView(child);
+        }
         return view;
     }
 
