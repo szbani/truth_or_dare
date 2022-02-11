@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.test3.R;
-import com.example.test3.ui.query.query;
 
 public class PlayerDialog extends DialogFragment {
     query query = new query();
@@ -88,6 +87,7 @@ public class PlayerDialog extends DialogFragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                query.player_delete(getActivity(),name,gender);
                 delete_player(line);
             }
         });

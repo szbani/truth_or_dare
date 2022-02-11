@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,16 @@ public class players extends Fragment {
 
         players = dialog.query.player_down(view.getContext());
         for (int i = 0; i < players.size();i++){
-            String name = players.get(i);
-            int gender = Integer.parseInt(name.substring(name.length()-1));
-            name = name.replace(" "+gender,"");
-            View child = dialog.add_player(inflater,name,gender);
-            binding.players.addView(child);
+            try {
+                String name = players.get(i);
+                int gender = Integer.parseInt(name.substring(name.length()-1));
+                name = name.replace(" "+gender,"");
+                View child = dialog.add_player(inflater,name,gender);
+                binding.players.addView(child);
+            }catch (Exception e){
+                Log.e("Exception","ez itt a hiba" + e.toString());
+            }
+
         }
         return view;
     }
