@@ -13,10 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class query extends players {
+public class query{
 
-
-    public void player_up(Activity activity, String name, int gender){
+    public static void player_up(Activity activity, String name, int gender){
         try{
 
             File file = new File(activity.getFilesDir().getPath(),"players.txt");
@@ -34,7 +33,7 @@ public class query extends players {
 
     }
 
-    public List<String> player_down(Context context){
+    public static List<String> player_down(Context context){
         List<String> list = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(context.getFilesDir().getPath()+"/players.txt");
@@ -49,33 +48,56 @@ public class query extends players {
         return list;
     }
 
-    public void player_delete(Activity activity,String name, int gender){
+    public static void player_delete(Context context, int id){
         try {
-            File inputFile = new File(activity.getFilesDir().getPath()+"/players.txt");
-            File tempFile = new File(activity.getFilesDir().getPath()+"/tempplayers.txt");
+
+            File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
+            File tempFile = new File(context.getFilesDir().getPath()+"/tempplayers.txt");
 
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
-            String del_player = name + " " + gender;
             String currentline;
-
+            int i = 0;
             while((currentline = reader.readLine()) != null){
-                if (currentline.equals(del_player)) continue;
+                if (i == id) {
+                    i++;
+                    continue;
+                }
                 if (tempFile.length() == 0) writer.newLine();
                 writer.write(currentline);
+                i++;
             }
             writer.close();
             reader.close();
             tempFile.renameTo(inputFile);
 
         }catch (IOException e){
-            Log.e("Exception","hiba a torlesnel"+e.toString());
+            Log.e("Exception","hiba a torlesnel "+e.toString());
         }
     }
 
-    public void player_edit(){
+    public static void player_edit(Context context, String name, int gender, int index){
+        try {
+            File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
+            File tempFile = new File(context.getFilesDir().getPath()+"/tempplayers.txt");
 
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+            String edit_player = name + " " + gender;
+            String currentline;
+
+            while((currentline = reader.readLine()) != null){
+                if (currentline.equals(edit_player))continue;
+                if (tempFile.length() == 0) writer.newLine();
+                writer.write(currentline);
+            }
+            writer.close();
+            reader.close();
+            tempFile.renameTo(inputFile);
+        }catch (IOException e){
+            Log.e("Exception","hiba az editnel "+e.toString());
+        }
     }
 
 }

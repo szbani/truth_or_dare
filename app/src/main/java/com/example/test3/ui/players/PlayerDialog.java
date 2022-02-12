@@ -2,9 +2,11 @@ package com.example.test3.ui.players;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,9 @@ import androidx.fragment.app.DialogFragment;
 import com.example.test3.R;
 
 public class PlayerDialog extends DialogFragment {
-    query query = new query();
+    private Context mcontext;
+    public PlayerDialog(Context context){ this.mcontext = context;}
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -35,9 +39,7 @@ public class PlayerDialog extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 EditText editText = (EditText) view.findViewById(R.id.dialog_name);
                 String name = editText.getText().toString();
-                while (name.startsWith(" ")){
-                    name = name.replaceFirst(" ","");
-                }
+                name = name.trim();
 
                 Spinner spinner = (Spinner) view.findViewById(R.id.dialog_gender);
                 int gender = 1;
@@ -46,7 +48,8 @@ public class PlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-                    p_layout.addView(add_player(inflater,name,gender));
+                    Log.e("exception","itt a childok szama"+p_layout.getChildCount());
+                    p_layout.addView(player_com.add_player(inflater,mcontext,name,gender,p_layout.getChildCount()));
                     query.player_up(getActivity(),name,gender);
                 }
 
@@ -63,43 +66,6 @@ public class PlayerDialog extends DialogFragment {
         spinner.setAdapter(adapter);
 
     return builder.create();
-    }
-
-    public View add_player(LayoutInflater inflater,String name,int gender){
-        //LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-
-        View child = inflater.inflate(R.layout.player_temp,null);
-        //line
-        LinearLayout line = child.findViewById(R.id.line);
-        //name
-        TextView editText = child.findViewById(R.id.name);
-        editText.setText(name);
-        //edit
-        ImageButton edit = child.findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                edit_player(line);
-            }
-        });
-        //delete
-        ImageButton delete = child.findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                query.player_delete(getActivity(),name,gender);
-                delete_player(line);
-            }
-        });
-        return child;
-    }
-
-    public void edit_player(LinearLayout layout){
-
-    }
-
-    public void delete_player(LinearLayout layout){
-        layout.removeAllViews();
     }
 
     public static String TAG = "NewPlayerDialog";
