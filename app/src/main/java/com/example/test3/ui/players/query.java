@@ -58,14 +58,15 @@ public class query{
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
             String currentline;
             int i = 0;
-            while((currentline = reader.readLine()) != null){
+            while((currentline = reader.readLine()) != null && currentline != ""){
                 if (i == id) {
                     i++;
                     continue;
                 }
-                if (tempFile.length() == 0) writer.newLine();
+                if (tempFile.length() != 0) writer.newLine();
                 writer.write(currentline);
                 i++;
+                Log.e("exception", "ennyiszer futott le" + String.valueOf(i));
             }
             writer.close();
             reader.close();
@@ -76,7 +77,7 @@ public class query{
         }
     }
 
-    public static void player_edit(Context context, String name, int gender, int index){
+    public static void player_edit(Context context,String name,int gender, int id){
         try {
             File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
             File tempFile = new File(context.getFilesDir().getPath()+"/tempplayers.txt");
@@ -84,13 +85,16 @@ public class query{
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-            String edit_player = name + " " + gender;
             String currentline;
-
-            while((currentline = reader.readLine()) != null){
-                if (currentline.equals(edit_player))continue;
-                if (tempFile.length() == 0) writer.newLine();
+            int i = 0;
+            while((currentline = reader.readLine()) != null && currentline != ""){
+                if (i == id){
+                    writer.write(name +" "+gender);
+                    continue;
+                }
+                if (tempFile.length() != 0) writer.newLine();
                 writer.write(currentline);
+                i++;
             }
             writer.close();
             reader.close();

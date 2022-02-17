@@ -22,9 +22,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.test3.R;
 
-public class PlayerDialog extends DialogFragment {
+public class ePlayerDialog extends DialogFragment {
     private Context mcontext;
-    public PlayerDialog(Context context){ this.mcontext = context;}
+    public ePlayerDialog(Context context){ this.mcontext = context;}
 
     @NonNull
     @Override
@@ -54,8 +54,8 @@ public class PlayerDialog extends DialogFragment {
 
             }
         })
-        .setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {})
-        .setTitle(R.string.dialog_title);
+                .setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {})
+                .setTitle(R.string.dialog_title);
 
         Spinner spinner = (Spinner) view.findViewById(R.id.dialog_gender);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
@@ -64,8 +64,8 @@ public class PlayerDialog extends DialogFragment {
 
         spinner.setAdapter(adapter);
 
-    return builder.create();
+        return builder.create();
     }
 
-    public static String TAG = "AddPlayer";
+    public static String TAG = "EditPlayer";
 }

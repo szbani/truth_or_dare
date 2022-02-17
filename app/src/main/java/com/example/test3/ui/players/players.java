@@ -38,7 +38,7 @@ public class players extends Fragment {
         //View inf = inflater.inflate(R.layout.players_fragment, container, false);
         View view = binding.getRoot();
         context = view.getContext();
-        PlayerDialog dialog = new PlayerDialog(view.getContext());
+
         view.findViewById(R.id.floating_action_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.test3.R;
 
 public class player_com{
@@ -25,8 +27,8 @@ public class player_com{
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query.player_edit(context,name,gender,index);
-                edit_player(line);
+                query.player_edit(context,"asd",1,index);
+                edit_player(line, "asd");
             }
         });
         //delete
@@ -41,8 +43,9 @@ public class player_com{
         return child;
     }
 
-    public static void edit_player(LinearLayout layout){
-
+    public static void edit_player(LinearLayout layout, String name){
+        TextView textView = (TextView)layout.getChildAt(0);
+        textView.setText(name);
     }
 
     public static void delete_player(LinearLayout layout){
