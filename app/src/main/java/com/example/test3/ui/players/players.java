@@ -1,7 +1,7 @@
 package com.example.test3.ui.players;
 
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 
 import android.os.Bundle;
@@ -30,10 +30,18 @@ public class players extends Fragment {
     private PlayersFragmentBinding binding;
     private List<String> players;
     public Context context;
+    player_com com = new player_com();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+//        mViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
+//
+//        mViewModel.getplayers().observe(getActivity(), players ->{
+//
+//        });
+
         binding = PlayersFragmentBinding.inflate(getLayoutInflater());
         //View inf = inflater.inflate(R.layout.players_fragment, container, false);
         View view = binding.getRoot();
@@ -52,7 +60,7 @@ public class players extends Fragment {
                 String name = players.get(i);
                 int gender = Integer.parseInt(name.substring(name.length()-1));
                 name = name.replace(" "+gender,"");
-                View child = player_com.add_player(inflater,context,name,gender,i);
+                View child = com.add_player(inflater,this,context,name,gender,i);
                 binding.players.addView(child);
             }catch (Exception e){
                 Log.e("Exception","ez itt a hiba" + e.toString());
@@ -62,12 +70,14 @@ public class players extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        mViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
 
 
 }

@@ -24,7 +24,17 @@ import com.example.test3.R;
 
 public class ePlayerDialog extends DialogFragment {
     private Context mcontext;
-    public ePlayerDialog(Context context){ this.mcontext = context;}
+    private String name;
+    private int gender;
+    private LinearLayout line;
+
+    public ePlayerDialog(Context context,String name, int gender,LinearLayout linearLayout){
+        this.mcontext = context;
+        this.name = name;
+        this.gender = gender;
+        this.line = linearLayout;
+    }
+    player_com com = new player_com();
 
     @NonNull
     @Override
@@ -48,7 +58,7 @@ public class ePlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-                    p_layout.addView(player_com.add_player(inflater,mcontext,name,gender,p_layout.getChildCount()));
+                    p_layout.addView(com.add_player(inflater,getParentFragment(),mcontext,name,gender,p_layout.getChildCount()));
                     query.player_up(getActivity(),name,gender);
                 }
 

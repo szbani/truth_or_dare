@@ -1,5 +1,6 @@
 package com.example.test3.ui.players;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.test3.R;
 
-public class player_com{
+public class player_com {
 
-    public static View add_player(LayoutInflater inflater, Context context, String name, int gender, int index){
+    public View add_player(LayoutInflater inflater,Fragment fragment, Context context, String name, int gender, int index){
         //LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
 
         View child = inflater.inflate(R.layout.player_temp,null);
@@ -27,8 +30,8 @@ public class player_com{
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query.player_edit(context,"asd",1,index);
-                edit_player(line, "asd");
+                new ePlayerDialog(context, name, gender,line).show(fragment.getChildFragmentManager(), PlayerDialog.TAG);
+
             }
         });
         //delete
@@ -43,12 +46,15 @@ public class player_com{
         return child;
     }
 
-    public static void edit_player(LinearLayout layout, String name){
-        TextView textView = (TextView)layout.getChildAt(0);
-        textView.setText(name);
-    }
+//    public void edit_player(Context context,Fragment fragment, LinearLayout layout, String name){
+//
+//
+//        TextView textView = (TextView)layout.getChildAt(0);
+//        textView.setText(name);
+//
+//    }
 
-    public static void delete_player(LinearLayout layout){
+    public void delete_player(LinearLayout layout){
         layout.removeAllViews();
     }
 }

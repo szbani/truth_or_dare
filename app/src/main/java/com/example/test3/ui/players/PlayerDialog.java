@@ -25,7 +25,7 @@ import com.example.test3.R;
 public class PlayerDialog extends DialogFragment {
     private Context mcontext;
     public PlayerDialog(Context context){ this.mcontext = context;}
-
+    player_com com = new player_com();
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -48,7 +48,7 @@ public class PlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-                    p_layout.addView(player_com.add_player(inflater,mcontext,name,gender,p_layout.getChildCount()));
+                    p_layout.addView(com.add_player(inflater,getParentFragment(),mcontext,name,gender,p_layout.getChildCount()));
                     query.player_up(getActivity(),name,gender);
                 }
 
