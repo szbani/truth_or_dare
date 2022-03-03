@@ -23,16 +23,16 @@ import androidx.fragment.app.DialogFragment;
 import com.example.test3.R;
 
 public class ePlayerDialog extends DialogFragment {
-    private Context mcontext;
     private String name;
     private int gender;
     private LinearLayout line;
+    private int id;
 
-    public ePlayerDialog(Context context,String name, int gender,LinearLayout linearLayout){
-        this.mcontext = context;
+    public ePlayerDialog(String name, int gender,LinearLayout linearLayout,int id){
         this.name = name;
         this.gender = gender;
         this.line = linearLayout;
+        this.id = id;
     }
     player_com com = new player_com();
 
@@ -41,9 +41,9 @@ public class ePlayerDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState){
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog,null);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this.getContext(), android.R.style.Theme_Material_Light_Dialog_Alert));
         builder.setView(view);
+
         builder.setPositiveButton(R.string.dialog_add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -58,8 +58,8 @@ public class ePlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-                    p_layout.addView(com.add_player(inflater,getParentFragment(),mcontext,name,gender,p_layout.getChildCount()));
-                    query.player_up(getActivity(),name,gender);
+                    com.edit_player((LinearLayout)p_layout.getChildAt(id),name,gender);
+                    query.player_edit(getContext(),name,gender,id);
                 }
 
             }
@@ -67,12 +67,15 @@ public class ePlayerDialog extends DialogFragment {
                 .setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {})
                 .setTitle(R.string.dialog_title);
 
+        TextView textname =  view.findViewById(R.id.dialog_name);
+        textname.setText(name);
         Spinner spinner = (Spinner) view.findViewById(R.id.dialog_gender);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.dialog_gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+        spinner.setSelection(gender);
 
         return builder.create();
     }

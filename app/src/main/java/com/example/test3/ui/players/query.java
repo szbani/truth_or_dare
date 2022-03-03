@@ -28,7 +28,7 @@ public class query{
             writer.write(player);
             writer.close();
         }catch (IOException e){
-            Log.e("Exception", "nem sikerult a fajl megirasa: " + e.toString());
+            Log.e("Exception", "nem sikerult a fajl megirasa: " + e);
         }
 
     }
@@ -43,22 +43,22 @@ public class query{
                 list.add(player);
             }
         }catch (IOException e){
-            Log.e("exception", "nem sikerult a fajl olvasasa" + e.toString());
+            Log.e("exception", "nem sikerult a fajl olvasasa" + e);
         }
         return list;
     }
 
     public static void player_delete(Context context, int id){
         try {
-
             File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
             File tempFile = new File(context.getFilesDir().getPath()+"/tempplayers.txt");
 
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
             String currentline;
             int i = 0;
-            while((currentline = reader.readLine()) != null && currentline != ""){
+            while((currentline = reader.readLine()) != null && currentline.equals("")){
                 if (i == id) {
                     i++;
                     continue;
@@ -66,41 +66,40 @@ public class query{
                 if (tempFile.length() != 0) writer.newLine();
                 writer.write(currentline);
                 i++;
-                Log.e("exception", "ennyiszer futott le" + String.valueOf(i));
+                Log.e("exception", "ennyiszer futott le" + i);
             }
             writer.close();
             reader.close();
             tempFile.renameTo(inputFile);
 
         }catch (IOException e){
-            Log.e("Exception","hiba a torlesnel "+e.toString());
+            Log.e("Exception","hiba a torlesnel "+e);
         }
     }
 
     public static void player_edit(Context context,String name,int gender, int id){
         try {
             File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
-            File tempFile = new File(context.getFilesDir().getPath()+"/tempplayers.txt");
+            File tempFile = new File(context.getFilesDir().getPath()+"/tempeplayers.txt");
 
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
             String currentline;
             int i = 0;
-            while((currentline = reader.readLine()) != null && currentline != ""){
+            while((currentline = reader.readLine()) != null && currentline.equals("")){
                 if (i == id){
-                    writer.write(name +" "+gender);
-                    continue;
+                    currentline = name + " " + gender;
                 }
-                if (tempFile.length() != 0) writer.newLine();
                 writer.write(currentline);
+                writer.newLine();
                 i++;
             }
             writer.close();
             reader.close();
             tempFile.renameTo(inputFile);
         }catch (IOException e){
-            Log.e("Exception","hiba az editnel "+e.toString());
+            Log.e("Exception","hiba az editnel "+e);
         }
     }
 

@@ -8,7 +8,7 @@
     <string name="menu_player">Player</string>
 
     //query
-    <string name="player">Játékos</string>
+    <string name="player"></string>
 
     //home
     <string name="felelsz">Felelsz</string>

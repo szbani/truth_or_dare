@@ -15,11 +15,17 @@ import com.example.test3.databinding.HomeFragmentBinding;
 import java.util.List;
 import java.util.Random;
 
+import com.example.test3.ui.players.query;
+
 public class home extends Fragment {
 
     private HomeFragmentBinding binding;
     private List<String> kerdesek_f;
     private List<String> kerdesek_m;
+    private List<String> players;
+
+    private String player;
+    String kerdes;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -31,16 +37,20 @@ public class home extends Fragment {
         kerdesek_f = beolvas.readline("F");
         kerdesek_m = beolvas.readline("M");
 
+        players = query.player_down(view.getContext());
+
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.gameText.setText(kivalaszt(0));
+                btn_press(0);
+                binding.gameText.setText(kerdes);
             }
         });
         binding.MBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.gameText.setText(kivalaszt(1));
+                btn_press(1);
+                binding.gameText.setText(kerdes);
             }
         });
 
@@ -53,7 +63,20 @@ public class home extends Fragment {
         binding = null;
     }
 
+    public void btn_press(int type){
+        player = player_valaszt();
+        kerdes =  (player.replace(player.substring(player.length()-1), "") + kivalaszt(type)).trim();
+    }
 
+    public String player_valaszt(){
+        if (players.size() > 0){
+            int random = new Random().nextInt(players.size());
+            return players.get(random);
+        }
+        else {
+            return "";
+        }
+    }
 
     public String kivalaszt(int type){
         String kerdes = "";

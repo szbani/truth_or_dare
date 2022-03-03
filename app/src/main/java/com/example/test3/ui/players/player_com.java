@@ -30,7 +30,7 @@ public class player_com {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ePlayerDialog(context, name, gender,line).show(fragment.getChildFragmentManager(), PlayerDialog.TAG);
+                new ePlayerDialog(name, gender,line,index).show(fragment.getChildFragmentManager(), PlayerDialog.TAG);
 
             }
         });
@@ -46,13 +46,12 @@ public class player_com {
         return child;
     }
 
-//    public void edit_player(Context context,Fragment fragment, LinearLayout layout, String name){
-//
-//
-//        TextView textView = (TextView)layout.getChildAt(0);
-//        textView.setText(name);
-//
-//    }
+    public void edit_player(LinearLayout layout, String name, int gender){
+
+       TextView textView = (TextView)layout.getChildAt(0);
+       textView.setText(name);
+
+    }
 
     public void delete_player(LinearLayout layout){
         layout.removeAllViews();
