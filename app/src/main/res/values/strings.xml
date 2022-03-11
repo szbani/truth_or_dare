@@ -14,6 +14,9 @@
     <string name="felelsz">Felelsz</string>
     <string name="mersz">Mersz</string>
 
+    <string name="Def_Person_0">tőled jobbra ülő</string>
+    <string name="Def_Person_1">tőled balra ülő</string>
+
     //players
     <string name="title_player">Játékosok</string>
     <string name="player_add">Új játékos</string>
@@ -34,11 +37,14 @@
     //settings
     <string name="packs">Kérdés_Packok</string>
     <string name="Default">Default</string>
-    <string name="pack1">Pack1</string>
     <string name="option1">Mindenki mindekivel</string>
     <string name="option2">Kimaradás(4 főtől)</string>
     <string name="textview">Test</string>
     <string name="other">Egyéb</string>
+
+    //packs
+    <string name="pack1">Pack1</string>
+    <string name="pack2">Pack2</string>
 
 
 </resources>

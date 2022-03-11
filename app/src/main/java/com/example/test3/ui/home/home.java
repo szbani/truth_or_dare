@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.test3.R;
 import com.example.test3.databinding.HomeFragmentBinding;
 
 import java.util.List;
@@ -57,19 +59,49 @@ public class home extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+
+
+
     public void btn_press(int type){
-        player = player_valaszt();
-        kerdes =  (player.replace(player.substring(player.length()-1), "") + kivalaszt(type)).trim();
+        try {
+            player = player_valaszt();
+            kerdes = kivalaszt(type).trim();
+            if (player != "") {
+                kerdes =  (player.replace(player.substring(player.length()-1), "") + kerdes);
+            }
+            if (kerdes.contains("@person")){
+                String person;
+
+                if (players.size() > 1){
+
+                    person = player_valaszt();
+                    while(person.equals(player)){
+                        person = player_valaszt();
+                    }
+                    person = person.replace(person.substring(person.length()-1), "").trim();
+                }else {
+                    int random = new Random().nextInt(2);
+                        if (random == 0) person = getString(R.string.Def_Person_0);
+                        else person = getString(R.string.Def_Person_1);
+                }
+                kerdes = kerdes.replace("@person", person);
+            }
+        }
+        catch (Exception e){
+            Log.e( "Exception" ,"ez itt a hiba" + e);
+        }
     }
 
     public String player_valaszt(){
-        if (players.size() > 0){
+        if (players.size() > 1){
             int random = new Random().nextInt(players.size());
             return players.get(random);
         }

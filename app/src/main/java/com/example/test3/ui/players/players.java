@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.test3.R;
 import com.example.test3.databinding.PlayersFragmentBinding;
 
-
 import java.util.List;
 
 

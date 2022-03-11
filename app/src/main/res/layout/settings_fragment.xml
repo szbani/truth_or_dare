@@ -47,6 +47,10 @@
                         android:id="@+id/checkBox2"
                         style="@style/item_LVL_2"
                         android:text="@string/pack1" />
+                    <CheckBox
+                        android:id="@+id/checkBox3"
+                        style="@style/item_LVL_2"
+                        android:text="@string/pack2" />
 
 
                 </LinearLayout>
