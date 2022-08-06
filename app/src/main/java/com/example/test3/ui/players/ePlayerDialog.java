@@ -19,19 +19,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.test3.R;
 
 public class ePlayerDialog extends DialogFragment {
     private String name;
     private int gender;
-    private LinearLayout line;
+    private Fragment fragment;
     private int id;
 
-    public ePlayerDialog(String name, int gender,LinearLayout linearLayout,int id){
+    public ePlayerDialog(String name, int gender, Fragment fragment, int id){
         this.name = name;
         this.gender = gender;
-        this.line = linearLayout;
+        this.fragment = fragment;
         this.id = id;
     }
     player_com com = new player_com();
@@ -58,10 +59,9 @@ public class ePlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     LinearLayout p_layout = (LinearLayout) getActivity().findViewById(R.id.players);
-                    com.edit_player((LinearLayout)p_layout.getChildAt(id),name,gender);
                     query.player_edit(getContext(),name,gender,id);
                 }
-
+                com.refresh(fragment);
             }
         })
                 .setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {})

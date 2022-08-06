@@ -58,15 +58,17 @@ public class query{
 
             String currentline;
             int i = 0;
-            while((currentline = reader.readLine()) != null && currentline.equals("")){
-                if (i == id) {
+
+            while((currentline = reader.readLine()) != null){
+                if (i == id || currentline.equals("")) {
                     i++;
                     continue;
                 }
-                if (tempFile.length() != 0) writer.newLine();
+                //if (tempFile.length() != 0) writer.newLine();
                 writer.write(currentline);
+                writer.newLine();
                 i++;
-                Log.e("exception", "ennyiszer futott le" + i);
+                Log.e("exception", "ennyiszer futott le " + i);
             }
             writer.close();
             reader.close();
@@ -87,7 +89,7 @@ public class query{
 
             String currentline;
             int i = 0;
-            while((currentline = reader.readLine()) != null && currentline.equals("")){
+            while((currentline = reader.readLine()) != null){
                 if (i == id){
                     currentline = name + " " + gender;
                 }

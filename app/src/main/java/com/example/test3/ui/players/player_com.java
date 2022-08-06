@@ -1,6 +1,7 @@
 package com.example.test3.ui.players;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.test3.R;
 
@@ -27,8 +30,7 @@ public class player_com {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ePlayerDialog(name, gender,line,index).show(fragment.getChildFragmentManager(), PlayerDialog.TAG);
-
+                new ePlayerDialog(name, gender,fragment,index).show(fragment.getChildFragmentManager(), PlayerDialog.TAG);
             }
         });
         //delete
@@ -37,20 +39,15 @@ public class player_com {
             @Override
             public void onClick(View view) {
                 query.player_delete(context,index);
-                delete_player(line);
+                refresh(fragment);
             }
         });
         return child;
     }
 
-    public void edit_player(LinearLayout layout, String name, int gender){
-
-       TextView textView = (TextView)layout.getChildAt(0);
-       textView.setText(name);
-
-    }
-
-    public void delete_player(LinearLayout layout){
-        layout.removeAllViews();
+    public void refresh(Fragment fragment){
+        NavController navController = Navigation.findNavController(fragment.getActivity(),R.id.nav_host);
+        navController.popBackStack();
+        navController.navigate(R.id.nav_player);
     }
 }
