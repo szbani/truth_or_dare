@@ -61,7 +61,7 @@ public class settings extends Fragment {
         mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         // TODO: Use the ViewModel
     }
-    // packok elmentesi sorrendjenek fixelese
+
     public void checkbox_Click(){
         packs = new HashSet<>();
         for ( int i = 0; i < binding.Packs.getChildCount();i++){

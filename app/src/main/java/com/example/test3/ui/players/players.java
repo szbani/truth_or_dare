@@ -1,7 +1,5 @@
 package com.example.test3.ui.players;
 
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 import com.example.test3.R;
@@ -49,7 +46,7 @@ public class players extends Fragment {
         view.findViewById(R.id.floating_action_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new PlayerDialog(view.getContext()).show(getChildFragmentManager(), PlayerDialog.TAG);
+                new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);
             }
         });
 
@@ -62,7 +59,7 @@ public class players extends Fragment {
                 View child = com.add_player(inflater,this,context,name,gender,i);
                 binding.players.addView(child);
             }catch (Exception e){
-                Log.e("Exception","ez itt a hiba" + e.toString());
+                Log.e("Exception","ez itt a hiba" + e);
             }
 
         }

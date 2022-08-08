@@ -39,7 +39,7 @@
                     android:orientation="vertical">
 
                     <CheckBox
-                        android:id="@+id/checkbox1"
+                        android:id="@+id/checkBox1"
                         style="@style/item_LVL_2"
                         android:text="@string/Default" />
 

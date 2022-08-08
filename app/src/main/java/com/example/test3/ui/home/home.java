@@ -33,8 +33,6 @@ public class home extends Fragment {
         return view;
     }
 
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
