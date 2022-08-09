@@ -1,4 +1,4 @@
-package com.example.test3;
+package com.example.FvM;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -7,18 +7,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.example.test3.databinding.ActivityMainBinding;
-import com.example.test3.ui.home.beolvas;
+import com.example.FvM.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
 }

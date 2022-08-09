@@ -1,4 +1,4 @@
-package com.example.test3.ui.home;
+package com.example.FvM.ui.home;
 
 import android.os.Bundle;
 
@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.test3.R;
-import com.example.test3.databinding.HomeFragmentBinding;
+import com.example.FvM.R;
+import com.example.FvM.databinding.HomeFragmentBinding;
 
 public class home extends Fragment {
 

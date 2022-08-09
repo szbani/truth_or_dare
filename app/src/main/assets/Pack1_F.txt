@@ -1,5 +1,11 @@
-Pack1.1
-Pack1.2
-Pack1.3
-Pack1.4
-Pack1.5
+Mikor veszítetted el a szüzességedet?
+Kivel veszítetted el a szüzességedet (keresztnév)?
+A jelenlévők közül kivel alkotnál szívesen egy párt?
+A jelenlévők közül kivel vállalnál be egy egyéjszakás kalandot?
+Elélveztél már más szájába?
+Örömmel fognád meg @person seggét?
+Csókolóznál az alábbi játékossal? @person
+Álmodtál már az alábbi játékosról? @person
+Hány évesnek tippeled @person játékost?
+@person játékos külső tényezőiből mi tetszik a legjobban?
+@person játékos belső tényezőiből mi tetszik a legjobban?

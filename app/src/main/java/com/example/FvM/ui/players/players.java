@@ -1,4 +1,4 @@
-package com.example.test3.ui.players;
+package com.example.FvM.ui.players;
 
 import android.content.Context;
 
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.test3.R;
-import com.example.test3.databinding.PlayersFragmentBinding;
+import com.example.FvM.R;
+import com.example.FvM.databinding.PlayersFragmentBinding;
 
 import java.util.List;
 

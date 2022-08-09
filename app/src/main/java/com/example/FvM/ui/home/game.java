@@ -1,4 +1,4 @@
-package com.example.test3.ui.home;
+package com.example.FvM.ui.home;
 
 import android.os.Bundle;
 
@@ -8,30 +8,34 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.test3.R;
-import com.example.test3.databinding.GameFragmentBinding;
+import com.example.FvM.R;
+import com.example.FvM.databinding.GameFragmentBinding;
 
 import java.util.List;
 import java.util.Random;
 
-import com.example.test3.ui.players.query;
+import com.example.FvM.ui.players.query;
 
-public class game extends Fragment {
+public class game extends Fragment{
+
 
     private GameFragmentBinding binding;
     private List<String> kerdesek_f;
     private List<String> kerdesek_m;
     private List<String> players;
+    private Random random;
 
     private String player;
-    String kerdes;
+    private String kerdes;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        random = new Random();
         binding = GameFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
@@ -40,6 +44,15 @@ public class game extends Fragment {
         kerdesek_m = beolvas.readline("M");
 
         players = query.player_down(view.getContext());
+
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == MotionEvent.){
+//                    Log.e( "Exception" ,"mozgas erzekelve");
+//                }
+//                return true;
+//            }
+//        });
 
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,14 +81,17 @@ public class game extends Fragment {
     }
 
 
-
     public void btn_press(int type){
         try {
             player = player_valaszt();
             kerdes = kivalaszt(type).trim();
-            if (player != "") {
-                kerdes =  (player.replace(player.substring(player.length()-1), "") + kerdes);
+            if (!player.equals("")) {
+                player = player.replace(player.substring(player.length()-1), "").trim();
+                binding.playerNameText.setText(player);
+            }else{
+                binding.playerNameText.setText("");
             }
+            //kerdes szemely cserelye
             if (kerdes.contains("@person")){
                 String person;
 
@@ -87,11 +103,29 @@ public class game extends Fragment {
                     }
                     person = person.replace(person.substring(person.length()-1), "").trim();
                 }else {
-                    int random = new Random().nextInt(2);
-                        if (random == 0) person = getString(R.string.Def_Person_0);
+                    int ran = random.nextInt(2);
+                        if (ran == 0) person = getString(R.string.Def_Person_0);
                         else person = getString(R.string.Def_Person_1);
                 }
                 kerdes = kerdes.replace("@person", person);
+            }
+            //kerdes jobbra/balra ulo
+            if(kerdes.contains("@sit")){
+                if (players.size() > 2){
+                    String way = "jobbra";
+                    if ((int) random.nextInt(2)==0){
+                        way = "balra";
+                    }
+                    int ran = random.nextInt(players.size()-1);
+                    if (ran==0){
+                        kerdes = kerdes.replace("@sit",way+" ulonek");
+                    }else{
+                        ran = ran+1;
+                        kerdes = kerdes.replace("@sit",way +" "+ ran +".-dik szemely");
+                    }
+                }else{
+                    kerdes = kerdes.replace("@sit","tudja a faszom");
+                }
             }
         }
         catch (Exception e){
@@ -101,8 +135,7 @@ public class game extends Fragment {
 
     public String player_valaszt(){
         if (players.size() > 1){
-            int random = new Random().nextInt(players.size());
-            return players.get(random);
+            return players.get(random.nextInt(players.size()));
         }
         else {
             return "";
@@ -113,12 +146,10 @@ public class game extends Fragment {
         String kerdes = "";
         try {
             if (type == 0 ){
-                int random = new Random().nextInt(kerdesek_f.size());
-                kerdes = kerdesek_f.get(random);
+                kerdes = kerdesek_f.get(random.nextInt(kerdesek_f.size()));
             }
             else if (type == 1){
-                int random = new Random().nextInt(kerdesek_m.size());
-                kerdes = kerdesek_m.get(random);
+                kerdes = kerdesek_m.get(random.nextInt(kerdesek_m.size()));
             }
 
         }catch (Exception e){
@@ -126,5 +157,6 @@ public class game extends Fragment {
         }
         return kerdes;
     }
+
 
 }

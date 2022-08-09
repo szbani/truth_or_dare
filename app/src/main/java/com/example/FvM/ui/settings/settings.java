@@ -1,4 +1,4 @@
-package com.example.test3.ui.settings;
+package com.example.FvM.ui.settings;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,9 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
-import com.example.test3.databinding.SettingsFragmentBinding;
+import com.example.FvM.databinding.SettingsFragmentBinding;
 
 import java.util.HashSet;
 import java.util.Set;

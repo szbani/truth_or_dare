@@ -1,14 +1,6 @@
-package com.example.test3.ui.players;
+package com.example.FvM.ui.players;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.List;
 
 public class PlayersViewModel extends ViewModel {
 //    private MutableLiveData<List<String>> players;

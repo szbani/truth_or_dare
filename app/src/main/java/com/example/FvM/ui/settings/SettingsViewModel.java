@@ -1,4 +1,4 @@
-package com.example.test3.ui.settings;
+package com.example.FvM.ui.settings;
 
 import androidx.lifecycle.ViewModel;
 

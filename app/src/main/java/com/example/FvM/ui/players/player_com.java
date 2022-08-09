@@ -1,4 +1,4 @@
-package com.example.test3.ui.players;
+package com.example.FvM.ui.players;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.test3.R;
+import com.example.FvM.R;
 
 public class player_com {
 
