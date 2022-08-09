@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_navigation"
+    app:startDestination="@id/game_fragment">
+
+    <fragment
+        android:id="@+id/game_fragment"
+        android:name="com.example.FvM.ui.game.game_events"
+        android:label="game_frag"
+        tools:layout='@layout/game_fragment'/>
+
+</navigation>

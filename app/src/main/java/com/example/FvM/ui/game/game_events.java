@@ -1,14 +1,14 @@
-package com.example.FvM.ui.home;
+package com.example.FvM.ui.game;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,17 +18,10 @@ import com.example.FvM.databinding.GameFragmentBinding;
 import java.util.List;
 import java.util.Random;
 
-import com.example.FvM.ui.players.query;
-
-public class game extends Fragment{
-
+public class game_events extends Fragment {
 
     private GameFragmentBinding binding;
-    private List<String> kerdesek_f;
-    private List<String> kerdesek_m;
-    private List<String> players;
     private Random random;
-
     private String player;
     private String kerdes;
 
@@ -39,20 +32,6 @@ public class game extends Fragment{
         binding = GameFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        beolvas beolvas = new beolvas(view.getContext());
-        kerdesek_f = beolvas.readline("F");
-        kerdesek_m = beolvas.readline("M");
-
-        players = query.player_down(view.getContext());
-
-//        view.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent motionEvent) {
-//                if (motionEvent.getAction() == MotionEvent.){
-//                    Log.e( "Exception" ,"mozgas erzekelve");
-//                }
-//                return true;
-//            }
-//        });
 
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +51,11 @@ public class game extends Fragment{
         return view;
     }
 
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
-
 
     public void btn_press(int type){
         try {
@@ -91,11 +67,11 @@ public class game extends Fragment{
             }else{
                 binding.playerNameText.setText("");
             }
-            //kerdes szemely cserelye
+            //kérdés személy cseréléses
             if (kerdes.contains("@person")){
                 String person;
 
-                if (players.size() > 1){
+                if (GameActivity.players.size() > 1){
 
                     person = player_valaszt();
                     while(person.equals(player)){
@@ -109,14 +85,14 @@ public class game extends Fragment{
                 }
                 kerdes = kerdes.replace("@person", person);
             }
-            //kerdes jobbra/balra ulo
+            //kérdés jobbra/balra ülő
             if(kerdes.contains("@sit")){
-                if (players.size() > 2){
+                if (GameActivity.players.size() > 2){
                     String way = "jobbra";
                     if ((int) random.nextInt(2)==0){
                         way = "balra";
                     }
-                    int ran = random.nextInt(players.size()-1);
+                    int ran = random.nextInt(GameActivity.players.size()-1);
                     if (ran==0){
                         kerdes = kerdes.replace("@sit",way+" ulonek");
                     }else{
@@ -132,24 +108,24 @@ public class game extends Fragment{
             Log.e( "Exception" ,"ez itt a hiba" + e);
         }
     }
-
+    //játkos kiválasztása
     public String player_valaszt(){
-        if (players.size() > 1){
-            return players.get(random.nextInt(players.size()));
+        if (GameActivity.players.size() > 1){
+            return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
         }
         else {
             return "";
         }
     }
-
+    //kérdés kiválasztása
     public String kivalaszt(int type){
         String kerdes = "";
         try {
             if (type == 0 ){
-                kerdes = kerdesek_f.get(random.nextInt(kerdesek_f.size()));
+                kerdes = GameActivity.K_f.get(random.nextInt(GameActivity.K_f.size()));
             }
             else if (type == 1){
-                kerdes = kerdesek_m.get(random.nextInt(kerdesek_m.size()));
+                kerdes = GameActivity.K_m.get(random.nextInt(GameActivity.K_m.size()));
             }
 
         }catch (Exception e){
@@ -157,6 +133,5 @@ public class game extends Fragment{
         }
         return kerdes;
     }
-
 
 }

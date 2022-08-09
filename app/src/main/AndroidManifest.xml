@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.FvM" >
+    package="com.example.FvM">
 
     <application
         android:allowBackup="true"
@@ -9,16 +9,21 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/FvM_Theme" >
+        android:theme="@style/FvM_Theme">
+        <activity
+            android:name=".ui.game.GameActivity"
+            android:exported="false"
+            android:label="@string/title_activity_game"
+            android:theme="@style/FvM_Theme.NoActionBar" />
         <activity
             android:name="com.example.FvM.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
+
 </manifest>
