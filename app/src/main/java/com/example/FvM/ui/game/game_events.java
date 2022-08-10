@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,38 +17,49 @@ import android.view.ViewGroup;
 import com.example.FvM.R;
 import com.example.FvM.databinding.GameFragmentBinding;
 
-import java.util.List;
 import java.util.Random;
 
 public class game_events extends Fragment {
 
     private GameFragmentBinding binding;
-    private Random random;
-    private String player;
-    private String kerdes;
+    public static Random random;
+    private static String player;
+    private  String kerdes;
+    NavController navController;
+
+    public game_events(){
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        random = new Random();
         binding = GameFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
+        navController = Navigation.findNavController(getParentFragment().getView());
 
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_press(0);
-                binding.gameText.setText(kerdes);
+                navController.navigate(R.id.action_nav2_game_to_nav2_truth);
             }
         });
         binding.MBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_press(1);
-                binding.gameText.setText(kerdes);
+                navController.navigate(R.id.action_nav2_game_to_nav2_dare);
             }
         });
+
+        random = new Random();
+
+        player = player_valaszt();
+        if (!player.equals("")) {
+            player = player.replace(player.substring(player.length()-1), "").trim();
+            binding.playerNameText.setText(player);
+        }else{
+            binding.playerNameText.setText("");
+        }
 
         return view;
     }
@@ -57,16 +70,11 @@ public class game_events extends Fragment {
         binding = null;
     }
 
-    public void btn_press(int type){
+    public String getKerdes(int type){
         try {
-            player = player_valaszt();
+
             kerdes = kivalaszt(type).trim();
-            if (!player.equals("")) {
-                player = player.replace(player.substring(player.length()-1), "").trim();
-                binding.playerNameText.setText(player);
-            }else{
-                binding.playerNameText.setText("");
-            }
+
             //kérdés személy cseréléses
             if (kerdes.contains("@person")){
                 String person;
@@ -103,13 +111,15 @@ public class game_events extends Fragment {
                     kerdes = kerdes.replace("@sit","tudja a faszom");
                 }
             }
+            return kerdes;
         }
         catch (Exception e){
             Log.e( "Exception" ,"ez itt a hiba" + e);
+            return e.toString();
         }
     }
     //játkos kiválasztása
-    public String player_valaszt(){
+    public static String player_valaszt(){
         if (GameActivity.players.size() > 1){
             return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
         }
@@ -118,7 +128,7 @@ public class game_events extends Fragment {
         }
     }
     //kérdés kiválasztása
-    public String kivalaszt(int type){
+    public static String kivalaszt(int type){
         String kerdes = "";
         try {
             if (type == 0 ){

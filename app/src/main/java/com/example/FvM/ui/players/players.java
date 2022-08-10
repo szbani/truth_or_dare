@@ -22,7 +22,6 @@ import java.util.List;
 
 public class players extends Fragment {
 
-    private PlayersViewModel mViewModel;
     private PlayersFragmentBinding binding;
     private List<String> players;
     public Context context;
@@ -65,16 +64,6 @@ public class players extends Fragment {
         }
         return view;
     }
-
-
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
-
 
 }
 

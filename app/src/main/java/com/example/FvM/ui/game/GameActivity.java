@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.FvM.databinding.ActivityGameBinding;
 
@@ -21,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     protected static List<String> K_f;
     protected static List<String> K_m;
     protected static List<String> players;
+    protected static String player;
 
     private ActivityGameBinding binding;
 
@@ -30,12 +33,13 @@ public class GameActivity extends AppCompatActivity {
     private GestureDetector mDetector;
     View.OnTouchListener gestureListener;
 
+    NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityGameBinding.inflate(getLayoutInflater());
-
         Intent intent = getIntent();
         setContentView(binding.getRoot());
 
@@ -51,6 +55,9 @@ public class GameActivity extends AppCompatActivity {
 
             }
         };
+        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game) ;
+        navController = navHostFragment.getNavController();
+
     }
 
     @Override
@@ -69,8 +76,11 @@ public class GameActivity extends AppCompatActivity {
                     return false;
                 if (event1.getX() - event2.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
                     Log.d(DEBUG_TAG,"Left Swipe: ");
+                    navController.navigate(R.id.action_nav2_game_to_nav2_dare);
+
                 }else if (event2.getX()-event1.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
                     Log.d(DEBUG_TAG,"Right Swipe: ");
+                    navController.navigate(R.id.action_nav2_game_to_nav2_truth);
                 }
             }catch (Exception e){
 

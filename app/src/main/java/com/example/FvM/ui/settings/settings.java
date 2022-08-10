@@ -23,7 +23,6 @@ public class settings extends Fragment {
 
     private SettingsFragmentBinding binding;
     public  Set<String> packs ;
-    private SettingsViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,13 +51,6 @@ public class settings extends Fragment {
 
 
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void checkbox_Click(){

@@ -3,12 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/game_navigation"
-    app:startDestination="@id/game_fragment">
+    app:startDestination="@id/nav2_game">
 
     <fragment
-        android:id="@+id/game_fragment"
+        android:id="@+id/nav2_game"
         android:name="com.example.FvM.ui.game.game_events"
-        android:label="game_frag"
-        tools:layout='@layout/game_fragment'/>
+        android:label="Game"
+        tools:layout='@layout/game_fragment'>
+        <action
+            android:id="@+id/action_nav2_game_to_nav2_truth"
+            app:destination="@id/nav2_truth" />
+        <action
+            android:id="@+id/action_nav2_game_to_nav2_dare"
+            app:destination="@id/nav2_dare" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav2_truth"
+        android:name="com.example.FvM.ui.game.TruthFragment"
+        android:label="Truth"
+        tools:layout="@layout/truth_fagment">
+        <action
+            android:id="@+id/action_nav2_truth_to_nav2_game"
+            app:destination="@id/nav2_game" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav2_dare"
+        android:name="com.example.FvM.ui.game.DareFragment"
+        android:label="Dare"
+        tools:layout="@layout/dare_fragment" >
+        <action
+            android:id="@+id/action_nav2_dare_to_nav2_game"
+            app:destination="@id/nav2_game" />
+    </fragment>
 
 </navigation>
