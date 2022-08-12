@@ -31,12 +31,6 @@ public class players extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-//        mViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
-//
-//        mViewModel.getplayers().observe(getActivity(), players ->{
-//
-//        });
-
         binding = PlayersFragmentBinding.inflate(getLayoutInflater());
         //View inf = inflater.inflate(R.layout.players_fragment, container, false);
         View view = binding.getRoot();

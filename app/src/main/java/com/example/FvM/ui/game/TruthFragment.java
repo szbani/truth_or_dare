@@ -2,64 +2,44 @@ package com.example.FvM.ui.game;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.FvM.R;
+import com.example.FvM.databinding.TruthFagmentBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TruthFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class TruthFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TruthFragment newInstance(String param1, String param2) {
-        TruthFragment fragment = new TruthFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private TruthFagmentBinding binding;
+    private static String q_temp = "";
 
     public TruthFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.truth_fagment, container, false);
+        binding = TruthFagmentBinding.inflate(getLayoutInflater());
+
+        binding.truthName.setText(game_events.player);
+        Log.e("question:",q_temp);
+
+        String question = "";
+        do {
+            question = game_events.kivalaszt(0);
+        }while(question.equals(q_temp));
+
+
+        q_temp = question;
+        question = game_events.kerdes_Person(question, binding.getRoot().getContext());
+        question = game_events.kerdes_Sit(question, binding.getRoot().getContext());
+
+        binding.truthQuestionText.setText(question);
+
+        return binding.getRoot();
     }
 }

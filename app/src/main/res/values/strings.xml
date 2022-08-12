@@ -39,6 +39,7 @@
     <string name="Default">Default</string>
     <string name="option1">Mindenki mindekivel</string>
     <string name="option2">Kimaradás(4 főtől)</string>
+    <string name="option3">Véletlenszerű sorrend</string>
     <string name="textview">Test</string>
     <string name="other">Egyéb</string>
 

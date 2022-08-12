@@ -1,5 +1,6 @@
 package com.example.FvM.ui.game;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,8 +24,7 @@ public class game_events extends Fragment {
 
     private GameFragmentBinding binding;
     public static Random random;
-    private static String player;
-    private  String kerdes;
+    protected static String player;
     NavController navController;
 
     public game_events(){
@@ -35,9 +35,8 @@ public class game_events extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = GameFragmentBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
         navController = Navigation.findNavController(getParentFragment().getView());
-
+        random = new Random();
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,18 +49,18 @@ public class game_events extends Fragment {
                 navController.navigate(R.id.action_nav2_game_to_nav2_dare);
             }
         });
-
-        random = new Random();
-
-        player = player_valaszt();
-        if (!player.equals("")) {
-            player = player.replace(player.substring(player.length()-1), "").trim();
-            binding.playerNameText.setText(player);
+        String p_temp = player_valaszt();
+        if (!p_temp.equals("")) {
+            while(p_temp.equals(player)){
+               p_temp =player_valaszt();
+            }
+            player = p_temp;
+            binding.playerNameText.setText(player.replace(player.substring(player.length()-1), "").trim());
         }else{
             binding.playerNameText.setText("");
         }
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -70,34 +69,40 @@ public class game_events extends Fragment {
         binding = null;
     }
 
-    public String getKerdes(int type){
+    public static String kerdes_Person(String kerdes, Context context) {
         try {
-
-            kerdes = kivalaszt(type).trim();
-
             //kérdés személy cseréléses
-            if (kerdes.contains("@person")){
+            if (kerdes.contains("@person")) {
                 String person;
 
-                if (GameActivity.players.size() > 1){
+                if (GameActivity.players.size() > 1) {
 
                     person = player_valaszt();
-                    while(person.equals(player)){
+                    while (person.equals(player)) {
                         person = player_valaszt();
                     }
-                    person = person.replace(person.substring(person.length()-1), "").trim();
-                }else {
+                    person = person.replace(person.substring(person.length() - 1), "").trim();
+                } else {
                     int ran = random.nextInt(2);
-                        if (ran == 0) person = getString(R.string.Def_Person_0);
-                        else person = getString(R.string.Def_Person_1);
+                    if (ran == 0) person =  context.getString(R.string.Def_Person_0);
+                    else person = context.getString(R.string.Def_Person_1);
                 }
                 kerdes = kerdes.replace("@person", person);
             }
+        } catch (Exception e) {
+            Log.e("Exception", "ez itt a hiba" + e);
+            return e.toString();
+        }
+        return kerdes;
+    }
+
+    public static String kerdes_Sit(String kerdes, Context context){
+        try {
             //kérdés jobbra/balra ülő
             if(kerdes.contains("@sit")){
                 if (GameActivity.players.size() > 2){
                     String way = "jobbra";
-                    if ((int) random.nextInt(2)==0){
+                    if ( random.nextInt(2)==0){
                         way = "balra";
                     }
                     int ran = random.nextInt(GameActivity.players.size()-1);
@@ -111,12 +116,12 @@ public class game_events extends Fragment {
                     kerdes = kerdes.replace("@sit","tudja a faszom");
                 }
             }
-            return kerdes;
         }
         catch (Exception e){
             Log.e( "Exception" ,"ez itt a hiba" + e);
             return e.toString();
         }
+        return kerdes;
     }
     //játkos kiválasztása
     public static String player_valaszt(){
@@ -137,11 +142,10 @@ public class game_events extends Fragment {
             else if (type == 1){
                 kerdes = GameActivity.K_m.get(random.nextInt(GameActivity.K_m.size()));
             }
-
         }catch (Exception e){
             kerdes = e.toString();
         }
-        return kerdes;
+        return kerdes.trim();
     }
 
 }

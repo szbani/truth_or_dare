@@ -1,5 +1,6 @@
 package com.example.FvM.ui.game;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,8 +9,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.FvM.databinding.ActivityGameBinding;
@@ -58,6 +61,7 @@ public class GameActivity extends AppCompatActivity {
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game) ;
         navController = navHostFragment.getNavController();
 
+
     }
 
     @Override
@@ -76,11 +80,20 @@ public class GameActivity extends AppCompatActivity {
                     return false;
                 if (event1.getX() - event2.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
                     Log.d(DEBUG_TAG,"Left Swipe: ");
-                    navController.navigate(R.id.action_nav2_game_to_nav2_dare);
+                    if (navController.getCurrentDestination().getId() == R.id.nav2_truth){
+                        navController.navigate(R.id.action_nav2_truth_to_nav2_game);
+                    }else{
+                        navController.navigate(R.id.action_nav2_game_to_nav2_dare);
+                    }
 
                 }else if (event2.getX()-event1.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
                     Log.d(DEBUG_TAG,"Right Swipe: ");
-                    navController.navigate(R.id.action_nav2_game_to_nav2_truth);
+                    if (navController.getCurrentDestination().getId() == R.id.nav2_dare){
+                        navController.navigate(R.id.action_nav2_dare_to_nav2_game);
+                    }else{
+                        navController.navigate(R.id.action_nav2_game_to_nav2_truth);
+                    }
+
                 }
             }catch (Exception e){
 
