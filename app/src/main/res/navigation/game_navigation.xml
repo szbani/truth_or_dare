@@ -13,11 +13,13 @@
         <action
             android:id="@+id/action_nav2_game_to_nav2_truth"
             app:destination="@id/nav2_truth"
+            app:enterAnim="@android:anim/fade_in"
             app:popUpTo="@id/nav2_game"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_nav2_game_to_nav2_dare"
             app:destination="@id/nav2_dare"
+            app:enterAnim="@android:anim/fade_in"
             app:popUpTo="@id/nav2_game"
             app:popUpToInclusive="false" />
     </fragment>

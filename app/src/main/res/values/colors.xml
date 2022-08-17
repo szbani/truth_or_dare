@@ -17,5 +17,10 @@
     <color name="green_300">#52b788</color>
     <color name="green_301">#40916c</color>
     <color name="btn">#52FFFFFF</color>
+    <color name="truthtemp_color">#DC9225</color>
+    <color name="daretemp_color">#07C5F4</color>
+    <color name="truth_color">#C6633EC8</color>
+    <color name="dare_color">#185EA8</color>
+    <color name="or_color">#B43F413E</color>
 
 </resources>
