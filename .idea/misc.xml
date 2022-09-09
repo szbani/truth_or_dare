@@ -36,8 +36,8 @@
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable-v24/ic_foreground_f.xml" value="0.34" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.355" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/anim1_list.xml" value="0.355" />
-        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/background_1.xml" value="0.355" />
-        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/background_2.xml" value="0.355" />
+        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/background_1.xml" value="0.25" />
+        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/background_2.xml" value="0.25" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/background_3.xml" value="0.355" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/home_bg.xml" value="0.2615" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33" />
@@ -46,7 +46,7 @@
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/activity_game.xml" value="0.25" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/content_game.xml" value="0.33" />
-        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/dare_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/dare_fragment.xml" value="0.33" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/dialog.xml" value="0.25625" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/fragment_dare.xml" value="0.33" />
         <entry key="..\:/Users/szabo/Documents/GitHub/FvM/app/src/main/res/layout/game_fragment.xml" value="0.25" />

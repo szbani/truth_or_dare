@@ -9,3 +9,4 @@ Csókolóznál az alábbi játékossal? @person
 Hány évesnek tippeled @person játékost?
 @person játékos külső tényezőiből mi tetszik a legjobban?
 @person játékos belső tényezőiből mi tetszik a legjobban?
+

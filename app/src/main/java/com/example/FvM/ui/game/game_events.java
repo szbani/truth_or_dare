@@ -68,7 +68,7 @@ public class game_events extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
+    //@person
     public static String kerdes_Person(String kerdes, Context context) {
         try {
             //kérdés személy cseréléses
@@ -95,7 +95,7 @@ public class game_events extends Fragment {
         }
         return kerdes;
     }
-
+    //@sit
     public static String kerdes_Sit(String kerdes, Context context){
         try {
             //kérdés jobbra/balra ülő
@@ -119,6 +119,34 @@ public class game_events extends Fragment {
         }
         catch (Exception e){
             Log.e( "Exception" ,"ez itt a hiba" + e);
+            return e.toString();
+        }
+        return kerdes;
+    }
+
+    //@gender
+    public static String kerdes_Gender(String kerdes, Context context) {
+        try {
+            //kérdés személy cseréléses
+            if (kerdes.contains("@gender")) {
+                String person;
+
+                if (GameActivity.players.size() > 1) {
+
+                    person = player_valaszt();
+                    while (person.equals(player) || person.substring(person.length() - 1).equals(player.substring(player.length() -1))) {
+                        person = player_valaszt();
+                    }
+                    person = person.replace(person.substring(person.length() - 1), "").trim();
+                } else {
+                    int ran = random.nextInt(2);
+                    if (ran == 0) person =  context.getString(R.string.Def_Person_0);
+                    else person = context.getString(R.string.Def_Person_1);
+                }
+                kerdes = kerdes.replace("@person", person);
+            }
+        } catch (Exception e) {
+            Log.e("Exception", "ez itt a hiba" + e);
             return e.toString();
         }
         return kerdes;

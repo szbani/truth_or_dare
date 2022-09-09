@@ -36,6 +36,7 @@ public class DareFragment extends Fragment {
 
 
         q_temp = question;
+        question = game_events.kerdes_Gender(question,binding.getRoot().getContext());
         question = game_events.kerdes_Person(question, binding.getRoot().getContext());
         question = game_events.kerdes_Sit(question, binding.getRoot().getContext());
 

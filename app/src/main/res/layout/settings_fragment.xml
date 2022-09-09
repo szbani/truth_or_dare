@@ -61,6 +61,13 @@
                 android:text="@string/other" />
 
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch3"
+                style="@style/item_LVL_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/option3" />
+
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch1"
                 style="@style/item_LVL_2"
                 android:text="@string/option1" />
@@ -69,13 +76,6 @@
                 android:id="@+id/switch2"
                 style="@style/item_LVL_2"
                 android:text="@string/option2" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch3"
-                style="@style/item_LVL_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/option3" />
 
             <TextView
                 android:id="@+id/test"

@@ -2,6 +2,7 @@ package com.example.FvM.ui.game;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
@@ -50,6 +52,14 @@ public class GameActivity extends AppCompatActivity {
         K_m = intent.getStringArrayListExtra("kerdesek_m");
         players = intent.getStringArrayListExtra("players");
 
+
+        ConstraintLayout constraintLayout = findViewById(R.id.activity_game);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(6000);
+        animationDrawable.start();
+
         mDetector = new GestureDetector(this, new gestureLis());
         gestureListener = new View.OnTouchListener() {
             @Override
@@ -58,6 +68,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
         };
+
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game) ;
         navController = navHostFragment.getNavController();
 
