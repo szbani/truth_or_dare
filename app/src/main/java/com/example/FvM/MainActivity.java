@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.Main_layout);
 
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(6000);
+        animationDrawable.setEnterFadeDuration(4000);
+        animationDrawable.setExitFadeDuration(8000);
         animationDrawable.start();
 
         mDetector = new GestureDetector(this, new gestureLis());
