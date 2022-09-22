@@ -26,7 +26,6 @@ public class TruthFragment extends Fragment {
         binding = TruthFagmentBinding.inflate(getLayoutInflater());
 
         binding.truthName.setText(game_events.player);
-        Log.e("question:",q_temp);
 
         String question = "";
         do {

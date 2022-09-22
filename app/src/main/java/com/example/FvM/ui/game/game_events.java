@@ -113,7 +113,7 @@ public class game_events extends Fragment {
                         kerdes = kerdes.replace("@sit",way +" "+ ran +".-dik szemely");
                     }
                 }else{
-                    kerdes = kerdes.replace("@sit","tudja a faszom");
+                    kerdes = kerdes.replace("@sit","valamelyik személy");
                 }
             }
         }
