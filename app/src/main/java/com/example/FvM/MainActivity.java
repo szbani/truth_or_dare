@@ -1,35 +1,31 @@
 package com.example.FvM;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.FvM.databinding.ActivityMainBinding;
-import com.example.FvM.ui.game.GameActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.FvM.ui.home.home;
+import com.example.FvM.ui.players.players;
+import com.example.FvM.ui.settings.settings;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private static final int Swipe_min = 120;
-    private static final int Swipe_max_off_path = 250;
-    private static final int Swipe_threshold = 200;
-    private GestureDetector mDetector;
-    View.OnTouchListener gestureListener;
+    private static  final int NUM_PAGES =3;
+    private static ViewPager2 viewPager;
+    private static FragmentStateAdapter pagerAdapter;
 
-    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,78 +35,60 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        ConstraintLayout constraintLayout = findViewById(R.id.Main_layout);
+        //animation
+        LinearLayout layout = findViewById(R.id.Main_layout);
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) layout.getBackground();
         animationDrawable.setEnterFadeDuration(4000);
         animationDrawable.setExitFadeDuration(8000);
         animationDrawable.start();
+        //animation end
 
-        mDetector = new GestureDetector(this, new gestureLis());
-        gestureListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                return mDetector.onTouchEvent(event);
+        int[] icons = {R.drawable.ic_play,R.drawable.ic_player,R.drawable.ic_settings};
+        int[] i_texts = {R.string.menu_home,R.string.menu_player,R.string.menu_settings};
+        viewPager = findViewById(R.id.pager);
+        pagerAdapter = new ScreenSlidePagerAdapter(this);
+        viewPager.setAdapter(pagerAdapter);
 
-            }
-        };
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setIcon(icons[position]).setText(i_texts[position])
+        ).attach();
+    }
 
-        //ugyan az
-        // setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav);
-        //megkeresi a 'nav'-ot
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_player, R.id.nav_settings).build();
+    public void refresh(){
 
-        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host) ;
-        navController = navHostFragment.getNavController();
-
-        //navController = Navigation.findNavController(this, R.id.nav_host);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.nav, navController);
-
-
+//        viewPager.setAdapter(pagerAdapter);
+//        viewPager.setCurrentItem(1, false);
 
     }
+
     @Override
-    public boolean onTouchEvent(MotionEvent event){
-        this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
-    class gestureLis extends GestureDetector.SimpleOnGestureListener {
-        private static final String DEBUG_TAG = "Gestures";
-        @Override
-        public boolean onFling(MotionEvent event1,MotionEvent  event2,
-                               float velocityX, float velocityY){
-            try {
-                if (Math.abs(event1.getY()-event2.getY()) > Swipe_max_off_path)
-                    return false;
-                if (event1.getX() - event2.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
-                    Log.d(DEBUG_TAG,"Left Swipe: ");
-                    if (navController.getCurrentDestination().getId() == R.id.nav_home){
-                        navController.navigate(R.id.action_nav_home_to_nav_player);
-                    }else if (navController.getCurrentDestination().getId() == R.id.nav_player){
-                        navController.navigate(R.id.action_nav_player_to_nav_settings);
-                    }
-
-                }else if (event2.getX()-event1.getX() > Swipe_min && Math.abs(velocityX) > Swipe_threshold){
-                    Log.d(DEBUG_TAG,"Right Swipe: ");
-                    if (navController.getCurrentDestination().getId() == R.id.nav_player){
-                        navController.navigate(R.id.action_nav_player_to_nav_home);
-                    }else if (navController.getCurrentDestination().getId() == R.id.nav_settings){
-                        navController.navigate(R.id.action_nav_settings_to_nav_player);
-                    }
-
-                }
-            }catch (Exception e){
-
-            }
-            return false;
-        }
-        @Override
-        public boolean onDown(MotionEvent event){
-            Log.d(DEBUG_TAG,"onDown: "+ event.toString());
-            return true;
+    public void onBackPressed(){
+        if (viewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            refresh();
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
 
     }
+    private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        public ScreenSlidePagerAdapter(FragmentActivity fa) {
+            super(fa);
+        }
+
+        @Override
+        public Fragment createFragment(int position) {
+            if (position==1)return new players();
+            if (position==2)return new settings();
+
+            return new home();
+        }
+        @Override
+        public int getItemCount() {
+            return NUM_PAGES;
+        }
+    }
+
 }

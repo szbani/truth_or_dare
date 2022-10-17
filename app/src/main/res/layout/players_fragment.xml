@@ -5,7 +5,6 @@
     android:id="@+id/players_f"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/btn"
     tools:context=".ui.players.players">
 
     <TextView

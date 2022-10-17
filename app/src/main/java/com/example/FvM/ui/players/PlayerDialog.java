@@ -20,8 +20,10 @@ import com.example.FvM.R;
 public class PlayerDialog extends DialogFragment {
 //    private Context mcontext;
 //    public PlayerDialog(Context context){ this.mcontext = context;}
-    public PlayerDialog(){}
-    player_com com = new player_com();
+    private final player_com pc;
+    public PlayerDialog(player_com pc){
+        this.pc = pc;
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -44,9 +46,8 @@ public class PlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     query.player_up(getActivity(),name,gender);
-                    com.refresh(getParentFragment());
+                    pc.refresh();
                 }
-
             }
         })
         .setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {})

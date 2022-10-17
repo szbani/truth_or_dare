@@ -22,13 +22,13 @@ public class ePlayerDialog extends DialogFragment {
     private final String name;
     private final int gender;
     private final int id;
-
-    public ePlayerDialog(String name, int gender, int id){
+    private final player_com pc;
+    public ePlayerDialog(String name, int gender, int id, player_com pc){
         this.name = name;
         this.gender = gender;
         this.id = id;
+        this.pc = pc;
     }
-    player_com com = new player_com();
 
     @NonNull
     @Override
@@ -52,7 +52,7 @@ public class ePlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     query.player_edit(getContext(),name,gender,id);
-                    com.refresh(getParentFragment());
+                    pc.refresh();
                 }
             }
         })

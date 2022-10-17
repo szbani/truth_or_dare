@@ -55,6 +55,7 @@ public class game_events extends Fragment {
                p_temp =player_valaszt();
             }
             player = p_temp;
+            Log.e("Player","ez a player:"+player);
             binding.playerNameText.setText(player.replace(player.substring(player.length()-1), "").trim());
         }else{
             binding.playerNameText.setText("");
@@ -90,7 +91,7 @@ public class game_events extends Fragment {
                 kerdes = kerdes.replace("@person", person);
             }
         } catch (Exception e) {
-            Log.e("Exception", "ez itt a hiba" + e);
+            Log.e("Exception", "(kerdes_person)ez itt a hiba" + e);
             return e.toString();
         }
         return kerdes;
@@ -118,7 +119,7 @@ public class game_events extends Fragment {
             }
         }
         catch (Exception e){
-            Log.e( "Exception" ,"ez itt a hiba" + e);
+            Log.e( "Exception" ,"(kerdes_sit)ez itt a hiba" + e);
             return e.toString();
         }
         return kerdes;
@@ -146,19 +147,24 @@ public class game_events extends Fragment {
                 kerdes = kerdes.replace("@person", person);
             }
         } catch (Exception e) {
-            Log.e("Exception", "ez itt a hiba" + e);
+            Log.e("Exception", "(kerdes_gender)ez itt a hiba" + e);
             return e.toString();
         }
         return kerdes;
     }
     //játkos kiválasztása
     public static String player_valaszt(){
-        if (GameActivity.players.size() > 1){
-            return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
+        try {
+            if (GameActivity.players.size() > 1){
+                return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
+            }
+            else {
+                return "";
+            }
+        }catch (Exception e){
+            Log.e("Exception","(player_valaszt)hiba: ");
         }
-        else {
-            return "";
-        }
+        return "";
     }
     //kérdés kiválasztása
     public static String kivalaszt(int type){

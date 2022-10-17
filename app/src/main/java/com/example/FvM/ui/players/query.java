@@ -17,7 +17,6 @@ public class query{
 
     public static void player_up(Activity activity, String name, int gender){
         try{
-
             File file = new File(activity.getFilesDir().getPath(),"players.txt");
             FileWriter fileWriter = new FileWriter(file,true);
             BufferedWriter writer = new BufferedWriter(fileWriter);
@@ -47,7 +46,6 @@ public class query{
         }
         return list;
     }
-
     public static void player_delete(Context context, int id){
         try {
             File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");
@@ -58,17 +56,22 @@ public class query{
 
             String currentline;
             int i = 0;
-
+            List<String> list = new ArrayList<String>();
             while((currentline = reader.readLine()) != null){
                 if (i == id || currentline.equals("")) {
                     i++;
-                    continue;
+                }else{
+                    list.add(currentline);
+                    //Log.e("Sorok", "lista sor: "+ list);
+                    i++;
                 }
-                //if (tempFile.length() != 0) writer.newLine();
-                writer.write(currentline);
-                writer.newLine();
-                i++;
-                Log.e("exception", "ennyiszer futott le " + i);
+                //Log.e("exception", "ennyiszer futott le " + i);
+            }
+            for (int k = 0; k < list.size(); k++){
+                writer.write(list.get(k));
+                if (!(k == list.size()-1)){
+                    writer.newLine();
+                }
             }
             writer.close();
             reader.close();

@@ -3,9 +3,9 @@
     <string name="app_name">FvM</string>
 
     //nav
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Inditás</string>
     <string name="menu_settings">Beállítások</string>
-    <string name="menu_player">Player</string>
+    <string name="menu_player">Játékosok</string>
 
     //query
     <string name="player"></string>
