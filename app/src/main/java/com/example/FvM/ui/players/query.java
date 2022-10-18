@@ -92,13 +92,22 @@ public class query{
 
             String currentline;
             int i = 0;
+            List<String> list = new ArrayList<String>();
             while((currentline = reader.readLine()) != null){
                 if (i == id){
                     currentline = name + " " + gender;
+                }else if (currentline.equals("")){
+                    i++;
+                    continue;
                 }
-                writer.write(currentline);
-                writer.newLine();
+                list.add(currentline);
                 i++;
+            }
+            for (int k = 0; k < list.size(); k++){
+                writer.write(list.get(k));
+                if (!(k == list.size()-1)){
+                    writer.newLine();
+                }
             }
             writer.close();
             reader.close();

@@ -9,13 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.FvM.R;
 import com.example.FvM.databinding.DareFragmentBinding;
 
 public class DareFragment extends Fragment {
 
     private DareFragmentBinding binding;
-    private static String q_temp = "";
 
     public DareFragment() {
         // Required empty public constructor
@@ -27,20 +25,9 @@ public class DareFragment extends Fragment {
         binding = DareFragmentBinding.inflate(getLayoutInflater());
 
         binding.dareName.setText(game_events.player);
-        Log.e("question:",q_temp);
+        question_com qcom = new question_com(getActivity(),1);
 
-        String question = "";
-        do {
-            question = game_events.kivalaszt(1);
-        }while(question.equals(q_temp));
-
-
-        q_temp = question;
-        question = game_events.kerdes_Gender(question,binding.getRoot().getContext());
-        question = game_events.kerdes_Person(question, binding.getRoot().getContext());
-        question = game_events.kerdes_Sit(question, binding.getRoot().getContext());
-
-        binding.dareQuestionText.setText(question);
+        binding.dareQuestionText.setText(qcom.getKerdes());
 
         return binding.getRoot();
     }

@@ -66,9 +66,8 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
-        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game) ;
+        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game);
         navController = navHostFragment.getNavController();
-
 
     }
 

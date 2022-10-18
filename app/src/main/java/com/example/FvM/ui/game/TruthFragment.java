@@ -14,7 +14,6 @@ import com.example.FvM.databinding.TruthFagmentBinding;
 public class TruthFragment extends Fragment {
 
     private TruthFagmentBinding binding;
-    private static String q_temp = "";
 
     public TruthFragment() {
         // Required empty public constructor
@@ -27,17 +26,14 @@ public class TruthFragment extends Fragment {
 
         binding.truthName.setText(game_events.player);
 
-        String question = "";
-        do {
-            question = game_events.kivalaszt(0);
-        }while(question.equals(q_temp));
+//        String question = "";
+//        do {
+//            question = game_events.kivalaszt(0);
+//        }while(question.equals(q_temp));
+        question_com qcom = new question_com(getActivity(),1);
 
 
-        q_temp = question;
-        question = game_events.kerdes_Person(question, binding.getRoot().getContext());
-        question = game_events.kerdes_Sit(question, binding.getRoot().getContext());
-
-        binding.truthQuestionText.setText(question);
+        binding.truthQuestionText.setText(qcom.getKerdes());
 
         return binding.getRoot();
     }

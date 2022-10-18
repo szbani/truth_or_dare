@@ -7,7 +7,6 @@
     tools:context=".ui.game.DareFragment"
     android:background="@color/dare_color">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/dare_question_text"
         android:layout_width="wrap_content"
