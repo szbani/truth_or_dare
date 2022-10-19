@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import com.example.FvM.databinding.DareFragmentBinding;
 public class DareFragment extends Fragment {
 
     private DareFragmentBinding binding;
+    private question_com qcom;
 
     public DareFragment() {
         // Required empty public constructor
@@ -23,11 +24,11 @@ public class DareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DareFragmentBinding.inflate(getLayoutInflater());
+        qcom = new question_com(getActivity());
 
         binding.dareName.setText(game_events.player);
-        question_com qcom = new question_com(getActivity(),1);
 
-        binding.dareQuestionText.setText(qcom.getKerdes());
+        binding.dareQuestionText.setText(qcom.getKerdes(1));
 
         return binding.getRoot();
     }

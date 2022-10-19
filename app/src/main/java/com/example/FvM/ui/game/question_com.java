@@ -14,19 +14,21 @@ public class question_com {
     private String player = game_events.player;
 
     private static Random random;
-    private final Activity activity;
+    private static boolean ran_player;
+    //private final Activity activity;
     private final Context context;
-    private final int tipus;
 
-    public question_com(Activity activity,int tipus){
-        this.activity = activity;
-        this.random = new Random();
+    // Todo kérdések ne jöhessenek egymas utan sorba maybe uj class
+
+    public question_com(Activity activity){
+        //this.activity = activity;
+        ran_player = GameActivity.settings.getBoolean("p-order");
+        Log.i("random players", String.valueOf(ran_player));
+        random = new Random();
         this.context = activity.getLayoutInflater().getContext();
-        this.tipus = tipus;
     }
-    public String getKerdes(){
-        String player_temp =player_valaszt();
-        kerdes = kivalaszt(tipus);
+    public String getKerdes(int tip){
+        kerdes = kivalaszt(tip);
         kerdes = kerdes_Person();
         kerdes = kerdes_Sit();
         kerdes = kerdes_Gender();
@@ -36,7 +38,12 @@ public class question_com {
     public static String player_valaszt(){
         try {
             if (GameActivity.players.size() > 1){
-                return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
+                if (ran_player) return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
+                else {
+                    game_events.player_num++;
+                    if (game_events.player_num >= GameActivity.players.size()) game_events.player_num = 0;
+                    return GameActivity.players.get(game_events.player_num);
+                }
                 //random.nextInt(GameActivity.players.size()
             }
             else {
@@ -128,6 +135,8 @@ public class question_com {
                 if (GameActivity.players.size() > 1) {
 
                     person = player_valaszt();
+                    // TODO: be tud akadni ha tobb ember van es mindenki ugyan olyan gender
+                    //kulon fiu es lany lista megoldhatja
                     while (person.equals(player) || person.substring(person.length() - 1).equals(player.substring(player.length() -1))) {
                         person = player_valaszt();
                     }

@@ -81,7 +81,6 @@ public class query{
             Log.e("Exception","hiba a torlesnel "+e);
         }
     }
-
     public static void player_edit(Context context,String name,int gender, int id){
         try {
             File inputFile = new File(context.getFilesDir().getPath()+"/players.txt");

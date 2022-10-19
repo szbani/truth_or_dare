@@ -54,26 +54,21 @@
             android:text="@string/other" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch3"
+            android:id="@+id/kimaradas"
+            style="@style/item_LVL_2"
+            android:text="@string/option2" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/random"
             style="@style/item_LVL_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/option3" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch1"
+            android:id="@+id/switch3"
             style="@style/item_LVL_2"
             android:text="@string/option1" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch2"
-            style="@style/item_LVL_2"
-            android:text="@string/option2" />
-
-        <TextView
-            android:id="@+id/test"
-            style="@style/item_LVL_2"
-            android:text="@string/textview" />
 
     </LinearLayout>
 

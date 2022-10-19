@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
+import androidx.preference.PreferenceManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +24,7 @@ public class beolvas {
     public  List<String> readline(String type){
         List<String> mLines = new ArrayList<>();
 
-        SharedPreferences sh = mcontext.getSharedPreferences("packok", Context.MODE_PRIVATE);
+        SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(mcontext);
         Set<String> set = new HashSet<>();
         set = sh.getStringSet("packs",set);
         List<String> packs = new ArrayList<>(set);

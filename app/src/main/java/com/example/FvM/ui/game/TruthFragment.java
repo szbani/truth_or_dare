@@ -3,18 +3,16 @@ package com.example.FvM.ui.game;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.FvM.R;
 import com.example.FvM.databinding.TruthFagmentBinding;
 
 public class TruthFragment extends Fragment {
 
     private TruthFagmentBinding binding;
-
+    private question_com qcom;
     public TruthFragment() {
         // Required empty public constructor
     }
@@ -26,14 +24,9 @@ public class TruthFragment extends Fragment {
 
         binding.truthName.setText(game_events.player);
 
-//        String question = "";
-//        do {
-//            question = game_events.kivalaszt(0);
-//        }while(question.equals(q_temp));
-        question_com qcom = new question_com(getActivity(),1);
+        qcom = new question_com(getActivity());
 
-
-        binding.truthQuestionText.setText(qcom.getKerdes());
+        binding.truthQuestionText.setText( qcom.getKerdes(1));
 
         return binding.getRoot();
     }

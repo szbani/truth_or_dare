@@ -1,13 +1,14 @@
 package com.example.FvM.ui.settings;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Context;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +24,19 @@ public class settings extends Fragment {
 
     private SettingsFragmentBinding binding;
     public  Set<String> packs ;
-
+    public SharedPreferences prefs;
+    private Activity activity;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         binding = SettingsFragmentBinding.inflate(getLayoutInflater());
+        activity=getActivity();
         View view = binding.getRoot();
-
-        SharedPreferences sh = getActivity().getSharedPreferences("packok",Context.MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         packs = new HashSet<>();
-        packs = sh.getStringSet("packs",packs);
+
+        packs = prefs.getStringSet("packs",packs);
 
         for (int i = 0; i < binding.Packs.getChildCount(); i++){
             CheckBox ch = (CheckBox) binding.Packs.getChildAt(i);
@@ -43,17 +46,22 @@ public class settings extends Fragment {
             ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    checkbox_Click();
+                    packs_Click();
                 }
             });
         }
-
-
-
+        SwitchCompat sw = (SwitchCompat) binding.random;
+        sw.setChecked(get_r_player(activity));
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                set_r_player(b);
+            }
+        });
         return view;
     }
 
-    public void checkbox_Click(){
+    public void packs_Click(){
         packs = new HashSet<>();
         for ( int i = 0; i < binding.Packs.getChildCount();i++){
             CheckBox checkBox = (CheckBox) binding.Packs.getChildAt(i);
@@ -63,12 +71,17 @@ public class settings extends Fragment {
             }
 
         }
-        SharedPreferences settings = getActivity().getSharedPreferences("packok", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putStringSet("packs", packs);
-
-        editor.apply();
+        prefs.edit().putStringSet("packs", packs).apply();
     }
 
+    public  void  set_r_player(boolean b){
+        prefs.edit().putBoolean("r_player", b).apply();
+    }
+
+    public static boolean  get_r_player(Activity activity){
+        boolean bool;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        bool = prefs.getBoolean("r_player",false);
+        return bool;
+    }
 }

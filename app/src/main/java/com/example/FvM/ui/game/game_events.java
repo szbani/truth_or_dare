@@ -23,19 +23,23 @@ public class game_events extends Fragment {
     private GameFragmentBinding binding;
     protected static String player;
     NavController navController;
+    public static int player_num = -1;
+
     public game_events(){
 
     }
-// Todo kérdések ne jöhessenek egymas utan sorba maybe uj class
-// TODO: emberek sorrendben jojjenek beallitas megcsinalasa
+    // TODO: emberek sorrendben jojjenek beallitas megcsinalasa
+
 // TODO: Dialog gombok a felesz vagy mersz kivalasztassahoz
         // TODO: visszagomb a kerdestol
+    //todo ujkerdes gomb 1 szeri hasznalatra
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = GameFragmentBinding.inflate(getLayoutInflater());
         navController = Navigation.findNavController(getParentFragment().getView());
+
         binding.FBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,10 +52,11 @@ public class game_events extends Fragment {
                 navController.navigate(R.id.action_nav2_game_to_nav2_dare);
             }
         });
+
         String p_temp = question_com.player_valaszt();
         if (!p_temp.equals("")) {
             while(p_temp.equals(player)){
-               p_temp =question_com.player_valaszt();
+               p_temp = question_com.player_valaszt();
             }
             player = p_temp;
             Log.e("Player","ez a player:"+player);
