@@ -7,6 +7,16 @@
     android:id="@+id/home"
     tools:context=".ui.home.home">
 
+    <TextView
+        android:id="@+id/title_players2"
+        style="@style/item_LVL_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/start_btn"
         android:layout_width="182dp"
@@ -18,4 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.669" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

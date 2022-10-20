@@ -7,12 +7,14 @@
     <string name="menu_settings">Beállítások</string>
     <string name="menu_player">Játékosok</string>
 
-    //query
-    <string name="player"></string>
+    //homepage
+    <string name="title_home">Felesz Vagy Mersz</string>
 
-    //home
+    //game
     <string name="felelsz">Felelsz</string>
     <string name="mersz">Mersz</string>
+    <string name="_dare">Merek</string>
+    <string name="_truth">Felelek</string>
 
     <string name="Def_Person_0">tőled jobbra ülő</string>
     <string name="Def_Person_1">tőled balra ülő</string>

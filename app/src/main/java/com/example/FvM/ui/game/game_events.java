@@ -28,11 +28,6 @@ public class game_events extends Fragment {
     public game_events(){
 
     }
-    // TODO: emberek sorrendben jojjenek beallitas megcsinalasa
-
-// TODO: Dialog gombok a felesz vagy mersz kivalasztassahoz
-        // TODO: visszagomb a kerdestol
-    //todo ujkerdes gomb 1 szeri hasznalatra
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,13 +35,13 @@ public class game_events extends Fragment {
         binding = GameFragmentBinding.inflate(getLayoutInflater());
         navController = Navigation.findNavController(getParentFragment().getView());
 
-        binding.FBtn.setOnClickListener(new View.OnClickListener() {
+        binding.truthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_nav2_game_to_nav2_truth);
             }
         });
-        binding.MBtn.setOnClickListener(new View.OnClickListener() {
+        binding.dareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_nav2_game_to_nav2_dare);

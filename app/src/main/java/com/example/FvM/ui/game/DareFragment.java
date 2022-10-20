@@ -3,18 +3,21 @@ package com.example.FvM.ui.game;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.FvM.R;
 import com.example.FvM.databinding.DareFragmentBinding;
 
 public class DareFragment extends Fragment {
 
     private DareFragmentBinding binding;
     private question_com qcom;
+    private NavController navController;
 
     public DareFragment() {
         // Required empty public constructor
@@ -29,6 +32,20 @@ public class DareFragment extends Fragment {
         binding.dareName.setText(game_events.player);
 
         binding.dareQuestionText.setText(qcom.getKerdes(1));
+
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_nav2_dare_to_nav2_game);
+            }
+        });
+        binding.newQBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.dareQuestionText.setText( qcom.getKerdes(1));
+                binding.newQBtn.setEnabled(false);
+            }
+        });
 
         return binding.getRoot();
     }

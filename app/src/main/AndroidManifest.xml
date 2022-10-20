@@ -14,10 +14,12 @@
             android:name=".ui.game.GameActivity"
             android:exported="false"
             android:label="@string/title_activity_game"
-            android:theme="@style/FvM_Theme.NoActionBar" />
+            android:theme="@style/FvM_Theme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.example.FvM.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
