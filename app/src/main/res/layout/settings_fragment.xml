@@ -5,17 +5,24 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.settings">
+    tools:context=".ui.settings.settings"
+    android:background="@color/white2">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
             style="@style/item_LVL_1"
+            android:text="@string/menu_settings"
+            android:textColor="@color/cardview_dark_background" />
+        <TextView
+            android:id="@+id/packok"
+            style="@style/item_LVL_2"
             android:text="@string/packs"
             android:textColor="@color/cardview_dark_background" />
 
@@ -31,17 +38,17 @@
 
                 <CheckBox
                     android:id="@+id/checkBox1"
-                    style="@style/item_LVL_2"
+                    style="@style/item_LVL_3"
                     android:text="@string/Default" />
 
                 <CheckBox
                     android:id="@+id/checkBox2"
-                    style="@style/item_LVL_2"
+                    style="@style/item_LVL_3"
                     android:text="@string/pack1" />
 
                 <CheckBox
                     android:id="@+id/checkBox3"
-                    style="@style/item_LVL_2"
+                    style="@style/item_LVL_3"
                     android:text="@string/pack2" />
 
 
@@ -50,24 +57,24 @@
 
         <TextView
             android:id="@+id/other"
-            style="@style/item_LVL_1"
+            style="@style/item_LVL_2"
             android:text="@string/other" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/kimaradas"
-            style="@style/item_LVL_2"
+            style="@style/item_LVL_3"
             android:text="@string/option2" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/random"
-            style="@style/item_LVL_2"
+            style="@style/item_LVL_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/option3" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch3"
-            style="@style/item_LVL_2"
+            style="@style/item_LVL_3"
             android:text="@string/option1" />
 
     </LinearLayout>

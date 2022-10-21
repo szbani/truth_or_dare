@@ -7,27 +7,27 @@
     tools:context=".ui.game.TruthFragment"
     android:background="@color/truth_color">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:elevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_game_header" />
     <TextView
         android:id="@+id/truth_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Sample"
-        android:textSize="34sp"
+        style="@style/game_player_name"
+        android:background="@drawable/bg_game_round_right"
+        android:textAlignment="textStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/truth_question_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/coordinatorLayout"
-        app:layout_constraintStart_toStartOf="@+id/coordinatorLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/game_q_text"
+        />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"

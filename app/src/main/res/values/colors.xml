@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white2">#7EFFFFFF</color>
     <color name="red_100">#ef233c</color>
     <color name="red_200">#d62828</color>
     <color name="blue_100">#4ea8de</color>
@@ -19,8 +20,8 @@
     <color name="btn">#52FFFFFF</color>
     <color name="truthtemp_color">#DC9225</color>
     <color name="daretemp_color">#07C5F4</color>
-    <color name="truth_color">#C610D1A4</color>
-    <color name="dare_color">#185EA8</color>
-    <color name="or_color">#B43F413E</color>
+    <color name="truth_color">#59CE8F</color>
+    <color name="dare_color">#2C8CF3</color>
+    <color name="or_color">#393C39</color>
 
 </resources>

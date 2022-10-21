@@ -52,10 +52,10 @@ public class GameActivity extends AppCompatActivity {
 
         ConstraintLayout constraintLayout = findViewById(R.id.activity_game);
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(6000);
-        animationDrawable.start();
+//        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+//        animationDrawable.setEnterFadeDuration(2000);
+//        animationDrawable.setExitFadeDuration(6000);
+//        animationDrawable.start();
 
         mDetector = new GestureDetector(this, new gestureLis());
         gestureListener = new View.OnTouchListener() {
@@ -89,7 +89,10 @@ public class GameActivity extends AppCompatActivity {
                     Log.d(DEBUG_TAG,"Left Swipe: ");
                     if (navController.getCurrentDestination().getId() == R.id.nav2_truth){
                         navController.navigate(R.id.action_nav2_truth_to_nav2_game);
-                    }else{
+                    }else if (navController.getCurrentDestination().getId() == R.id.nav2_dare){
+                        navController.navigate(R.id.action_nav2_dare_to_nav2_game);
+                    }
+                    else{
                         navController.navigate(R.id.action_nav2_game_to_nav2_dare);
                     }
 
@@ -97,7 +100,10 @@ public class GameActivity extends AppCompatActivity {
                     Log.d(DEBUG_TAG,"Right Swipe: ");
                     if (navController.getCurrentDestination().getId() == R.id.nav2_dare){
                         navController.navigate(R.id.action_nav2_dare_to_nav2_game);
-                    }else{
+                    }else if (navController.getCurrentDestination().getId() == R.id.nav2_truth){
+                        navController.navigate(R.id.action_nav2_truth_to_nav2_game);
+                    }
+                    else{
                         navController.navigate(R.id.action_nav2_game_to_nav2_truth);
                     }
 

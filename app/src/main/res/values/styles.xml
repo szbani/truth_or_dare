@@ -4,7 +4,7 @@
     <style name="item_LVL_1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/btn</item>
+        <item name="android:background">@color/white</item>
         <item name="android:padding">10dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">26sp</item>
@@ -12,6 +12,16 @@
         <item name="android:textAlignment">textStart</item>
     </style>
     <style name="item_LVL_2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_game_round_right</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/cardview_dark_background</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+    <style name="item_LVL_3">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">5dp</item>
@@ -24,30 +34,56 @@
     <style name="player_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
+        <item name="android:paddingVertical">5dp</item>
     </style>
     <style name="player_text">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:maxLength">20</item>
         <item name="android:maxLines">1</item>
     </style>
     <style name="player_image_e">
         <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">35dp</item>
         <item name="android:layout_weight">0</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:background">@drawable/ic_edit</item>
         <item name="android:contentDescription">@string/player_edit</item>
+        <item name="android:layout_marginEnd">10dp</item>
     </style>
     <style name="player_image_d">
         <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">35dp</item>
         <item name="android:layout_weight">0</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:background">@drawable/ic_delete_player</item>
         <item name="android:contentDescription">@string/player_delete</item>
+    </style>
+    <style name="game_player_name">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintWidth_percent">0.75</item>
+        <item name="android:elevation">30dp</item>
+        <item name="android:shadowRadius">50</item>
+        <item name="android:paddingHorizontal">30dp</item>
+        <item name="android:paddingVertical">10dp</item>
+        <item name="android:text">Sample</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+    <style name="game_q_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/hello_blank_fragment</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">@+id/coordinatorLayout</item>
+        <item name="layout_constraintStart_toStartOf">@+id/coordinatorLayout</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 </resources>

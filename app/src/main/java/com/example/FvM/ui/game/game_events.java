@@ -29,6 +29,7 @@ public class game_events extends Fragment {
 
     }
 
+    // TODO: vissza gomb alulra(valamilyen funkcio)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

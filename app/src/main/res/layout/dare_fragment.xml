@@ -4,59 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game.DareFragment"
-    android:background="@color/dare_color">
+    android:background="@color/dare_color"
+    tools:context=".ui.game.DareFragment">
 
-    <TextView
-        android:id="@+id/dare_question_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.419" />
-
+        app:srcCompat="@drawable/bg_game_header" />
     <TextView
         android:id="@+id/dare_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Sample"
-        app:layout_constraintStart_toStartOf="parent"
+        style="@style/game_player_name"
+        android:background="@drawable/bg_game_round_left"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/dare_question_text"
+        style="@style/game_q_text"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:layout_marginHorizontal="20dp">
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="60dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/back_btn"
+            android:id="@+id/new_q_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="30dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/_dare"
-            app:maxImageSize="40dp"
             app:fabCustomSize="70dp"
+            app:maxImageSize="40dp"
             app:srcCompat="@drawable/ic_refresh" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/new_q_btn"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
             android:layout_margin="30dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/_truth"
-            app:maxImageSize="40dp"
             app:fabCustomSize="70dp"
+            app:maxImageSize="40dp"
             app:srcCompat="@drawable/ic_arrow_left" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

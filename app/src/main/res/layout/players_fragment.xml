@@ -36,9 +36,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/player_add"
+            app:maxImageSize="35dp"
+            app:fabCustomSize="65dp"
             app:srcCompat="@drawable/ic_player_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

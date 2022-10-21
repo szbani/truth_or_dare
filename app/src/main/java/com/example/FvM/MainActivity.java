@@ -58,19 +58,11 @@ public class MainActivity extends AppCompatActivity {
         ).attach();
     }
 
-    public void refresh(){
-
-//        viewPager.setAdapter(pagerAdapter);
-//        viewPager.setCurrentItem(1, false);
-
-    }
-
     @Override
     public void onBackPressed(){
         if (viewPager.getCurrentItem() == 0) {
             super.onBackPressed();
         } else {
-            refresh();
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
 

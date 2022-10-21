@@ -24,7 +24,6 @@ public class players extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        //todo uj jatekos nev max meret
         binding = PlayersFragmentBinding.inflate(getLayoutInflater());
         //View inf = inflater.inflate(R.layout.players_fragment, container, false);
         view = binding.getRoot();

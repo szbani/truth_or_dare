@@ -26,12 +26,10 @@ public class TruthFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = TruthFagmentBinding.inflate(getLayoutInflater());
         navController = Navigation.findNavController(getParentFragment().getView());
-
-        binding.truthName.setText(game_events.player);
-
         qcom = new question_com(getActivity());
 
-        binding.truthQuestionText.setText( qcom.getKerdes(1));
+        binding.truthName.setText(game_events.player);
+        binding.truthQuestionText.setText( qcom.getKerdes(0));
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

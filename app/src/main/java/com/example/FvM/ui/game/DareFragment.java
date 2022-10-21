@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 
 import android.view.LayoutInflater;
@@ -27,10 +28,10 @@ public class DareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DareFragmentBinding.inflate(getLayoutInflater());
+        navController = Navigation.findNavController(getParentFragment().getView());
         qcom = new question_com(getActivity());
 
         binding.dareName.setText(game_events.player);
-
         binding.dareQuestionText.setText(qcom.getKerdes(1));
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
