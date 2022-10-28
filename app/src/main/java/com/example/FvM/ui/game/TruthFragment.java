@@ -17,6 +17,9 @@ public class TruthFragment extends Fragment {
     private TruthFagmentBinding binding;
     private question_com qcom;
     private NavController navController;
+    public static String t_kerdes;
+    public String t_kerdes_last;
+
     public TruthFragment() {
         // Required empty public constructor
     }
@@ -27,9 +30,16 @@ public class TruthFragment extends Fragment {
         binding = TruthFagmentBinding.inflate(getLayoutInflater());
         navController = Navigation.findNavController(getParentFragment().getView());
         qcom = new question_com(getActivity());
+        String player = game_events.player;
 
-        binding.truthName.setText(game_events.player);
-        binding.truthQuestionText.setText( qcom.getKerdes(0));
+        binding.truthName.setText(player.replace(player.substring(player.length()-1), "").trim());
+        String temp = qcom.getKerdes(0);
+        while(temp.equals(t_kerdes)){
+            temp = qcom.getKerdes(0);
+        }
+        t_kerdes_last = t_kerdes;
+        t_kerdes = temp;
+        binding.truthQuestionText.setText( t_kerdes);
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +50,12 @@ public class TruthFragment extends Fragment {
         binding.newQBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.truthQuestionText.setText( qcom.getKerdes(1));
+                String temp = qcom.getKerdes(0);
+                while(temp.equals(t_kerdes) || temp.equals(t_kerdes_last)){
+                    temp = qcom.getKerdes(0);
+                }
+                t_kerdes = temp;
+                binding.truthQuestionText.setText( t_kerdes);
                 binding.newQBtn.setEnabled(false);
             }
         });

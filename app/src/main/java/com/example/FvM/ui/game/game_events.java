@@ -23,13 +23,11 @@ public class game_events extends Fragment {
     private GameFragmentBinding binding;
     protected static String player;
     NavController navController;
-    public static int player_num = -1;
 
     public game_events(){
 
     }
 
-    // TODO: vissza gomb alulra(valamilyen funkcio)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -46,6 +44,12 @@ public class game_events extends Fragment {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_nav2_game_to_nav2_dare);
+            }
+        });
+        binding.gameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
             }
         });
 

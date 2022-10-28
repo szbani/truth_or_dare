@@ -18,8 +18,6 @@ public class question_com {
     //private final Activity activity;
     private final Context context;
 
-    // Todo kérdések ne jöhessenek egymas utan sorba maybe uj class
-
     public question_com(Activity activity){
         //this.activity = activity;
         ran_player = GameActivity.settings.getBoolean("p-order");
@@ -31,7 +29,7 @@ public class question_com {
         kerdes = kivalaszt(tip);
         kerdes = kerdes_Person();
         kerdes = kerdes_Sit();
-        kerdes = kerdes_Gender();
+        //kerdes = kerdes_Gender();
         return kerdes;
     }
     //játkos kiválasztása
@@ -40,9 +38,9 @@ public class question_com {
             if (GameActivity.players.size() > 1){
                 if (ran_player) return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
                 else {
-                    game_events.player_num++;
-                    if (game_events.player_num >= GameActivity.players.size()) game_events.player_num = 0;
-                    return GameActivity.players.get(game_events.player_num);
+                    GameActivity.player_num++;
+                    if (GameActivity.player_num >= GameActivity.players.size()) GameActivity.player_num = 0;
+                    return GameActivity.players.get(GameActivity.player_num);
                 }
                 //random.nextInt(GameActivity.players.size()
             }
@@ -126,32 +124,30 @@ public class question_com {
     }
 
     //@gender
-    public String kerdes_Gender() {
-        try {
-            //kérdés személy cseréléses
-            if (kerdes.contains("@gender")) {
-                String person;
-
-                if (GameActivity.players.size() > 1) {
-
-                    person = player_valaszt();
-                    // TODO: be tud akadni ha tobb ember van es mindenki ugyan olyan gender
-                    //kulon fiu es lany lista megoldhatja
-                    while (person.equals(player) || person.substring(person.length() - 1).equals(player.substring(player.length() -1))) {
-                        person = player_valaszt();
-                    }
-                    person = person.replace(person.substring(person.length() - 1), "").trim();
-                } else {
-                    int ran = random.nextInt(2);
-                    if (ran == 0) person =  context.getString(R.string.Def_Person_0);
-                    else person = context.getString(R.string.Def_Person_1);
-                }
-                kerdes = kerdes.replace("@person", person);
-            }
-        } catch (Exception e) {
-            Log.e("Exception", "(kerdes_gender)ez itt a hiba" + e);
-            return e.toString();
-        }
-        return kerdes;
-    }
+//    public String kerdes_Gender() {
+//        try {
+//            //kérdés személy cseréléses
+//            if (kerdes.contains("@gender")) {
+//                String person;
+//
+//                if (GameActivity.players.size() > 1) {
+//
+//                    person = player_valaszt();
+//                    while (person.equals(player) || person.substring(person.length() - 1).equals(player.substring(player.length() -1))) {
+//                        person = player_valaszt();
+//                    }
+//                    person = person.replace(person.substring(person.length() - 1), "").trim();
+//                } else {
+//                    int ran = random.nextInt(2);
+//                    if (ran == 0) person =  context.getString(R.string.Def_Person_0);
+//                    else person = context.getString(R.string.Def_Person_1);
+//                }
+//                kerdes = kerdes.replace("@person", person);
+//            }
+//        } catch (Exception e) {
+//            Log.e("Exception", "(kerdes_gender)ez itt a hiba" + e);
+//            return e.toString();
+//        }
+//        return kerdes;
+//    }
 }

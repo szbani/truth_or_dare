@@ -18,8 +18,6 @@ import com.example.FvM.ui.settings.settings;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-// TODO: Design to all views
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;

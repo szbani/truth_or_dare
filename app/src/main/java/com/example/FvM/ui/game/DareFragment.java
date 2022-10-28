@@ -19,6 +19,8 @@ public class DareFragment extends Fragment {
     private DareFragmentBinding binding;
     private question_com qcom;
     private NavController navController;
+    public static String d_kerdes;
+    public String d_kerdes_last;
 
     public DareFragment() {
         // Required empty public constructor
@@ -30,9 +32,16 @@ public class DareFragment extends Fragment {
         binding = DareFragmentBinding.inflate(getLayoutInflater());
         navController = Navigation.findNavController(getParentFragment().getView());
         qcom = new question_com(getActivity());
+        String player = game_events.player;
 
-        binding.dareName.setText(game_events.player);
-        binding.dareQuestionText.setText(qcom.getKerdes(1));
+        binding.dareName.setText(player.replace(player.substring(player.length()-1), "").trim());
+        String temp = qcom.getKerdes(1);
+        while(temp.equals(d_kerdes)){
+            temp = qcom.getKerdes(1);
+        }
+        d_kerdes_last = d_kerdes;
+        d_kerdes = temp;
+        binding.dareQuestionText.setText(d_kerdes);
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +52,12 @@ public class DareFragment extends Fragment {
         binding.newQBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.dareQuestionText.setText( qcom.getKerdes(1));
+                String temp = qcom.getKerdes(1);
+                while(temp.equals(d_kerdes) || temp.equals(d_kerdes_last)){
+                    temp = qcom.getKerdes(1);
+                }
+                d_kerdes = temp;
+                binding.dareQuestionText.setText( d_kerdes);
                 binding.newQBtn.setEnabled(false);
             }
         });
