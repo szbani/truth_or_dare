@@ -11,7 +11,6 @@ import java.util.Random;
 public class question_com {
 
     private String kerdes;
-    private String player = game_events.player;
 
     private static Random random;
     private static boolean ran_player;

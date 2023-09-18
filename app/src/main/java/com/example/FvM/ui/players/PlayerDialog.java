@@ -18,8 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.FvM.R;
 
 public class PlayerDialog extends DialogFragment {
-//    private Context mcontext;
-//    public PlayerDialog(Context context){ this.mcontext = context;}
+
     private final player_com pc;
     public PlayerDialog(player_com pc){
         this.pc = pc;

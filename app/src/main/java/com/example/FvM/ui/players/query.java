@@ -58,13 +58,11 @@ public class query{
             int i = 0;
             List<String> list = new ArrayList<String>();
             while((currentline = reader.readLine()) != null){
-                if (i == id || currentline.equals("")) {
-                    i++;
-                }else{
+                if (i != id && !currentline.equals("")) {
                     list.add(currentline);
                     //Log.e("Sorok", "lista sor: "+ list);
-                    i++;
                 }
+                i++;
                 //Log.e("exception", "ennyiszer futott le " + i);
             }
             for (int k = 0; k < list.size(); k++){

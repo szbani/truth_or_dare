@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 public class beolvas {
-    private Context mcontext;
+    private final Context mcontext;
     public beolvas(Context context){
         this.mcontext = context;
     }

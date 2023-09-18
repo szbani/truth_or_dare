@@ -72,11 +72,6 @@
             android:layout_height="wrap_content"
             android:text="@string/option3" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch3"
-            style="@style/item_LVL_3"
-            android:text="@string/option1" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
