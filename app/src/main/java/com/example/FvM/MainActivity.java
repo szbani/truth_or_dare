@@ -18,6 +18,10 @@ import com.example.FvM.ui.settings.settings;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import io.realm.Realm;
+import com.example.FvM.BuildConfig;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -54,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setIcon(icons[position]).setText(i_texts[position])
         ).attach();
+
+        RealmHelper.init(binding.getRoot().getContext());
+
+
     }
 
     @Override

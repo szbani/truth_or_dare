@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
 import com.example.FvM.ui.game.GameActivity;
 import com.example.FvM.ui.players.query;
@@ -32,7 +33,8 @@ public class home extends Fragment {
         binding.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                change_scene(view);
+//                change_scene(view);
+                RealmHelper.addTask();
             }
         });
         return view;

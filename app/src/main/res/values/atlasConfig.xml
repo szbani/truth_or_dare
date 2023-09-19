@@ -1,0 +1,9 @@
+<resources>
+    <string name="realm_app_id">truthordare-slpuf</string>
+    <string name="realm_app_url">https://realm.mongodb.com/groups/65087561ec4094376dc1f1ed/apps/65087821d12726001d89d1e2</string>
+    <string name="realm_base_url">https://realm.mongodb.com</string>
+    <string name="realm_client_api_base_url">https://us-east-1.aws.realm.mongodb.com</string>
+    <string name="realm_data_api_base_url">https://us-east-1.aws.data.mongodb-api.com</string>
+    <string name="realm_data_explorer_link">https://cloud.mongodb.com/links/65087561ec4094376dc1f1ed/explorer/Cluster0/database/collection/find</string>
+    <string name="realm_data_source_name">mongodb-atlas</string>
+</resources>
