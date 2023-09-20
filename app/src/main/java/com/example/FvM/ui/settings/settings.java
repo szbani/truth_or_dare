@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.example.FvM.R;
 import com.example.FvM.databinding.SettingsFragmentBinding;
 
 import java.util.HashSet;
@@ -38,6 +39,7 @@ public class settings extends Fragment {
 
         packs = prefs.getStringSet("packs",packs);
 
+
         for (int i = 0; i < binding.Packs.getChildCount(); i++){
             CheckBox ch = (CheckBox) binding.Packs.getChildAt(i);
             if (!packs.isEmpty()){
@@ -58,6 +60,14 @@ public class settings extends Fragment {
                 set_r_player(b);
             }
         });
+
+        view.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LoginDialog().show(getChildFragmentManager(),"Login");
+            }
+        });
+
         return view;
     }
 

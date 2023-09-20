@@ -30,6 +30,10 @@
     <string name="dialog_cancel">Mégse</string>
     <string name="dialog_title">Új játékos</string>
     <string name="dialog_name">Név</string>
+    <string name="dialog_login">Bejelentkezés</string>
+    <string name="dialog_register">Regisztráció</string>
+    <string name="username">Felhasználónév</string>
+    <string name="password">Jelszó</string>
 
     <string-array name="dialog_gender">
         <item>Fiú</item>
@@ -59,6 +63,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fiok">Fiók</string>
+    <string name="bejelentkezes">Bejelentkezés</string>
 
 
 </resources>
