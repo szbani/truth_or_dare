@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
+import com.example.FvM.models.Task;
 import com.example.FvM.ui.game.GameActivity;
 import com.example.FvM.ui.players.query;
 import com.example.FvM.ui.settings.settings;
@@ -34,7 +35,8 @@ public class home extends Fragment {
             @Override
             public void onClick(View view) {
 //                change_scene(view);
-                RealmHelper.addTask();
+                Task task = new Task("Task");
+                RealmHelper.addTask(task);
             }
         });
         return view;

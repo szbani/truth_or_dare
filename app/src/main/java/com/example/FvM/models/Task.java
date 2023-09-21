@@ -9,6 +9,7 @@ public class Task extends RealmObject {
     @PrimaryKey
     private ObjectId _id = new ObjectId();
     private String name = "Task";
+    private String owner_id;
     @Required
     private String status = TaskStatus.Open.name();
     public void setStatus(TaskStatus status) {
@@ -32,6 +33,15 @@ public class Task extends RealmObject {
     public Task(String _name) {
         this.name = _name;
     }
+
+    public void setOwner_id(String owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    public String getOwner_id() {
+        return owner_id;
+    }
+
     public Task() {}
 }
 

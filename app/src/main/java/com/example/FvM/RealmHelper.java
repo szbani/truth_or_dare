@@ -23,7 +23,9 @@ import io.realm.mongodb.sync.SyncConfiguration;
 public class RealmHelper {
 
     private static Realm realm;
-    public static void init(Context context){
+    private static User user;
+
+    public static void init(Context context) {
 
         Realm.init(context);
 
@@ -34,7 +36,7 @@ public class RealmHelper {
         app.loginAsync(credentials, result -> {
             if (result.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-                User user = app.currentUser();
+                user = app.currentUser();
                 String partitionValue = "My Project";
 
                 SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
@@ -63,18 +65,33 @@ public class RealmHelper {
         });
     }
 
-    public static void addTask(){
-        Task task = new Task("My task");
+    public static void addTask(Task task) {
+        Task newTask = new Task();
+        newTask.setName(task.getName());
+        newTask.setOwner_id(user.getId());
+//        newTask.setStatus(TaskStatus.Open.name());
         realm.executeTransactionAsync(transactionRealm -> {
-            transactionRealm.insert(task);
+            transactionRealm.insert(newTask);
         });
     }
 
-    public static RealmResults<Task> getTasks(){
-        Log.i("FASZ", String.valueOf(realm.where(Task.class).findAll())) ;
-
-        return null;
+    public static RealmResults<Task> getTasks() {
+        return realm.where(Task.class).findAll();
     }
+
+    public static void deleteTask(Task task) {
+        realm.executeTransactionAsync(transactionRealm -> {
+            task.deleteFromRealm();
+        });
+    }
+
+    public static void updateTask(Task task, String name) {
+        realm.executeTransactionAsync(transactionRealm -> {
+            task.setName(name);
+        });
+    }
+
+
 
 
 }
