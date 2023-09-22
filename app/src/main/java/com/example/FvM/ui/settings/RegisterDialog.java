@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.security.keystore.UserNotAuthenticatedException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +20,28 @@ import com.example.FvM.R;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+
 
 public class RegisterDialog extends DialogFragment {
+    private String userName;
+    private String password;
+    private String password2;
 
-    private JSONObject user = new JSONObject();
+    public RegisterDialog() {
+        this.userName = "";
+        this.password = "";
+        this.password2 = "";
+    }
+
+    public RegisterDialog(String userName, String password, String password2) {
+        this.userName = userName;
+        this.password = password;
+        this.password2 = password2;
+
+    }
+
+    private JSONObject userJson = new JSONObject();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,32 +58,59 @@ public class RegisterDialog extends DialogFragment {
             }
         });
 
-        builder.setView(view)
-                .setPositiveButton(R.string.dialog_login, new DialogInterface.OnClickListener() {
+        EditText user = view.findViewById(R.id.username);
+        EditText pw1 = view.findViewById(R.id.password);
+        EditText pw2 = view.findViewById(R.id.password2);
+
+        user.setText(userName);
+        pw1.setText(password);
+        pw2.setText(password2);
+
+        builder.setView(view);
+
+        Dialog dialog = builder.create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button customPositiveBtn = view.findViewById(R.id.RegisterConfirm);
+                customPositiveBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        EditText username = view.findViewById(R.id.username);
-                        EditText pw1 = view.findViewById(R.id.password);
-                        EditText pw2 = view.findViewById(R.id.password2);
+                    public void onClick(View view) {
+                        userName = String.valueOf(user.getText());
+                        password = String.valueOf(pw1.getText());
+                        password2 = String.valueOf(pw2.getText());
+
                         try {
-                            user.put("username", username.getText());
-                            user.put("pw1", pw1.getText());
-                            user.put("pw2", pw2.getText());
+                            userJson.put("username", user.getText());
+                            userJson.put("pw1", pw1.getText());
+                            userJson.put("pw2", pw2.getText());
                         } catch (Exception e) {
                             Log.e("JSON", "onClick: " + e);
                         }
-                        if ((pw1.getText()).equals(pw2.getText())) {
-                            dismiss();
+                        if (userName.isEmpty()){
+                            Toast.makeText(getContext(), "Nincs megadva Email", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (password.equals(password2)) {
+                            if (password.length()<5){
+                                Toast.makeText(getContext(), "Leagább 5 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
+                            }else{
+                                View loggedIn = getLayoutInflater().inflate(R.layout.logged_in,null);
+                                FrameLayout userContainer =  getActivity().findViewById(R.id.user_view);
+                                userContainer.removeAllViews();
+                                userContainer.addView(loggedIn);
+                                dismiss();
+                            }
                         } else {
+//                            new RegisterDialog(userName, password, password2).show(getParentFragmentManager(), "Register");
                             Toast.makeText(getContext(), "A két jelszó nem eggyezik meg", Toast.LENGTH_SHORT).show();
                         }
-                        //backend
                     }
                 });
-        builder.setNegativeButton(R.string.dialog_cancel, (dialogInterface, i) -> {
-                })
-                .setTitle(R.string.dialog_register);
+            }
+        });
 
-        return builder.create();
+        return dialog;
+
     }
 }

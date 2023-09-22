@@ -53,6 +53,16 @@
             android:textSize="17dp"
             android:text="Van már fiókod? Jelentkezz be!" />
 
+        <Button
+            android:id="@+id/RegisterConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="15dp"
+
+            android:background="@drawable/bg_btn"
+            android:text="Regisztráció" />
+
 
     </LinearLayout>
 

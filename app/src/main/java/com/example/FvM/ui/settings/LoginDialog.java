@@ -15,7 +15,23 @@ import com.example.FvM.R;
 
 import org.json.JSONObject;
 
+
+
 public class LoginDialog extends DialogFragment {
+
+    private String userName;
+    private String password;
+
+    public LoginDialog(){
+        this.userName = "";
+        this.password = "";
+    }
+
+    public LoginDialog(String userName,String password){
+        this.userName = userName;
+        this.password = password;
+    }
+
     private JSONObject user = new JSONObject();
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,6 +40,12 @@ public class LoginDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.login_dialog, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        EditText username = view.findViewById(R.id.username);
+        EditText pw1 = view.findViewById(R.id.password);
+
+        username.setText(userName);
+        pw1.setText(password);
 
         view.findViewById(R.id.Register_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,8 +59,6 @@ public class LoginDialog extends DialogFragment {
                 .setPositiveButton(R.string.dialog_login, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        EditText username = view.findViewById(R.id.username);
-                        EditText pw1 = view.findViewById(R.id.password);
                         try {
                             user.put("username",username.getText());
                             user.put("pw1",pw1.getText());

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/fiokText"
+        style="@style/item_LVL_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fiok" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <Button
+            android:id="@+id/login_btn"
+            style="@style/item_LVL_3"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn"
+            android:text="@string/bejelentkezes"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.373"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.695" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/item_LVL_3"
+            android:layout_width="222dp"
+            android:layout_height="36dp"
+            android:text="Bejelentkezve"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/login_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.767" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
