@@ -36,11 +36,13 @@ public class RealmHelper {
     private static Realm realm;
     private static User user;
 
+    private static App app;
+
     public static void init(Context context) {
 
         Realm.init(context);
 
-        App app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id)).defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
+         app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id)).defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
                     @Override
                     public void onBeforeReset(Realm realm) {
                         Log.w("RESET", "Beginning client reset for" + realm.getPath());
@@ -90,30 +92,25 @@ public class RealmHelper {
         });
     }
 
-    public static void addTask(Task task) {
-        Task newTask = new Task();
-        newTask.setName(task.getName());
-        newTask.setOwner_id(user.getId());
-        Log.v("USERID", user.getId());
-//        newTask.setStatus(TaskStatus.Open.name());
-        realm.executeTransactionAsync(transactionRealm -> {
-            transactionRealm.insert(newTask);
+    public static void login(String username, String password) {
+        Credentials credentials = Credentials.emailPassword(username, password);
+        app.loginAsync(credentials, result -> {
+            if (result.isSuccess()) {
+                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                user = app.currentUser();
+            } else {
+                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+            }
         });
     }
 
-    public static RealmResults<Task> getTasks() {
-        return realm.where(Task.class).findAll();
-    }
-
-    public static void deleteTask(Task task) {
-        realm.executeTransactionAsync(transactionRealm -> {
-            task.deleteFromRealm();
-        });
-    }
-
-    public static void updateTask(Task task, String name) {
-        realm.executeTransactionAsync(transactionRealm -> {
-            task.setName(name);
+    public static void register(String username, String password) {
+        app.getEmailPassword().registerUserAsync(username, password, it -> {
+            if (it.isSuccess()) {
+                Log.v("QUICKSTART", "Successfully registered user.");
+            } else {
+                Log.e("QUICKSTART", "Failed to register user: " + it.getError());
+            }
         });
     }
 
@@ -161,6 +158,18 @@ public class RealmHelper {
         });
         Log.v("PACKID", newPack.get_id().toString());
         return newPack.get_id();
+    }
+
+    public static void deletePack(Packs pack) {
+        realm.executeTransactionAsync(transactionRealm -> {
+            pack.deleteFromRealm();
+        });
+    }
+
+    public static void updatePack(Packs pack, String name) {
+        realm.executeTransactionAsync(transactionRealm -> {
+            pack.setName(name);
+        });
     }
 
     public RealmResults<Packs> getPacks() {
