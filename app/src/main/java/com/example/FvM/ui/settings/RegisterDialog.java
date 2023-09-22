@@ -23,6 +23,7 @@ public class RegisterDialog extends DialogFragment {
     private String password2;
 
     public RegisterDialog() {
+
         this.userName = "";
         this.password = "";
         this.password2 = "";
@@ -49,7 +50,6 @@ public class RegisterDialog extends DialogFragment {
                 new LoginDialog().show(getParentFragmentManager(), "Login");
             }
         });
-
         EditText user = view.findViewById(R.id.username);
         EditText pw1 = view.findViewById(R.id.password);
         EditText pw2 = view.findViewById(R.id.password2);

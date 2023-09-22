@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,9 @@ public class LoginDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        Activity activity = getActivity();
+        FragmentManager fm = getParentFragmentManager();
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.login_dialog, null);
@@ -84,7 +88,7 @@ public class LoginDialog extends DialogFragment {
                             loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    logout(requireParentFragment());
+                                    settings.logout(activity,fm);
                                 }
                             });
                             try {
@@ -108,23 +112,5 @@ public class LoginDialog extends DialogFragment {
         });
 
         return dialog;
-    }
-
-    public void logout(Fragment fragment){
-
-        FrameLayout userContainer = fragment.getActivity().findViewById(R.id.user_view);
-        View loggedOut = fragment.getLayoutInflater().inflate(R.layout.logged_out,null);
-        loggedOut.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new LoginDialog().show(getChildFragmentManager(),"Login");
-            }
-        });
-
-        RealmHelper.logout();
-
-        userContainer.removeAllViews();
-        userContainer.addView(loggedOut);
-
     }
 }

@@ -1,6 +1,7 @@
 package com.example.FvM.ui.settings;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -36,7 +37,6 @@ public class settings extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         binding = SettingsFragmentBinding.inflate(getLayoutInflater());
         activity=getActivity();
         View view = binding.getRoot();
@@ -103,6 +103,24 @@ public class settings extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         bool = prefs.getBoolean("r_player",false);
         return bool;
+    }
+
+    public static void logout(Activity activity, FragmentManager fm){
+
+        FrameLayout userContainer = activity.findViewById(R.id.user_view);
+        View loggedOut = activity.getLayoutInflater().inflate(R.layout.logged_out,null);
+        loggedOut.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LoginDialog().show(fm,"Login");
+            }
+        });
+
+        RealmHelper.logout();
+
+        userContainer.removeAllViews();
+        userContainer.addView(loggedOut);
+
     }
 
     private static String TAG = "Debug";
