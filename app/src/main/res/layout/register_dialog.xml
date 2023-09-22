@@ -46,7 +46,7 @@
             android:inputType="textPassword" />
 
         <TextView
-            android:id="@+id/login_btn"
+            android:id="@+id/logOut_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

@@ -1,24 +1,17 @@
 package com.example.FvM;
 
-import com.example.FvM.R;
-
 import android.content.Context;
 import android.util.Log;
 
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
-import com.example.FvM.models.Task;
-import com.example.FvM.models.TaskStatus;
-
-import android.content.res.Resources;
 
 import org.bson.types.ObjectId;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -104,6 +97,10 @@ public class RealmHelper {
         });
     }
 
+    public static boolean isLogged() {
+        return !String.valueOf(app.currentUser().getProviderType()).equals("anon-user");
+    }
+
     public static void register(String username, String password) {
         app.getEmailPassword().registerUserAsync(username, password, it -> {
             if (it.isSuccess()) {
@@ -176,5 +173,13 @@ public class RealmHelper {
         return realm.where(Packs.class).findAll();
     }
 
-
+    public static void logout() {
+        user.logOutAsync(result -> {
+            if (result.isSuccess()) {
+                Log.v("QUICKSTART", "Successfully logged out.");
+            } else {
+                Log.e("QUICKSTART", "Failed to log out user: " + result.getError());
+            }
+        });
+    }
 }

@@ -4,23 +4,17 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.security.keystore.UserNotAuthenticatedException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.example.FvM.R;
-
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
+import com.example.FvM.RealmHelper;
 
 
 public class RegisterDialog extends DialogFragment {
@@ -41,8 +35,6 @@ public class RegisterDialog extends DialogFragment {
 
     }
 
-    private JSONObject userJson = new JSONObject();
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -50,7 +42,7 @@ public class RegisterDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        view.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireDialog().dismiss();
@@ -81,25 +73,20 @@ public class RegisterDialog extends DialogFragment {
                         password = String.valueOf(pw1.getText());
                         password2 = String.valueOf(pw2.getText());
 
-                        try {
-                            userJson.put("username", user.getText());
-                            userJson.put("pw1", pw1.getText());
-                            userJson.put("pw2", pw2.getText());
-                        } catch (Exception e) {
-                            Log.e("JSON", "onClick: " + e);
-                        }
-                        if (userName.isEmpty()){
+                        if (userName.isEmpty()) {
                             Toast.makeText(getContext(), "Nincs megadva Email", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (password.equals(password2)) {
-                            if (password.length()<5){
+                        } else if (password.equals(password2)) {
+                            if (password.length() < 6) {
                                 Toast.makeText(getContext(), "Leagább 5 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
-                            }else{
-                                View loggedIn = getLayoutInflater().inflate(R.layout.logged_in,null);
-                                FrameLayout userContainer =  getActivity().findViewById(R.id.user_view);
-                                userContainer.removeAllViews();
-                                userContainer.addView(loggedIn);
-                                dismiss();
+                            } else {
+                                try {
+                                    RealmHelper.register(userName, password);
+                                    requireDialog().dismiss();
+                                    new LoginDialog().show(getParentFragmentManager(), "Login");
+                                } catch (Exception e) {
+//                                    Log.e("Register Hiba", String.valueOf(e));;
+                                    e.printStackTrace();
+                                }
                             }
                         } else {
 //                            new RegisterDialog(userName, password, password2).show(getParentFragmentManager(), "Register");

@@ -19,7 +19,7 @@
         android:layout_height="140dp">
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/logOut_btn"
             style="@style/item_LVL_3"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_height="36dp"
             android:text="Jelentkezz be!"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/login_btn"
+            app:layout_constraintBottom_toTopOf="@+id/logOut_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.372"
             app:layout_constraintStart_toStartOf="parent"

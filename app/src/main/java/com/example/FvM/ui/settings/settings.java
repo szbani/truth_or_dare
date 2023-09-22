@@ -7,8 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
 import com.example.FvM.R;
+import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.SettingsFragmentBinding;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import io.realm.Realm;
 
 public class settings extends Fragment {
 
@@ -65,7 +70,7 @@ public class settings extends Fragment {
 
         View userField = getLayoutInflater().inflate(R.layout.logged_out,null);
 
-        userField.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+        userField.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new LoginDialog().show(getChildFragmentManager(),"Login");
@@ -99,4 +104,6 @@ public class settings extends Fragment {
         bool = prefs.getBoolean("r_player",false);
         return bool;
     }
+
+    private static String TAG = "Debug";
 }
