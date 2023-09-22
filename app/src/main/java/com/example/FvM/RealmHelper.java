@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -63,9 +64,9 @@ public class RealmHelper {
                                 new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                                     @Override
                                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                        subscriptions.addOrUpdate(Subscription.create("Packs", realm.where(Packs.class).equalTo("owner_id", user.getId())));
+                                        Subscription Packs = subscriptions.addOrUpdate(Subscription.create("Packs", realm.where(Packs.class).equalTo("owner_id", user.getId())));
                                         subscriptions.addOrUpdate(Subscription.create("DefaultPacks", realm.where(Packs.class).equalTo("owner_id", "default")));
-                                        subscriptions.addOrUpdate(Subscription.create("Questions", realm.where(Questions.class).equalTo("owner_id", user.getId())));
+                                        subscriptions.addOrUpdate(Subscription.create("Questions" , realm.where(Questions.class).contains("pack_id", Packs.getQuery())));
                                     }
                                 }
                         )
@@ -124,6 +125,7 @@ public class RealmHelper {
     }
 
     public static RealmResults<Questions> getQuestions() {
+        //TODO - fix this query
         Packs pack = realm.where(Packs.class).equalTo("owner_id", user.getId()).findFirst();
         if (pack != null) {
             ObjectId packId = pack.get_id();
@@ -169,7 +171,7 @@ public class RealmHelper {
         });
     }
 
-    public RealmResults<Packs> getPacks() {
+    public static RealmResults<Packs> getPacks() {
         return realm.where(Packs.class).findAll();
     }
 
