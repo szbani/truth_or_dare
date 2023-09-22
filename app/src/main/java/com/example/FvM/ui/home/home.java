@@ -7,16 +7,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
+import com.example.FvM.models.Category;
+import com.example.FvM.models.Packs;
+import com.example.FvM.models.Questions;
 import com.example.FvM.models.Task;
 import com.example.FvM.ui.game.GameActivity;
 import com.example.FvM.ui.players.query;
 import com.example.FvM.ui.settings.settings;
+
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +41,20 @@ public class home extends Fragment {
             @Override
             public void onClick(View view) {
 //                change_scene(view);
-                Task task = new Task("Task");
-                RealmHelper.addTask(task);
+
+                Packs pack = new Packs();
+                pack.setName("pack 1");
+                ObjectId pack_id = RealmHelper.addPack(pack);
+                Log.i("PACK_ID", pack_id.toString());
+
+                Questions questions = new Questions();
+                questions.setQuestion("asd");
+                questions.setCategory(Category.Dare.name());
+                questions.setPack_id(pack_id);
+                RealmHelper.addQuestion(questions);
+
+                List<Questions> asd = RealmHelper.getQuestions();
+                Log.v("TASKS", asd.toString());
             }
         });
         return view;
