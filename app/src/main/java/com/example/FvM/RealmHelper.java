@@ -17,7 +17,6 @@ import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.ClientResetRequiredError;
 import io.realm.mongodb.sync.DiscardUnsyncedChangesStrategy;
-import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 import io.realm.mongodb.sync.SyncSession;
@@ -59,21 +58,16 @@ public class RealmHelper {
                 user = app.currentUser();
 
                 SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
-                        new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                            @Override
-                            public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                String[] owners = new String[]{user.getId(), "default"};
-                                RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                                RealmResults<Packs> Packs = PacksQuery.findAll();
-                                subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                            }
+                        (realm, subscriptions) -> {
+                            String[] owners = new String[]{user.getId(), "default"};
+                            RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
+                            subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
                         }
                 ).allowWritesOnUiThread(true).waitForInitialRemoteData().build();
                 Realm.getInstanceAsync(config, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
                         RealmHelper.realm = realm;
-                        Subscription subscription = realm.getSubscriptions().find("Task");
                         Log.v("QUICKSTART", "Successfully opened a realm.");
                     }
                 });
