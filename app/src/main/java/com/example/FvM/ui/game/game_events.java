@@ -60,11 +60,10 @@ public class game_events extends Fragment {
             }
             player = p_temp;
             Log.e("Player","ez a player:"+player);
-            binding.playerNameText.setText(player.replace(player.substring(player.length()-1), "").trim());
         }else{
-            binding.playerNameText.setText("");
+            player = "Játékos ";
         }
-
+        binding.playerNameText.setText(player.replace(player.substring(player.length()-1), "").trim());
         return binding.getRoot();
     }
 
@@ -72,6 +71,7 @@ public class game_events extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        navController = null;
     }
 
 }

@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 
 import com.example.FvM.R;
 import com.example.FvM.databinding.PlayersFragmentBinding;
+import com.example.FvM.ui.home.PlayerDialog;
 
 
 public class players extends Fragment {
 
-    private  PlayersFragmentBinding binding;
-    public Context context;
+    private PlayersFragmentBinding binding;
     private View view;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -27,19 +27,18 @@ public class players extends Fragment {
         binding = PlayersFragmentBinding.inflate(getLayoutInflater());
         //View inf = inflater.inflate(R.layout.players_fragment, container, false);
         view = binding.getRoot();
-        context = view.getContext();
 
-        player_com pc =new player_com(getActivity(),view,getChildFragmentManager());
+//        player_com pc =new player_com(getActivity(),view,getChildFragmentManager());
 
-        view.findViewById(R.id.new_player).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new PlayerDialog(pc).show(getChildFragmentManager(), PlayerDialog.TAG);
-            }
-        });
-
-
-        pc.playerlist();
+//        view.findViewById(R.id.new_player).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new PlayerDialog(pc).show(getChildFragmentManager(), PlayerDialog.TAG);
+//            }
+//        });
+//
+//
+//        pc.playerlist();
 
         return view;
     }

@@ -17,17 +17,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/players"
+    <ScrollView
+        android:id="@+id/players_sw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_players" />
+        app:layout_constraintTop_toBottomOf="@+id/title_players">
+
+        <LinearLayout
+            android:id="@+id/players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_players">
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -36,12 +50,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="30dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/player_add"
-            app:maxImageSize="35dp"
             app:fabCustomSize="65dp"
+            app:maxImageSize="35dp"
             app:srcCompat="@drawable/ic_player_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

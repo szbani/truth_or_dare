@@ -1,25 +1,29 @@
 package com.example.FvM.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
 import com.example.FvM.models.Category;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
-import com.example.FvM.models.Task;
 import com.example.FvM.ui.game.GameActivity;
-import com.example.FvM.ui.players.query;
 import com.example.FvM.ui.settings.settings;
 
 import org.bson.types.ObjectId;
@@ -32,17 +36,17 @@ import io.realm.Realm;
 public class home extends Fragment {
 
     private HomeFragmentBinding binding;
+    private static List<String> players;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = HomeFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
         binding.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                change_scene(view);
+
 
 //                ObjectId asd = RealmHelper.addPack("Pack1");
 //                Log.i("PACK_ID", asd.toString());
@@ -54,11 +58,36 @@ public class home extends Fragment {
                 questions.setCategory(Category.Dare.name());
 
                 RealmHelper.addQuestion(pack, questions);
+
+               
+
+                change_scene(view);
+
             }
         });
+
+        view.findViewById(R.id.new_player).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);
+
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        playerlist(getParentFragmentManager(),getActivity());
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        LinearLayout players = getActivity().findViewById(R.id.players);
+        players.removeAllViews();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -83,5 +112,54 @@ public class home extends Fragment {
         intent.putExtra("settings", set_bundle);
         startActivity(intent);
 
+    }
+
+    public static void playerlist(FragmentManager fm,Activity activity) {
+        players = query.player_down(activity.getLayoutInflater().getContext());
+        for (int i = 0; i < players.size(); i++) {
+            try {
+                String name = players.get(i);
+                int gender = Integer.parseInt(name.substring(name.length() - 1));
+                name = name.replace(" " + gender, "");
+                View child = add_player(name, gender, i,fm,activity);
+                LinearLayout players = activity.findViewById(R.id.players);
+                players.addView(child);
+            } catch (Exception e) {
+                Log.e("Exception", "(players)ez itt a hiba" + e);
+            }
+
+        }
+    }
+
+    public static View add_player(String name, int gender, int index, FragmentManager fm,Activity activity) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View child = inflater.inflate(R.layout.player_temp, null);
+        //name
+        TextView editText = child.findViewById(R.id.name);
+        editText.setText(name);
+        //edit
+        ImageButton edit = child.findViewById(R.id.edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ePlayerDialog(name, gender, index).show(fm, ePlayerDialog.TAG);
+            }
+        });
+        //delete
+        ImageButton delete = child.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                query.player_delete(inflater.getContext(), index);
+                refresh(fm, activity);
+            }
+        });
+        return child;
+    }
+
+    public static void refresh(FragmentManager fm,Activity activity) {
+        LinearLayout players = activity.findViewById(R.id.players);
+        players.removeAllViews();
+        home.playerlist(fm,activity);
     }
 }

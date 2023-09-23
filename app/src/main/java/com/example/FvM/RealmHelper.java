@@ -58,12 +58,14 @@ public class RealmHelper {
                 user = app.currentUser();
 
                 SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
+
                         (realm, subscriptions) -> {
                             String[] owners = new String[]{user.getId(), "default"};
                             RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
                             subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
                         }
                 ).allowWritesOnUiThread(true).waitForInitialRemoteData().build();
+
                 Realm.getInstanceAsync(config, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
@@ -88,6 +90,20 @@ public class RealmHelper {
                 Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
             }
         });
+    }
+  
+   public static void logout() {
+        user.logOutAsync(result -> {
+            if (result.isSuccess()) {
+                Log.v("QUICKSTART", "Successfully logged out.");
+            } else {
+                Log.e("QUICKSTART", "Failed to log out user: " + result.getError());
+            }
+        });
+    }
+
+    public static boolean isLogged() {
+        return !String.valueOf(app.currentUser().getProviderType()).equals("anon-user");
     }
 
     public static void register(String username, String password) {
@@ -138,7 +154,7 @@ public class RealmHelper {
         });
     }
 
-    public RealmResults<Packs> getPacks() {
+    public static RealmResults<Packs> getPacks() {
         return realm.where(Packs.class).findAll();
     }
 
@@ -147,3 +163,6 @@ public class RealmHelper {
     }
 
 }
+
+
+
