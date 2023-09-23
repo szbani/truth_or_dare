@@ -125,8 +125,9 @@ public class RealmHelper {
         return newPack.get_id();
     }
 
-    public static void deletePack(Packs pack) {
-        realm.executeTransactionAsync(transactionRealm -> {
+    public static void deletePack(ObjectId pack_id) {
+        realm.executeTransaction(transactionRealm -> {
+            Packs pack = getPack(pack_id);
             pack.deleteFromRealm();
         });
     }

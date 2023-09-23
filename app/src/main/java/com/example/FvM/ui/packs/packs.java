@@ -2,6 +2,7 @@ package com.example.FvM.ui.packs;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,18 +11,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.FvM.R;
+import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.PacksFragmentBinding;
+import com.example.FvM.models.Packs;
 import com.example.FvM.ui.home.home;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -61,6 +68,35 @@ public class packs extends Fragment {
             });
         }
 
+        List<Packs> packsList = RealmHelper.getPacks();
+        Log.i("packlist", String.valueOf(packsList));
+        LinearLayout userPacks = binding.userPacks;
+        for (Packs pack:packsList){
+            LinearLayout userPack = (LinearLayout) inflater.inflate(R.layout.pack_temp,null);
+            TextView nameField = (TextView) userPack.findViewById(R.id.name);
+            ImageButton editBtn = (ImageButton) userPack.findViewById(R.id.edit);
+            ImageButton deleteBtn = (ImageButton) userPack.findViewById(R.id.delete);
+
+            nameField.setText(pack.getName());
+
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RealmHelper.deletePack(pack.get_id());
+                    LinearLayout parenttt = (LinearLayout) v.getParent().getParent();
+                    parenttt.removeView((LinearLayout)v.getParent());
+                }
+            });
+            userPacks.addView(userPack);
+        }
+
         return view;
     }
 
@@ -77,10 +113,5 @@ public class packs extends Fragment {
         prefs.edit().putStringSet("packs", packs).apply();
     }
 
-//    public static void refreshPacks(FragmentManager fm, Activity activity) {
-//        LinearLayout packs = activity.findViewById(R.id.players);
-//        players.removeAllViews();
-//        home.playerlist(fm,activity);
-//    }
 }
 

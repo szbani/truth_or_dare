@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
+import com.example.FvM.models.Category;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
 import com.example.FvM.ui.game.GameActivity;
@@ -51,13 +52,13 @@ public class home extends Fragment {
 //                ObjectId asd = RealmHelper.addPack("Pack1");
 //                Log.i("PACK_ID", asd.toString());
 //
-                Packs pack = RealmHelper.getPack(new ObjectId("650f1ad58e03896796e541c5"));
-                Log.i("PACK_ID", pack.toString());
-                Questions questions = new Questions();
-                questions.setQuestion("asd");
-                questions.setCategory(Category.Dare.name());
-
-                RealmHelper.addQuestion(pack, questions);
+//                Packs pack = RealmHelper.getPack(new ObjectId("650f1ad58e03896796e541c5"));
+//                Log.i("PACK_ID", pack.toString());
+//                Questions questions = new Questions();
+//                questions.setQuestion("asd");
+//                questions.setCategory(Category.Dare.name());
+//
+//                RealmHelper.addQuestion(pack, questions);
 
                
 

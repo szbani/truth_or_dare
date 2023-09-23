@@ -16,7 +16,10 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.FvM.R;
+import com.example.FvM.RealmHelper;
 import com.example.FvM.ui.home.ePlayerDialog;
+
+import org.bson.types.ObjectId;
 
 public class packAddDialog extends DialogFragment {
 
@@ -38,10 +41,13 @@ public class packAddDialog extends DialogFragment {
                 View pack = inflater.inflate(R.layout.pack_temp,null);
                 LinearLayout userPacks = activity.findViewById(R.id.userPacks);
 
+                String name = nameField.getText().toString();
+                ObjectId packId = RealmHelper.addPack(name);
+
                 userPacks.addView(pack);
 
                 TextView editText = pack.findViewById(R.id.name);
-                editText.setText(nameField.getText().toString());
+                editText.setText(name);
                 //edit
                 ImageButton edit = pack.findViewById(R.id.edit);
                 edit.setOnClickListener(new View.OnClickListener() {
@@ -54,11 +60,16 @@ public class packAddDialog extends DialogFragment {
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        RealmHelper.deletePack(packId);
                         LinearLayout parenttt = (LinearLayout) v.getParent().getParent();
                         parenttt.removeView((LinearLayout)v.getParent());
 
                     }
                 });
+
+
+
+
             }
         });
         builder.setNegativeButton(R.string.dialog_cancel,(dialogInterface, i) -> {});
