@@ -4,35 +4,17 @@ import org.bson.types.ObjectId;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
+@RealmClass(embedded = true)
 public class Questions extends RealmObject {
     @PrimaryKey
     private ObjectId _id = new ObjectId();
-
-    private String owner_id;
     @Required
     private String question;
     @Required
     private String category = String.valueOf(Category.values()[0]);
-    @Required
-    private ObjectId pack_id;
-
-    public void setPack_id(ObjectId pack_id) {
-        this.pack_id = pack_id;
-    }
-
-    public ObjectId getPack_id() {
-        return pack_id;
-    }
-
-    public void setOwner_id(String owner_id) {
-        this.owner_id = owner_id;
-    }
-
-    public String getOwner_id() {
-        return owner_id;
-    }
 
     public void setQuestion(String question) {
         this.question = question;

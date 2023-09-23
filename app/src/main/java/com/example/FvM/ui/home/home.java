@@ -43,18 +43,18 @@ public class home extends Fragment {
 //                change_scene(view);
 
                 Packs pack = new Packs();
-                pack.setName("pack 1");
-                ObjectId pack_id = RealmHelper.addPack(pack);
-                Log.i("PACK_ID", pack_id.toString());
-
-                Questions questions = new Questions();
-                questions.setQuestion("asd");
-                questions.setCategory(Category.Dare.name());
-                questions.setPack_id(pack_id);
-                RealmHelper.addQuestion(questions);
-
-                List<Questions> asd = RealmHelper.getQuestions();
-                Log.v("TASKS", asd.toString());
+//                pack.setName("pack 1");
+//                ObjectId pack_id = RealmHelper.addPack(pack);
+//                Log.i("PACK_ID", pack_id.toString());
+//
+//                Questions questions = new Questions();
+//                questions.setQuestion("asd");
+//                questions.setCategory(Category.Dare.name());
+//                questions.setPack_id(pack_id);
+//                RealmHelper.addQuestion(questions);
+//
+//                List<Questions> asd = RealmHelper.getQuestions();
+//                Log.v("TASKS", asd.toString());
             }
         });
         return view;

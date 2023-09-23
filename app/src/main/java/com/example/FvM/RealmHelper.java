@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -42,7 +43,7 @@ public class RealmHelper {
 
         Realm.init(context);
 
-         app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id)).defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
+        app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id)).defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
                     @Override
                     public void onBeforeReset(Realm realm) {
                         Log.w("RESET", "Beginning client reset for" + realm.getPath());
@@ -70,9 +71,10 @@ public class RealmHelper {
                                 new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                                     @Override
                                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                        subscriptions.addOrUpdate(Subscription.create("Packs", realm.where(Packs.class).equalTo("owner_id", user.getId())));
-                                        subscriptions.addOrUpdate(Subscription.create("DefaultPacks", realm.where(Packs.class).equalTo("owner_id", "default")));
-                                        subscriptions.addOrUpdate(Subscription.create("Questions", realm.where(Questions.class).equalTo("owner_id", user.getId())));
+                                        String[] owners = new String[]{user.getId(), "default"};
+                                        RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
+                                        RealmResults<Packs> Packs = PacksQuery.findAll();
+                                        subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
                                     }
                                 }
                         )
@@ -114,40 +116,6 @@ public class RealmHelper {
         });
     }
 
-    public static void addQuestion(Questions question) {
-        Questions newQuestion = new Questions();
-        newQuestion.setQuestion(question.getQuestion());
-        newQuestion.setCategory(question.getCategory());
-        newQuestion.setOwner_id(user.getId());
-        newQuestion.setPack_id(question.getPack_id());
-        Log.v("USERID", user.getId());
-        realm.executeTransactionAsync(transactionRealm -> {
-            transactionRealm.insert(newQuestion);
-        });
-    }
-
-    public static RealmResults<Questions> getQuestions() {
-        Packs pack = realm.where(Packs.class).equalTo("owner_id", user.getId()).findFirst();
-        if (pack != null) {
-            ObjectId packId = pack.get_id();
-            return realm.where(Questions.class).equalTo("pack_id", packId).findAll();
-        } else {
-            return null; // Handle the case where no pack is found for the owner
-        }
-    }
-
-    public static void deleteQuestion(Questions question) {
-        realm.executeTransactionAsync(transactionRealm -> {
-            question.deleteFromRealm();
-        });
-    }
-
-    public static void updateQuestion(Questions question, String name) {
-        realm.executeTransactionAsync(transactionRealm -> {
-            question.setQuestion(name);
-        });
-    }
-
     public static ObjectId addPack(Packs pack) {
         Packs newPack = new Packs();
         newPack.setName(pack.getName());
@@ -175,6 +143,5 @@ public class RealmHelper {
     public RealmResults<Packs> getPacks() {
         return realm.where(Packs.class).findAll();
     }
-
 
 }
