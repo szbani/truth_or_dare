@@ -9,7 +9,7 @@ import io.realm.annotations.Required;
 
 @RealmClass(embedded = true)
 public class Questions extends RealmObject {
-    @PrimaryKey
+
     private ObjectId _id = new ObjectId();
     @Required
     private String question;

@@ -27,6 +27,8 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class home extends Fragment {
 
     private HomeFragmentBinding binding;
@@ -42,19 +44,16 @@ public class home extends Fragment {
             public void onClick(View view) {
 //                change_scene(view);
 
-                Packs pack = new Packs();
-//                pack.setName("pack 1");
-//                ObjectId pack_id = RealmHelper.addPack(pack);
-//                Log.i("PACK_ID", pack_id.toString());
+//                ObjectId asd = RealmHelper.addPack("Pack1");
+//                Log.i("PACK_ID", asd.toString());
 //
-//                Questions questions = new Questions();
-//                questions.setQuestion("asd");
-//                questions.setCategory(Category.Dare.name());
-//                questions.setPack_id(pack_id);
-//                RealmHelper.addQuestion(questions);
-//
-//                List<Questions> asd = RealmHelper.getQuestions();
-//                Log.v("TASKS", asd.toString());
+                Packs pack = RealmHelper.getPack(new ObjectId("650f1ad58e03896796e541c5"));
+                Log.i("PACK_ID", pack.toString());
+                Questions questions = new Questions();
+                questions.setQuestion("asd");
+                questions.setCategory(Category.Dare.name());
+
+                RealmHelper.addQuestion(pack, questions);
             }
         });
         return view;
@@ -66,7 +65,7 @@ public class home extends Fragment {
         binding = null;
     }
 
-    public void change_scene(View view){
+    public void change_scene(View view) {
         beolvas beolvas = new beolvas(view.getContext());
         List<String> kerdesek_f = beolvas.readline("F");
         List<String> kerdesek_m = beolvas.readline("M");
@@ -74,14 +73,14 @@ public class home extends Fragment {
 
         boolean setting = settings.get_r_player(getActivity());
         Bundle set_bundle = new Bundle();
-        set_bundle.putBoolean("p-order",setting);
+        set_bundle.putBoolean("p-order", setting);
 
         Intent intent = new Intent(getContext(), GameActivity.class);
 
         intent.putStringArrayListExtra("kerdesek_f", (ArrayList<String>) kerdesek_f);
         intent.putStringArrayListExtra("kerdesek_m", (ArrayList<String>) kerdesek_m);
         intent.putStringArrayListExtra("players", (ArrayList<String>) players);
-        intent.putExtra("settings",set_bundle);
+        intent.putExtra("settings", set_bundle);
         startActivity(intent);
 
     }

@@ -13,9 +13,14 @@ public class Packs extends RealmObject {
 
     private String owner_id;
 
-    private RealmList<Questions> questions;
+    private RealmList<Questions> questions = new RealmList<>();
     @Required
     private String name;
+
+    public Packs() {}
+    public Packs(String _name) {
+        this.name = _name;
+    }
 
     public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
@@ -45,7 +50,8 @@ public class Packs extends RealmObject {
         return questions;
     }
 
-   public void setQuestion(Questions question) {
+   public void setQuestion(Questions question, String question_text) {
+        question.setQuestion(question_text);
         this.questions.set(this.questions.indexOf(question), question);
     }
 

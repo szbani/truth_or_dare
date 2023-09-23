@@ -1,22 +1,12 @@
 package com.example.FvM;
 
-import com.example.FvM.R;
-
 import android.content.Context;
 import android.util.Log;
 
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
-import com.example.FvM.models.Task;
-import com.example.FvM.models.TaskStatus;
-
-import android.content.res.Resources;
 
 import org.bson.types.ObjectId;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -43,7 +33,8 @@ public class RealmHelper {
 
         Realm.init(context);
 
-        app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id)).defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
+        app = new App(new AppConfiguration.Builder(context.getString(R.string.realm_app_id))
+                .defaultSyncClientResetStrategy(new DiscardUnsyncedChangesStrategy() {
                     @Override
                     public void onBeforeReset(Realm realm) {
                         Log.w("RESET", "Beginning client reset for" + realm.getPath());
@@ -68,17 +59,16 @@ public class RealmHelper {
                 user = app.currentUser();
 
                 SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
-                                new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                                    @Override
-                                    public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                        String[] owners = new String[]{user.getId(), "default"};
-                                        RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                                        RealmResults<Packs> Packs = PacksQuery.findAll();
-                                        subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                                    }
-                                }
-                        )
-                        .build();
+                        new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
+                            @Override
+                            public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
+                                String[] owners = new String[]{user.getId(), "default"};
+                                RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
+                                RealmResults<Packs> Packs = PacksQuery.findAll();
+                                subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
+                            }
+                        }
+                ).allowWritesOnUiThread(true).waitForInitialRemoteData().build();
                 Realm.getInstanceAsync(config, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
@@ -116,15 +106,12 @@ public class RealmHelper {
         });
     }
 
-    public static ObjectId addPack(Packs pack) {
-        Packs newPack = new Packs();
-        newPack.setName(pack.getName());
+    public static ObjectId addPack(String name) {
+        Packs newPack = new Packs(name);
         newPack.setOwner_id(user.getId());
-        Log.v("PACKIOWNER", user.getId());
         realm.executeTransactionAsync(transactionRealm -> {
             transactionRealm.insert(newPack);
         });
-        Log.v("PACKID", newPack.get_id().toString());
         return newPack.get_id();
     }
 
@@ -134,14 +121,35 @@ public class RealmHelper {
         });
     }
 
-    public static void updatePack(Packs pack, String name) {
+    public static void addQuestion(Packs pack, Questions question) {
+        Log.v("PACK", pack.toString());
+
+        realm.executeTransaction(transactionRealm -> {
+            pack.addQuestion(question);
+            transactionRealm.copyToRealmOrUpdate(pack);
+        });
+    }
+
+    public static void updateName(Packs pack, String name) {
         realm.executeTransactionAsync(transactionRealm -> {
             pack.setName(name);
         });
     }
 
+    public static void updateQuestion(ObjectId pack_id, ObjectId question_id, String question) {
+        Packs pack = getPack(pack_id);
+        Questions question_obj = pack.getQuestions().where().equalTo("_id", question_id).findFirst();
+        realm.executeTransactionAsync(transactionRealm -> {
+            pack.setQuestion(question_obj, question);
+        });
+    }
+
     public RealmResults<Packs> getPacks() {
         return realm.where(Packs.class).findAll();
+    }
+
+    public static Packs getPack(ObjectId pack_id) {
+        return realm.where(Packs.class).equalTo("_id", pack_id).findFirst();
     }
 
 }
