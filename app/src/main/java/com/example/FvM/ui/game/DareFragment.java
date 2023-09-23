@@ -8,6 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,13 @@ public class DareFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+    public void onDestroyView(){
+        super.onDestroyView();
+        binding = null;
+        navController = null;
+        qcom = null;
+        d_kerdes_last = null;
     }
 }
 

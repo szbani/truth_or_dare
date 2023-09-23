@@ -1,4 +1,4 @@
-package com.example.FvM.ui.players;
+package com.example.FvM.ui.home;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,12 +22,10 @@ public class ePlayerDialog extends DialogFragment {
     private final String name;
     private final int gender;
     private final int id;
-    private final player_com pc;
-    public ePlayerDialog(String name, int gender, int id, player_com pc){
+    public ePlayerDialog(String name, int gender, int id){
         this.name = name;
         this.gender = gender;
         this.id = id;
-        this.pc = pc;
     }
 
     @NonNull
@@ -52,7 +50,7 @@ public class ePlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     query.player_edit(getContext(),name,gender,id);
-                    pc.refresh();
+                    home.refresh(getParentFragmentManager(),getActivity());
                 }
             }
         })
@@ -73,4 +71,5 @@ public class ePlayerDialog extends DialogFragment {
     }
 
     public static String TAG = "EditPlayer";
+
 }

@@ -1,4 +1,4 @@
-package com.example.FvM.ui.players;
+package com.example.FvM.ui.home;
 
 import android.app.Activity;
 import android.content.Context;

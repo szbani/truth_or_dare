@@ -71,7 +71,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }
         };
 
-
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_game);
         navController = navHostFragment.getNavController();
 

@@ -64,7 +64,6 @@ public class game_events extends Fragment {
             player = "Játékos ";
         }
         binding.playerNameText.setText(player.replace(player.substring(player.length()-1), "").trim());
-
         return binding.getRoot();
     }
 
@@ -72,6 +71,7 @@ public class game_events extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        navController = null;
     }
 
 }

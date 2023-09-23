@@ -1,4 +1,4 @@
-package com.example.FvM.ui.players;
+package com.example.FvM.ui.home;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,10 +19,6 @@ import com.example.FvM.R;
 
 public class PlayerDialog extends DialogFragment {
 
-    private final player_com pc;
-    public PlayerDialog(player_com pc){
-        this.pc = pc;
-    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -45,7 +41,7 @@ public class PlayerDialog extends DialogFragment {
                 }
                 if (!name.isEmpty()){
                     query.player_up(getActivity(),name,gender);
-                    pc.refresh();
+                    home.refresh(getParentFragmentManager(),getActivity());
                 }
             }
         })
@@ -63,4 +59,5 @@ public class PlayerDialog extends DialogFragment {
     }
 
     public static String TAG = "AddPlayer";
+
 }

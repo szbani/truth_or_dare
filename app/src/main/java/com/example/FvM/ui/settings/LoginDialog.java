@@ -96,7 +96,6 @@ public class LoginDialog extends DialogFragment {
                                 if (RealmHelper.isLogged()){
                                     userContainer.removeAllViews();
                                     userContainer.addView(loggedIn);
-//                                    userContainer.
                                     dismiss();
                                 }else{
                                     Toast.makeText(getContext(), "Sikertelen Bejelentkezés", Toast.LENGTH_SHORT).show();
