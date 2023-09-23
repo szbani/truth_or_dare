@@ -30,6 +30,8 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class home extends Fragment {
 
     private HomeFragmentBinding binding;
@@ -45,17 +47,19 @@ public class home extends Fragment {
 
             public void onClick(View view) {
 
-                Packs pack = new Packs();
-                pack.setName("pack 1");
-                ObjectId pack_id = RealmHelper.addPack(pack);
-                Log.i("PACK_ID", pack_id.toString());
 
-                List<Questions> asd = RealmHelper.getQuestions();
+//                ObjectId asd = RealmHelper.addPack("Pack1");
+//                Log.i("PACK_ID", asd.toString());
+//
+                Packs pack = RealmHelper.getPack(new ObjectId("650f1ad58e03896796e541c5"));
+                Log.i("PACK_ID", pack.toString());
+                Questions questions = new Questions();
+                questions.setQuestion("asd");
+                questions.setCategory(Category.Dare.name());
 
-                List<Packs> packs = RealmHelper.getPacks();
-                Log.v("PACKS", String.valueOf(packs.size()));
+                RealmHelper.addQuestion(pack, questions);
 
-                Log.v("TASKS", asd.toString());
+               
 
                 change_scene(view);
 
@@ -66,6 +70,7 @@ public class home extends Fragment {
             @Override
             public void onClick(View view) {
                 new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);
+
             }
         });
 

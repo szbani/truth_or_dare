@@ -1,5 +1,6 @@
 package com.example.FvM.models;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -11,8 +12,15 @@ public class Packs extends RealmObject {
     private ObjectId _id = new ObjectId();
 
     private String owner_id;
+
+    private RealmList<Questions> questions = new RealmList<>();
     @Required
     private String name;
+
+    public Packs() {}
+    public Packs(String _name) {
+        this.name = _name;
+    }
 
     public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
@@ -32,5 +40,22 @@ public class Packs extends RealmObject {
 
     public ObjectId get_id() {
         return _id;
+    }
+
+    public void addQuestion(Questions question) {
+        this.questions.add(question);
+    }
+
+    public RealmList<Questions> getQuestions() {
+        return questions;
+    }
+
+   public void setQuestion(Questions question, String question_text) {
+        question.setQuestion(question_text);
+        this.questions.set(this.questions.indexOf(question), question);
+    }
+
+    public void deleteQuestion(Questions question) {
+        this.questions.remove(question);
     }
 }
