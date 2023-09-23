@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/players_f"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white2"
+    tools:context=".ui.packs.packs">
+
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/item_LVL_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pack"
+                android:textColor="@color/cardview_dark_background" />
+
+            <LinearLayout
+                android:id="@+id/defPacks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/item_LVL_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/packs"
+                    android:textColor="@color/cardview_dark_background" />
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    style="@style/item_LVL_3"
+                    android:text="@string/pack2" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    style="@style/item_LVL_3"
+                    android:text="@string/pack1" />
+
+                <CheckBox
+                    android:id="@+id/checkBox1"
+                    style="@style/item_LVL_3"
+                    android:text="@string/Default" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userPacks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/item_LVL_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/packs2"
+                    android:textColor="@color/cardview_dark_background" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/new_pack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/player_add"
+            app:fabCustomSize="65dp"
+            app:maxImageSize="35dp"
+            app:srcCompat="@drawable/ic_pack_add" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:id="@+id/coordinatorLayout2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/new_player"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="bottom|end"-->
+    <!--            android:layout_marginEnd="20dp"-->
+    <!--            android:layout_marginBottom="30dp"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            android:contentDescription="@string/player_add"-->
+    <!--            app:fabCustomSize="65dp"-->
+    <!--            app:maxImageSize="35dp"-->
+    <!--            app:srcCompat="@drawable/ic_player_add" />-->
+
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

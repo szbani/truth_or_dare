@@ -58,7 +58,9 @@ public class RegisterDialog extends DialogFragment {
         pw1.setText(password);
         pw2.setText(password2);
 
+
         builder.setView(view);
+        builder.setTitle("Regisztráció");
 
         Dialog dialog = builder.create();
 

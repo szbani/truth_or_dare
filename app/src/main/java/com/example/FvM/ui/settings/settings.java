@@ -1,7 +1,6 @@
 package com.example.FvM.ui.settings;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -31,35 +30,15 @@ import io.realm.Realm;
 public class settings extends Fragment {
 
     private SettingsFragmentBinding binding;
-    public  Set<String> packs ;
     public SharedPreferences prefs;
-    private Activity activity;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = SettingsFragmentBinding.inflate(getLayoutInflater());
-        activity=getActivity();
         View view = binding.getRoot();
-        prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        packs = new HashSet<>();
 
-        packs = prefs.getStringSet("packs",packs);
-
-
-        for (int i = 0; i < binding.Packs.getChildCount(); i++){
-            CheckBox ch = (CheckBox) binding.Packs.getChildAt(i);
-            if (!packs.isEmpty()){
-                ch.setChecked(packs.contains(ch.getText()));
-            }
-            ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    packs_Click();
-                }
-            });
-        }
         SwitchCompat sw = (SwitchCompat) binding.random;
-        sw.setChecked(get_r_player(activity));
+        sw.setChecked(get_r_player(getActivity()));
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -81,18 +60,6 @@ public class settings extends Fragment {
         return view;
     }
 
-    public void packs_Click(){
-        packs = new HashSet<>();
-        for ( int i = 0; i < binding.Packs.getChildCount();i++){
-            CheckBox checkBox = (CheckBox) binding.Packs.getChildAt(i);
-            if (checkBox.isChecked()){
-                String name = checkBox.getText().toString();
-                packs.add(name);
-            }
-
-        }
-        prefs.edit().putStringSet("packs", packs).apply();
-    }
 
     public  void  set_r_player(boolean b){
         prefs.edit().putBoolean("r_player", b).apply();

@@ -20,7 +20,7 @@ public class question_com {
     public question_com(Activity activity){
         //this.activity = activity;
         ran_player = GameActivity.settings.getBoolean("p-order");
-        Log.i("random players", String.valueOf(ran_player));
+//        Log.i("random players", String.valueOf(ran_player));
         random = new Random();
         this.context = activity.getLayoutInflater().getContext();
     }

@@ -99,7 +99,7 @@ public class RealmHelper {
     }
 
     public static boolean isLogged() {
-        return !String.valueOf(app.currentUser().getProviderType()).equals("anon-user");
+        return !String.valueOf(app.currentUser().getProviderType()).equals("ANONYMOUS");
     }
 
     public static void register(String username, String password) {

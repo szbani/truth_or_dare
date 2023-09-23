@@ -13,13 +13,10 @@ import android.widget.LinearLayout;
 
 import com.example.FvM.databinding.ActivityMainBinding;
 import com.example.FvM.ui.home.home;
-import com.example.FvM.ui.players.players;
+import com.example.FvM.ui.packs.packs;
 import com.example.FvM.ui.settings.settings;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import io.realm.Realm;
-import com.example.FvM.BuildConfig;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            if (position==1)return new players();
+            if (position==1)return new packs();
             if (position==2)return new settings();
 
             return new home();

@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
-import com.example.FvM.models.Category;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
 import com.example.FvM.ui.game.GameActivity;
@@ -43,6 +42,7 @@ public class home extends Fragment {
         View view = binding.getRoot();
         binding.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
 
                 Packs pack = new Packs();
@@ -62,7 +62,7 @@ public class home extends Fragment {
             }
         });
 
-        view.findViewById(R.id.new_player).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.new_pack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);

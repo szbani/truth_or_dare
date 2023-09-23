@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/line"
+    style="@style/player_line">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/player_text"
+        android:layout_marginStart="16dp"
+        android:text="Testplayer" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        style="@style/player_image_e"
+        android:background="@drawable/ic_edit"
+        android:contentDescription="@string/player_edit" />
+
+    <ImageButton
+        android:id="@+id/delete"
+        style="@style/player_image_d"
+        android:background="@drawable/ic_delete_pack"
+        android:contentDescription="@string/player_delete" />
+</LinearLayout>

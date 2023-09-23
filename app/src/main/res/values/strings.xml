@@ -41,7 +41,9 @@
     </string-array>
 
     //settings
-    <string name="packs">Kérdés_Packok</string>
+    <string name="pack">Packok</string>
+    <string name="packs">Alap_Packok</string>
+    <string name="packs2">Saját_Packok</string>
     <string name="Default">Default</string>
     <string name="option1">Mindenki mindekivel</string>
     <string name="option2">Kimaradás(4 főtől)</string>

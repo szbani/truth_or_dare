@@ -20,40 +20,6 @@
             style="@style/item_LVL_1"
             android:text="@string/menu_settings"
             android:textColor="@color/cardview_dark_background" />
-        <TextView
-            android:id="@+id/packok"
-            style="@style/item_LVL_2"
-            android:text="@string/packs"
-            android:textColor="@color/cardview_dark_background" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="176dp">
-
-            <LinearLayout
-                android:id="@+id/Packs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <CheckBox
-                    android:id="@+id/checkBox1"
-                    style="@style/item_LVL_3"
-                    android:text="@string/Default" />
-
-                <CheckBox
-                    android:id="@+id/checkBox2"
-                    style="@style/item_LVL_3"
-                    android:text="@string/pack1" />
-
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    style="@style/item_LVL_3"
-                    android:text="@string/pack2" />
-
-
-            </LinearLayout>
-        </ScrollView>
 
 
         <FrameLayout
