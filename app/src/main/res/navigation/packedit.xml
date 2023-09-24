@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/packedit"
+    app:startDestination="@id/packs">
+
+    <fragment
+        android:id="@+id/packs"
+        android:name="com.example.FvM.ui.packs.packs"
+        android:label="packs_fragment"
+        tools:layout="@layout/packs_fragment" >
+        <action
+            android:id="@+id/action_packs_to_packEdit"
+            app:destination="@id/packEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/packEdit"
+        android:name="com.example.FvM.ui.packs.packEdit"
+        android:label="packEdit" >
+        <action
+            android:id="@+id/action_packEdit_to_packs"
+            app:destination="@id/packs" />
+        <argument
+            android:name="packName"
+            app:argType="string" />
+        <argument android:name="packId" />
+    </fragment>
+</navigation>

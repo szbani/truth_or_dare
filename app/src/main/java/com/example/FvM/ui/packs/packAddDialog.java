@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -46,7 +47,7 @@ public class packAddDialog extends DialogFragment {
 
                 userPacks.addView(pack);
 
-                TextView editText = pack.findViewById(R.id.name);
+                CheckBox editText = pack.findViewById(R.id.name);
                 editText.setText(name);
                 //edit
                 ImageButton edit = pack.findViewById(R.id.edit);

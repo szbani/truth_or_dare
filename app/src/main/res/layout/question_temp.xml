@@ -3,15 +3,10 @@
     android:id="@+id/line"
     style="@style/player_line">
 
-    <CheckBox
+    <TextView
         android:id="@+id/name"
         style="@style/player_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:text="CheckBox"
-        android:textStyle="normal"/>
+        android:text="TestQuestion" />
 
     <ImageButton
         android:id="@+id/edit"

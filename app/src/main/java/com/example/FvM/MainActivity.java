@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.example.FvM.databinding.ActivityMainBinding;
 import com.example.FvM.ui.home.home;
+import com.example.FvM.ui.packs.packView;
 import com.example.FvM.ui.packs.packs;
 import com.example.FvM.ui.settings.settings;
 import com.google.android.material.tabs.TabLayout;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //animation end
 
         int[] icons = {R.drawable.ic_play,R.drawable.ic_player,R.drawable.ic_settings};
-        int[] i_texts = {R.string.menu_home,R.string.menu_player,R.string.menu_settings};
+        int[] i_texts = {R.string.menu_home,R.string.menu_packs,R.string.menu_settings};
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            if (position==1)return new packs();
+            if (position==1)return new packView();
             if (position==2)return new settings();
 
             return new home();

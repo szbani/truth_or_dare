@@ -8,6 +8,8 @@ import com.example.FvM.models.Questions;
 
 import org.bson.types.ObjectId;
 
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -64,7 +66,9 @@ public class RealmHelper {
                             RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
                             subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
                         }
-                ).allowWritesOnUiThread(true).waitForInitialRemoteData().build();
+                ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
+                        .allowWritesOnUiThread(true)
+                        .build();
 
                 Realm.getInstanceAsync(config, new Realm.Callback() {
                     @Override
@@ -91,7 +95,7 @@ public class RealmHelper {
             }
         });
     }
-  
+
    public static void logout() {
         user.logOutAsync(result -> {
             if (result.isSuccess()) {
