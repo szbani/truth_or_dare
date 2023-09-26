@@ -44,7 +44,10 @@ public class packModifyDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Activity activity = requireActivity();
-        ObjectId qId =question.get_id();
+        ObjectId qId = null;
+        if (question != null) {
+            qId = question.get_id();
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -58,19 +61,20 @@ public class packModifyDialog extends DialogFragment {
         spinner.setAdapter(adapter);
 
         if (qId != null) {
-            LinearLayout l = (LinearLayout)spinner.getParent();
+            LinearLayout l = (LinearLayout) spinner.getParent();
             l.removeView(spinner);
             l.removeView(view.findViewById(R.id.categoryTextView));
             questionField.setText(question.getQuestion());
         }
 
         builder.setView(view);
+        ObjectId finalQId = qId;
         builder.setPositiveButton("kész", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 LinearLayout layout;
-                if (qId == null) {
+                if (finalQId == null) {
                     String category;
                     if (spinner.getSelectedItem().toString().equals("Felelsz")) {
                         category = Category.Truth.name();
@@ -100,7 +104,7 @@ public class packModifyDialog extends DialogFragment {
                     nameField.setText(questions.getQuestion());
                     layout.addView(temp);
                 } else {
-                    RealmHelper.updateQuestion(id,qId,questionField.getText().toString());
+                    RealmHelper.updateQuestion(id, finalQId, questionField.getText().toString());
                     nameTextView.setText(questionField.getText().toString());
                 }
             }

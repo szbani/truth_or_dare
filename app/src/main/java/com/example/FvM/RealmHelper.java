@@ -61,12 +61,12 @@ public class RealmHelper {
 
                 SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
 
-                        (realm, subscriptions) -> {
-                            String[] owners = new String[]{user.getId(), "default"};
-                            RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                            subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                        }
-                ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
+                                (realm, subscriptions) -> {
+                                    String[] owners = new String[]{user.getId(), "default"};
+                                    RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
+                                    subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
+                                }
+                        ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
                         .allowWritesOnUiThread(true)
                         .build();
 
@@ -96,7 +96,7 @@ public class RealmHelper {
         });
     }
 
-   public static void logout() {
+    public static void logout() {
         user.logOutAsync(result -> {
             if (result.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully logged out.");
@@ -139,7 +139,7 @@ public class RealmHelper {
     public static void addQuestion(ObjectId id, Questions question) {
 //        Log.v("PACK", pack.toString());
         Packs pack = getPack(id);
-            realm.executeTransaction(transactionRealm -> {
+        realm.executeTransaction(transactionRealm -> {
             pack.addQuestion(question);
             transactionRealm.copyToRealmOrUpdate(pack);
         });
@@ -171,7 +171,12 @@ public class RealmHelper {
     }
 
     public static RealmResults<Packs> getPacks() {
-        return realm.where(Packs.class).findAll();
+        try {
+            return realm.where(Packs.class).findAll();
+        } catch (Exception e) {
+            Log.e("REALM", e.getMessage());
+        }
+        return null;
     }
 
     public static Packs getPack(ObjectId pack_id) {
