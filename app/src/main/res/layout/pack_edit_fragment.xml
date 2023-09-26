@@ -9,6 +9,7 @@
         android:id="@+id/ViewName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,7 @@
         app:layout_constraintVertical_weight="1">
 
         <LinearLayout
+            android:id="@+id/dareLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -78,6 +80,7 @@
         app:layout_constraintVertical_weight="1">
 
         <LinearLayout
+            android:id="@+id/truthLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -103,7 +106,7 @@
             app:srcCompat="@drawable/ic_x" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/new_pack"
+            android:id="@+id/new_Question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -113,7 +116,7 @@
             android:contentDescription="@string/player_add"
             app:fabCustomSize="65dp"
             app:maxImageSize="35dp"
-            app:srcCompat="@drawable/ic_pack_add" />
+            app:srcCompat="@drawable/ic_plus" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

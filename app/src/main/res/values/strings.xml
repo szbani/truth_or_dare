@@ -39,6 +39,10 @@
         <item>Fiú</item>
         <item>Lány</item>
     </string-array>
+    <string-array name="question_type">
+        <item>Felelsz</item>
+        <item>Mersz</item>
+    </string-array>
 
     //settings
     <string name="pack">Packok</string>

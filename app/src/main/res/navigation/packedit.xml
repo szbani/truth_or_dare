@@ -21,9 +21,10 @@
         <action
             android:id="@+id/action_packEdit_to_packs"
             app:destination="@id/packs" />
-        <argument
-            android:name="packName"
+        <argument android:name="packName"
             app:argType="string" />
-        <argument android:name="packId" />
+        <argument
+            android:name="packId"
+            app:argType="string" />
     </fragment>
 </navigation>

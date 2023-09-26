@@ -10,6 +10,14 @@ import io.realm.annotations.Required;
 @RealmClass(embedded = true)
 public class Questions extends RealmObject {
 
+    public Questions(String kerdes, String category){
+        this.question = kerdes;
+        this.category = category;
+    }
+    public Questions(){
+
+    }
+
     private ObjectId _id = new ObjectId();
     @Required
     private String question;

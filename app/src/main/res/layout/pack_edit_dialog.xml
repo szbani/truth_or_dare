@@ -22,7 +22,7 @@
             android:text="Kérdés" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/questionTextField"
             style="@style/dialog_Fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,14 +32,14 @@
             android:inputType="textMultiLine" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/categoryTextView"
             style="@style/dialog_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Típus" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/questionSpinner"
             style="@style/dialog_Fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

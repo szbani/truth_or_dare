@@ -136,17 +136,18 @@ public class RealmHelper {
         });
     }
 
-    public static void addQuestion(Packs pack, Questions question) {
-        Log.v("PACK", pack.toString());
-
-        realm.executeTransaction(transactionRealm -> {
+    public static void addQuestion(ObjectId id, Questions question) {
+//        Log.v("PACK", pack.toString());
+        Packs pack = getPack(id);
+            realm.executeTransaction(transactionRealm -> {
             pack.addQuestion(question);
             transactionRealm.copyToRealmOrUpdate(pack);
         });
     }
 
-    public static void updateName(Packs pack, String name) {
-        realm.executeTransactionAsync(transactionRealm -> {
+    public static void updateName(ObjectId id, String name) {
+        realm.executeTransaction(transactionRealm -> {
+            Packs pack = getPack(id);
             pack.setName(name);
         });
     }
@@ -154,8 +155,18 @@ public class RealmHelper {
     public static void updateQuestion(ObjectId pack_id, ObjectId question_id, String question) {
         Packs pack = getPack(pack_id);
         Questions question_obj = pack.getQuestions().where().equalTo("_id", question_id).findFirst();
-        realm.executeTransactionAsync(transactionRealm -> {
+        Log.i("qOBJ", String.valueOf(question_obj));
+        realm.executeTransaction(transactionRealm -> {
             pack.setQuestion(question_obj, question);
+            transactionRealm.copyToRealmOrUpdate(pack);
+        });
+    }
+
+    public static void deleteQuestion(ObjectId pack_id, ObjectId question_id) {
+        Packs pack = getPack(pack_id);
+        Questions question_obj = pack.getQuestions().where().equalTo("_id", question_id).findFirst();
+        realm.executeTransaction(transactionRealm -> {
+            pack.deleteQuestion(question_obj);
         });
     }
 

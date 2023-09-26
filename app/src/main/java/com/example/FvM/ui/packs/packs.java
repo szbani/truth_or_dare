@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.preference.PreferenceManager;
 
@@ -24,6 +25,7 @@ import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.PacksFragmentBinding;
 import com.example.FvM.models.Packs;
+import com.example.FvM.ui.packs.packsDirections.ActionPacksToPackEdit;
 
 import java.util.HashSet;
 import java.util.List;
@@ -49,7 +51,7 @@ public class packs extends Fragment {
 
         packs = prefs.getStringSet("packs", packs);
 
-        binding.newPack.setOnClickListener(new View.OnClickListener() {
+        binding.newQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new packAddDialog().show(getParentFragmentManager(), "packAdd");
@@ -90,8 +92,8 @@ public class packs extends Fragment {
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Confirmation action =
-                        navController.navigate(R.id.action_packs_to_packEdit);
+                        ActionPacksToPackEdit action = packsDirections.actionPacksToPackEdit(pack.getName(),String.valueOf(pack.get_id()));
+                        navController.navigate(action);
                     }
                 });
 

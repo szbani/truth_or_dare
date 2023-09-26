@@ -18,20 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.FvM.R;
-import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
-import com.example.FvM.models.Category;
-import com.example.FvM.models.Packs;
-import com.example.FvM.models.Questions;
 import com.example.FvM.ui.game.GameActivity;
 import com.example.FvM.ui.settings.settings;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import io.realm.Realm;
 
 public class home extends Fragment {
 
@@ -67,7 +59,7 @@ public class home extends Fragment {
             }
         });
 
-        view.findViewById(R.id.new_pack).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.new_Question).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PlayerDialog().show(getChildFragmentManager(), PlayerDialog.TAG);
