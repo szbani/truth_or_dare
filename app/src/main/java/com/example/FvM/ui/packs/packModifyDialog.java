@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
@@ -44,6 +45,7 @@ public class packModifyDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Activity activity = requireActivity();
+        FragmentManager fm = getParentFragmentManager();
         ObjectId qId = null;
         if (question != null) {
             qId = question.get_id();
@@ -91,6 +93,14 @@ public class packModifyDialog extends DialogFragment {
                     TextView nameField = (TextView) temp.findViewById(R.id.name);
                     ImageButton editBtn = (ImageButton) temp.findViewById(R.id.edit);
                     ImageButton DelBtn = (ImageButton) temp.findViewById(R.id.delete);
+
+                    editBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LinearLayout parent = (LinearLayout) v.getParent();
+                            new packModifyDialog(id.toString(),questions,(TextView)parent.findViewById(R.id.name)).show(fm, "editQuestion");
+                        }
+                    });
 
                     DelBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
