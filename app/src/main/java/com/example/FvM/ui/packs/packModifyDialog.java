@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
@@ -44,6 +45,7 @@ public class packModifyDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Activity activity = requireActivity();
+        FragmentManager fm = getParentFragmentManager();
         ObjectId qId = null;
         if (question != null) {
             qId = question.get_id();
@@ -69,41 +71,52 @@ public class packModifyDialog extends DialogFragment {
 
         builder.setView(view);
         ObjectId finalQId = qId;
-        builder.setPositiveButton("kész", (dialogInterface, i) -> {
+        builder.setPositiveButton("kész", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-            LinearLayout layout;
-            if (finalQId == null) {
-                String category;
-                if (spinner.getSelectedItem().toString().equals("Felelsz")) {
-                    category = Category.Truth.name();
-                    layout = activity.findViewById(R.id.truthLayout);
-                } else {
-                    category = Category.Dare.name();
-                    layout = activity.findViewById(R.id.dareLayout);
-                }
-                Questions questions = new Questions(questionField.getText().toString(), category);
-
-                RealmHelper.addQuestion(id, questions);
-
-                LinearLayout temp = (LinearLayout) inflater.inflate(R.layout.question_temp, null);
-                TextView nameField = temp.findViewById(R.id.name);
-                ImageButton editBtn = temp.findViewById(R.id.edit);
-                ImageButton DelBtn = temp.findViewById(R.id.delete);
-
-                DelBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        RealmHelper.deleteQuestion(id, questions.get_id());
-                        LinearLayout parenttt = (LinearLayout) v.getParent().getParent();
-                        parenttt.removeView((LinearLayout) v.getParent());
+                LinearLayout layout;
+                if (finalQId == null) {
+                    String category;
+                    if (spinner.getSelectedItem().toString().equals("Felelsz")) {
+                        category = Category.Truth.name();
+                        layout = activity.findViewById(R.id.truthLayout);
+                    } else {
+                        category = Category.Dare.name();
+                        layout = activity.findViewById(R.id.dareLayout);
                     }
-                });
+                    Questions questions = new Questions(questionField.getText().toString(), category);
 
-                nameField.setText(questions.getQuestion());
-                layout.addView(temp);
-            } else {
-                RealmHelper.updateQuestion(id, finalQId, questionField.getText().toString());
-                nameTextView.setText(questionField.getText().toString());
+                    RealmHelper.addQuestion(id, questions);
+
+                    LinearLayout temp = (LinearLayout) inflater.inflate(R.layout.question_temp, null);
+                    TextView nameField = (TextView) temp.findViewById(R.id.name);
+                    ImageButton editBtn = (ImageButton) temp.findViewById(R.id.edit);
+                    ImageButton DelBtn = (ImageButton) temp.findViewById(R.id.delete);
+
+                    editBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LinearLayout parent = (LinearLayout) v.getParent();
+                            new packModifyDialog(id.toString(),questions,(TextView)parent.findViewById(R.id.name)).show(fm, "editQuestion");
+                        }
+                    });
+
+                    DelBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RealmHelper.deleteQuestion(id, questions.get_id());
+                            LinearLayout parenttt = (LinearLayout) v.getParent().getParent();
+                            parenttt.removeView((LinearLayout) v.getParent());
+                        }
+                    });
+
+                    nameField.setText(questions.getQuestion());
+                    layout.addView(temp);
+                } else {
+                    RealmHelper.updateQuestion(id, finalQId, questionField.getText().toString());
+                    nameTextView.setText(questionField.getText().toString());
+                }
             }
         });
 
