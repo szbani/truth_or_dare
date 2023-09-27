@@ -49,27 +49,12 @@ public class packs extends Fragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         packs = new HashSet<>();
 
-        packs = prefs.getStringSet("packs", packs);
-
         binding.newQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new packAddDialog().show(getParentFragmentManager(), "packAdd");
             }
         });
-
-        for (int i = 1; i < binding.defPacks.getChildCount(); i++) {
-            CheckBox ch = (CheckBox) binding.defPacks.getChildAt(i);
-            if (!packs.isEmpty()) {
-                ch.setChecked(packs.contains(ch.getText()));
-            }
-            ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    packs_Click();
-                }
-            });
-        }
 
         List<Packs> packsList = RealmHelper.getPacks();
         Log.i("packlist", String.valueOf(packsList));
@@ -83,12 +68,27 @@ public class packs extends Fragment {
             ImageButton deleteBtn = (ImageButton) userPack.findViewById(R.id.delete);
 
             nameField.setText(pack.getName());
+            nameField.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    packs = prefs.getStringSet("packs", packs);
+                    if (nameField.isChecked())
+                        packs.add(String.valueOf(pack.get_id()));
+                    else {
+
+                        packs.remove(String.valueOf(pack.get_id()));
+                    }
+                    prefs.edit().putStringSet("pack", packs).apply();
+                    Log.i("kurva", prefs.getStringSet("packs", packs).toString());
+                }
+            });
 
             if (pack.getOwner_id().equals("default")) {
                 userPack.removeView(editBtn);
                 userPack.removeView(deleteBtn);
                 defaultPacks.addView(userPack);
             } else {
+
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -113,18 +113,18 @@ public class packs extends Fragment {
         return view;
     }
 
-    public void packs_Click() {
-        packs = new HashSet<>();
-        for (int i = 0; i < binding.defPacks.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) binding.defPacks.getChildAt(i);
-            if (checkBox.isChecked()) {
-                String name = checkBox.getText().toString();
-                packs.add(name);
-            }
-
-        }
-        prefs.edit().putStringSet("packs", packs).apply();
-    }
+//    public void packs_Click() {
+//        packs = new HashSet<>();
+//        for (int i = 0; i < binding.defPacks.getChildCount(); i++) {
+//            CheckBox checkBox = (CheckBox) binding.defPacks.getChildAt(i);
+//            if (checkBox.isChecked()) {
+//                String name = checkBox.get;
+//                packs.add();
+//            }
+//
+//        }
+//        prefs.edit().putStringSet("packs", packs).apply();
+//    }
 
 }
 

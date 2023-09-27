@@ -2,12 +2,14 @@ package com.example.FvM.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.FvM.R;
+import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
+import com.example.FvM.models.Packs;
+import com.example.FvM.models.Questions;
 import com.example.FvM.ui.game.GameActivity;
 import com.example.FvM.ui.settings.settings;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class home extends Fragment {
 
@@ -88,22 +96,31 @@ public class home extends Fragment {
     }
 
     public void change_scene(View view) {
-        beolvas beolvas = new beolvas(view.getContext());
-        List<String> kerdesek_f = beolvas.readline("F");
-        List<String> kerdesek_m = beolvas.readline("M");
-        List<String> players = query.player_down(view.getContext());
+        SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Set<String> set = new HashSet<>();
+        set = sh.getStringSet("packs",set);
+        String[] asd = set.toArray(new String[0]);
+        List<Packs> questionsList = (List<Packs>) RealmHelper.getPacks().where().in("_id",asd).findAll();
+        Log.i("asd",questionsList.toString());
 
-        boolean setting = settings.get_r_player(getActivity());
-        Bundle set_bundle = new Bundle();
-        set_bundle.putBoolean("p-order", setting);
 
-        Intent intent = new Intent(getContext(), GameActivity.class);
-
-        intent.putStringArrayListExtra("kerdesek_f", (ArrayList<String>) kerdesek_f);
-        intent.putStringArrayListExtra("kerdesek_m", (ArrayList<String>) kerdesek_m);
-        intent.putStringArrayListExtra("players", (ArrayList<String>) players);
-        intent.putExtra("settings", set_bundle);
-        startActivity(intent);
+//
+////        beolvas beolvas = new beolvas(view.getContext());
+//        List<String> kerdesek_f = beolvas.readline("F");
+//        List<String> kerdesek_m = beolvas.readline("M");
+//        List<String> players = query.player_down(view.getContext());
+//
+//        boolean setting = settings.get_r_player(getActivity());
+//        Bundle set_bundle = new Bundle();
+//        set_bundle.putBoolean("p-order", setting);
+//
+//        Intent intent = new Intent(getContext(), GameActivity.class);
+//
+//        intent.putStringArrayListExtra("kerdesek_f", (ArrayList<String>) kerdesek_f);
+//        intent.putStringArrayListExtra("kerdesek_m", (ArrayList<String>) kerdesek_m);
+//        intent.putStringArrayListExtra("players", (ArrayList<String>) players);
+//        intent.putExtra("settings", set_bundle);
+//        startActivity(intent);
 
     }
 
