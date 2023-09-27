@@ -25,6 +25,7 @@ import io.realm.mongodb.sync.SyncSession;
 
 public class RealmHelper {
 
+    private static boolean logged = false;
     private static Realm realm;
     private static User user;
 
@@ -86,9 +87,12 @@ public class RealmHelper {
 
     public static void login(String username, String password) {
         Credentials credentials = Credentials.emailPassword(username, password);
+
         app.loginAsync(credentials, result -> {
             if (result.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                // TODO - ez nem fut le
+                Log.v("QUICKSTART", "Successfully authenticated with user" + username);
+                setLoggedUser(true);
                 user = app.currentUser();
             } else {
                 Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
@@ -100,6 +104,7 @@ public class RealmHelper {
         user.logOutAsync(result -> {
             if (result.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully logged out.");
+                setLoggedUser(false);
             } else {
                 Log.e("QUICKSTART", "Failed to log out user: " + result.getError());
             }
@@ -181,6 +186,16 @@ public class RealmHelper {
 
     public static Packs getPack(ObjectId pack_id) {
         return realm.where(Packs.class).equalTo("_id", pack_id).findFirst();
+    }
+
+    public static boolean getLoggedUser() {
+        Log.i("GETLogged", String.valueOf(logged));
+        return logged;
+    }
+
+    public static void setLoggedUser(boolean logged) {
+        RealmHelper.logged = logged;
+        Log.i("setLogged", String.valueOf(RealmHelper.logged));
     }
 
 }
