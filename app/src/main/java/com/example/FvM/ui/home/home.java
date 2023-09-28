@@ -24,11 +24,7 @@ import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
-import com.example.FvM.ui.game.GameActivity;
-import com.example.FvM.ui.settings.settings;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,8 +82,12 @@ public class home extends Fragment {
     @Override
     public void onStop(){
         super.onStop();
-        LinearLayout players = getActivity().findViewById(R.id.players);
-        players.removeAllViews();
+        try {
+            LinearLayout players = getActivity().findViewById(R.id.players);
+            players.removeAllViews();
+        }catch (Exception e){
+
+        }
     }
     @Override
     public void onDestroyView() {

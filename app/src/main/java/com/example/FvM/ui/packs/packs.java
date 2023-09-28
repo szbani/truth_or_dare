@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
@@ -27,6 +28,7 @@ import com.example.FvM.databinding.PacksFragmentBinding;
 import com.example.FvM.models.Packs;
 import com.example.FvM.ui.packs.packsDirections.ActionPacksToPackEdit;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +39,7 @@ public class packs extends Fragment {
     private PacksFragmentBinding binding;
     public SharedPreferences prefs;
     public Set<String> packs;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,25 +47,42 @@ public class packs extends Fragment {
         binding = PacksFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        NavController navController = Navigation.findNavController(getParentFragment().getView());
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         packs = new HashSet<>();
+
+        navController = Navigation.findNavController(getParentFragment().getView());
 
         binding.newQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new packAddDialog().show(getParentFragmentManager(), "packAdd");
+                if (RealmHelper.getLoggedUser())
+                    new packAddDialog().show(getParentFragmentManager(), "packAdd");
+                else
+                    Toast.makeText(getContext(),"Jelentkezz be előbb",Toast.LENGTH_SHORT).show();
             }
         });
 
+        return view;
+    }
+
+    public void onResume() {
+        super.onResume();
+
         List<Packs> packsList = RealmHelper.getPacks();
-        Log.i("packlist", String.valueOf(packsList));
+        if (packsList == null) {
+            packsList = new ArrayList<>();
+        }
+//        Log.i("packlist", String.valueOf(packsList));
         LinearLayout defaultPacks = binding.defPacks;
         LinearLayout userPacks = binding.userPacks;
         for (Packs pack : packsList) {
-            LinearLayout userPack = (LinearLayout) inflater.inflate(R.layout.pack_temp, null);
+            packs = prefs.getStringSet("packs", packs);
+            LinearLayout userPack = (LinearLayout) getLayoutInflater().inflate(R.layout.pack_temp, null);
             CheckBox nameField = (CheckBox) userPack.findViewById(R.id.name);
+
+            if (packs.contains(String.valueOf(pack.get_id()))) {
+                nameField.setChecked(true);
+            }
 
             ImageButton editBtn = (ImageButton) userPack.findViewById(R.id.edit);
             ImageButton deleteBtn = (ImageButton) userPack.findViewById(R.id.delete);
@@ -75,7 +95,6 @@ public class packs extends Fragment {
                     if (nameField.isChecked())
                         packs.add(String.valueOf(pack.get_id()));
                     else {
-
                         packs.remove(String.valueOf(pack.get_id()));
                     }
                     prefs.edit().putStringSet("pack", packs).apply();
@@ -87,12 +106,12 @@ public class packs extends Fragment {
                 userPack.removeView(editBtn);
                 userPack.removeView(deleteBtn);
                 defaultPacks.addView(userPack);
-            } else {
+            } else if (RealmHelper.getLoggedUser()){
 
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ActionPacksToPackEdit action = packsDirections.actionPacksToPackEdit(pack.getName(),String.valueOf(pack.get_id()));
+                        ActionPacksToPackEdit action = packsDirections.actionPacksToPackEdit(pack.getName(), String.valueOf(pack.get_id()));
                         navController.navigate(action);
                     }
                 });
@@ -110,8 +129,16 @@ public class packs extends Fragment {
             }
         }
 
-        return view;
     }
+
+    public void onPause() {
+        super.onPause();
+        LinearLayout defaultPacks = binding.defPacks;
+        LinearLayout userPacks = binding.userPacks;
+        userPacks.removeAllViews();
+        defaultPacks.removeAllViews();
+    }
+
 
 //    public void packs_Click() {
 //        packs = new HashSet<>();

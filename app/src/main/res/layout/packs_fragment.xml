@@ -31,20 +31,27 @@
                 android:text="@string/pack"
                 android:textColor="@color/cardview_dark_background" />
 
+            <TextView
+                style="@style/item_LVL_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/packs"
+                android:textColor="@color/cardview_dark_background" />
+
             <LinearLayout
                 android:id="@+id/defPacks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/item_LVL_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/packs"
-                    android:textColor="@color/cardview_dark_background" />
-
             </LinearLayout>
+
+            <TextView
+                style="@style/item_LVL_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/packs2"
+                android:textColor="@color/cardview_dark_background" />
 
             <LinearLayout
                 android:id="@+id/userPacks"
@@ -52,12 +59,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/item_LVL_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/packs2"
-                    android:textColor="@color/cardview_dark_background" />
             </LinearLayout>
 
 

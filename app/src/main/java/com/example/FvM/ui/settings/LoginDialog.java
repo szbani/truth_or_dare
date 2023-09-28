@@ -5,12 +5,9 @@ import static java.lang.Thread.sleep;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +16,10 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
-
-import org.json.JSONObject;
 
 
 public class LoginDialog extends DialogFragment {
