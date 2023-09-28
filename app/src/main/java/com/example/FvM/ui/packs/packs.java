@@ -58,7 +58,7 @@ public class packs extends Fragment {
                 if (RealmHelper.getLoggedUser())
                     new packAddDialog().show(getParentFragmentManager(), "packAdd");
                 else
-                    Toast.makeText(getContext(),"Jelentkezz be előbb",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Jelentkezz be előbb", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,6 +75,7 @@ public class packs extends Fragment {
 //        Log.i("packlist", String.valueOf(packsList));
         LinearLayout defaultPacks = binding.defPacks;
         LinearLayout userPacks = binding.userPacks;
+        Boolean logged = RealmHelper.getLoggedUser();
         for (Packs pack : packsList) {
             packs = prefs.getStringSet("packs", packs);
             LinearLayout userPack = (LinearLayout) getLayoutInflater().inflate(R.layout.pack_temp, null);
@@ -106,7 +107,7 @@ public class packs extends Fragment {
                 userPack.removeView(editBtn);
                 userPack.removeView(deleteBtn);
                 defaultPacks.addView(userPack);
-            } else if (RealmHelper.getLoggedUser()){
+            } else if (logged) {
 
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

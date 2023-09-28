@@ -8,11 +8,13 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -20,6 +22,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
+
+import org.w3c.dom.Text;
 
 
 public class LoginDialog extends DialogFragment {
@@ -88,8 +92,12 @@ public class LoginDialog extends DialogFragment {
                         });
 
                         Boolean logged = RealmHelper.getLoggedUser();
-                        while (!logged){
+                        for (int i = 0 ; i < 3; i++){
                             logged = RealmHelper.getLoggedUser();
+                            Log.i("for", String.valueOf(i));
+                            if (logged){
+                                break;
+                            }
                             try {
                                 sleep(1000);
                             } catch (InterruptedException e) {
@@ -100,6 +108,8 @@ public class LoginDialog extends DialogFragment {
 
                         if (logged) {
                             userContainer.removeAllViews();
+                            TextView userNameTextView = (TextView) loggedIn.findViewById(R.id.UserNameField);
+                            userNameTextView.setText("Felhasználó: "+userName);
                             userContainer.addView(loggedIn);
                             dismiss();
                         } else {
