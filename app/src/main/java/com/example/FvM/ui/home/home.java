@@ -22,9 +22,13 @@ import android.widget.TextView;
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
 import com.example.FvM.databinding.HomeFragmentBinding;
+import com.example.FvM.models.Category;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
 
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +60,6 @@ public class home extends Fragment {
 //
 //                RealmHelper.addQuestion(pack, questions);
 
-               
 
                 change_scene(view);
 
@@ -75,20 +78,22 @@ public class home extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        playerlist(getParentFragmentManager(),getActivity());
+        playerlist(getParentFragmentManager(), getActivity());
     }
+
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         try {
             LinearLayout players = getActivity().findViewById(R.id.players);
             players.removeAllViews();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -98,10 +103,27 @@ public class home extends Fragment {
     public void change_scene(View view) {
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
         Set<String> set = new HashSet<>();
-        set = sh.getStringSet("packs",set);
+        set = sh.getStringSet("packs", set);
         String[] asd = set.toArray(new String[0]);
-        List<Packs> questionsList = (List<Packs>) RealmHelper.getPacks().where().in("_id",asd).findAll();
-        Log.i("asd",questionsList.toString());
+        List<ObjectId> pack_ids = new ArrayList<>();
+        for (String id : asd) {
+            pack_ids.add(new ObjectId(id));
+        }
+        List<Packs> packsList = RealmHelper.getPacks("_id", pack_ids);
+        List<String> dareQuestions = new ArrayList<>();
+        List<String> truthQuestions = new ArrayList<>();
+        for (Packs pack : packsList) {
+            for (Questions question : pack.getQuestions()) {
+                if (question.getCategory().equals(Category.Dare.name())) {
+                    dareQuestions.add(question.getQuestion());
+                    Log.w("HUHUHUH", question.getQuestion());
+                } else {
+                    truthQuestions.add(question.getQuestion());
+                }
+            }
+        }
+        Log.w("dares", dareQuestions.toString());
+        Log.w("truths", truthQuestions.toString());
 
 
 //
@@ -124,14 +146,14 @@ public class home extends Fragment {
 
     }
 
-    public static void playerlist(FragmentManager fm,Activity activity) {
+    public static void playerlist(FragmentManager fm, Activity activity) {
         players = query.player_down(activity.getLayoutInflater().getContext());
         for (int i = 0; i < players.size(); i++) {
             try {
                 String name = players.get(i);
                 int gender = Integer.parseInt(name.substring(name.length() - 1));
                 name = name.replace(" " + gender, "");
-                View child = add_player(name, gender, i,fm,activity);
+                View child = add_player(name, gender, i, fm, activity);
                 LinearLayout players = activity.findViewById(R.id.players);
                 players.addView(child);
             } catch (Exception e) {
@@ -141,7 +163,7 @@ public class home extends Fragment {
         }
     }
 
-    public static View add_player(String name, int gender, int index, FragmentManager fm,Activity activity) {
+    public static View add_player(String name, int gender, int index, FragmentManager fm, Activity activity) {
         LayoutInflater inflater = activity.getLayoutInflater();
         View child = inflater.inflate(R.layout.player_temp, null);
         //name
@@ -167,9 +189,9 @@ public class home extends Fragment {
         return child;
     }
 
-    public static void refresh(FragmentManager fm,Activity activity) {
+    public static void refresh(FragmentManager fm, Activity activity) {
         LinearLayout players = activity.findViewById(R.id.players);
         players.removeAllViews();
-        home.playerlist(fm,activity);
+        home.playerlist(fm, activity);
     }
 }

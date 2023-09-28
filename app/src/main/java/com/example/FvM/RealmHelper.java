@@ -8,9 +8,9 @@ import com.example.FvM.models.Questions;
 
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -56,50 +56,71 @@ public class RealmHelper {
                 })
                 .build());
 
-        Credentials credentials = Credentials.anonymous();
-        app.loginAsync(credentials, result -> {
-            if (result.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-                user = app.currentUser();
+        user = app.currentUser();
+        if (user != null) {
+            Log.i("USER", user.getId());
+            Credentials credentials = Credentials.anonymous();
+            app.loginAsync(credentials, result -> {
+                if (result.isSuccess()) {
+                    Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                    user = app.currentUser();
 
-                SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
+                    SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
 
-                                (realm, subscriptions) -> {
-                                    String[] owners = new String[]{user.getId(), "default"};
-                                    RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                                    subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                                }
-                        ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
-                        .allowWritesOnUiThread(true)
-                        .build();
+                                    (realm, subscriptions) -> {
+                                        String[] owners = new String[]{user.getId(), "default"};
+                                        RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
+                                        subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
+                                    }
+                            ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
+                            .allowWritesOnUiThread(true)
+                            .build();
 
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        RealmHelper.realm = realm;
-                        Log.v("QUICKSTART", "Successfully opened a realm.");
-                    }
-                });
+                    Realm.getInstanceAsync(config, new Realm.Callback() {
+                        @Override
+                        public void onSuccess(Realm realm) {
+                            RealmHelper.realm = realm;
+                            Log.v("QUICKSTART", "Successfully opened a realm.");
+                        }
+                    });
 
-            } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-            }
-        });
+                } else {
+                    Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+                }
+            });
+        }
     }
 
     public static void login(String username, String password) {
         Credentials credentials = Credentials.emailPassword(username, password);
-
-        app.loginAsync(credentials, result -> {
-            if (result.isSuccess()) {
-                // TODO - ez nem fut le
+        app.loginAsync(credentials, it -> {
+            if (it.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully authenticated with user" + username);
                 setLoggedUser(true);
                 user = app.currentUser();
+                user.linkCredentialsAsync(Credentials.anonymous(), it1 -> {
+                    if (it1.isSuccess()) {
+                        Log.v("QUICKSTART", "Successfully linked anonymous account");
+                    } else {
+                        Log.e("QUICKSTART", "Failed to link anonymous account", it1.getError());
+                    }
+                });
             } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+                Log.e("QUICKSTART", "Failed to log in. Error: " + it.getError());
             }
         });
+//        AtomicReference<User> realmUser = new AtomicReference<User>();
+//        app.loginAsync(credentials, result -> {
+//            if (result.isSuccess()) {
+//                // TODO - ez nem fut le
+//                Log.v("QUICKSTART", "Successfully authenticated with user" + username);
+//                setLoggedUser(true);
+//                realmUser.set(result.get());
+//                user = realmUser.get();
+//            } else {
+//                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+//            }
+//        });
     }
 
     public static void logout() {
@@ -186,6 +207,15 @@ public class RealmHelper {
         return null;
     }
 
+//    public static RealmResults<Packs> getPacks(String queryParam, List<ObjectId> queryValue) {
+//        try {
+//            return realm.where(Packs.class).in(queryParam, ).findAll();
+//        } catch (Exception e) {
+//            Log.e("REALM", e.getMessage());
+//        }
+//        return null;
+//    }
+
     public static Packs getPack(ObjectId pack_id) {
         return realm.where(Packs.class).equalTo("_id", pack_id).findFirst();
     }
@@ -200,6 +230,19 @@ public class RealmHelper {
         Log.i("setLogged", String.valueOf(RealmHelper.logged));
     }
 
+
+    public static List<Packs> getPacks(String queryParam, List<ObjectId> queryValue) {
+        try {
+            RealmQuery<Packs> query = realm.where(Packs.class);
+            for (ObjectId id : queryValue) {
+                query.equalTo(queryParam, id);
+            }
+            return query.findAll();
+        } catch (Exception e) {
+            Log.e("REALM", e.getMessage());
+        }
+        return null;
+    }
 }
 
 
