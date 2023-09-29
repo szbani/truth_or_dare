@@ -25,6 +25,8 @@ import com.example.FvM.databinding.HomeFragmentBinding;
 import com.example.FvM.models.Category;
 import com.example.FvM.models.Packs;
 import com.example.FvM.models.Questions;
+import com.example.FvM.ui.game.GameActivity;
+import com.example.FvM.ui.settings.settings;
 
 import org.bson.types.ObjectId;
 
@@ -104,46 +106,39 @@ public class home extends Fragment {
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
         Set<String> set = new HashSet<>();
         set = sh.getStringSet("packs", set);
-        String[] asd = set.toArray(new String[0]);
+        String[] pack_ids_string = set.toArray(new String[0]);
         List<ObjectId> pack_ids = new ArrayList<>();
-        for (String id : asd) {
+        for (String id : pack_ids_string) {
             pack_ids.add(new ObjectId(id));
         }
         List<Packs> packsList = RealmHelper.getPacks("_id", pack_ids);
-        List<String> dareQuestions = new ArrayList<>();
-        List<String> truthQuestions = new ArrayList<>();
+        if (packsList == null) {
+            packsList = new ArrayList<>();
+        }
+        ArrayList<String> dareQuestions = new ArrayList<>();
+        ArrayList<String> truthQuestions = new ArrayList<>();
         for (Packs pack : packsList) {
             for (Questions question : pack.getQuestions()) {
                 if (question.getCategory().equals(Category.Dare.name())) {
                     dareQuestions.add(question.getQuestion());
-                    Log.w("HUHUHUH", question.getQuestion());
                 } else {
                     truthQuestions.add(question.getQuestion());
                 }
             }
         }
-        Log.w("dares", dareQuestions.toString());
-        Log.w("truths", truthQuestions.toString());
 
+        List<String> players = query.player_down(view.getContext());
+        boolean setting = settings.get_r_player(getActivity());
+        Bundle set_bundle = new Bundle();
+        set_bundle.putBoolean("p-order", setting);
 
-//
-////        beolvas beolvas = new beolvas(view.getContext());
-//        List<String> kerdesek_f = beolvas.readline("F");
-//        List<String> kerdesek_m = beolvas.readline("M");
-//        List<String> players = query.player_down(view.getContext());
-//
-//        boolean setting = settings.get_r_player(getActivity());
-//        Bundle set_bundle = new Bundle();
-//        set_bundle.putBoolean("p-order", setting);
-//
-//        Intent intent = new Intent(getContext(), GameActivity.class);
-//
-//        intent.putStringArrayListExtra("kerdesek_f", (ArrayList<String>) kerdesek_f);
-//        intent.putStringArrayListExtra("kerdesek_m", (ArrayList<String>) kerdesek_m);
-//        intent.putStringArrayListExtra("players", (ArrayList<String>) players);
-//        intent.putExtra("settings", set_bundle);
-//        startActivity(intent);
+        Intent intent = new Intent(getContext(), GameActivity.class);
 
+        intent.putStringArrayListExtra("kerdesek_f", truthQuestions);
+        intent.putStringArrayListExtra("kerdesek_m", dareQuestions);
+        intent.putStringArrayListExtra("players", (ArrayList<String>) players);
+        intent.putExtra("settings", set_bundle);
+        startActivity(intent);
     }
 
     public static void playerlist(FragmentManager fm, Activity activity) {
