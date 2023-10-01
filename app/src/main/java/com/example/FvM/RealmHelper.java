@@ -1,6 +1,8 @@
 package com.example.FvM;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 
 import com.example.FvM.models.Packs;
@@ -9,6 +11,7 @@ import com.example.FvM.models.Questions;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,17 +24,19 @@ import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.ClientResetRequiredError;
 import io.realm.mongodb.sync.DiscardUnsyncedChangesStrategy;
+import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
+import io.realm.mongodb.sync.SubscriptionSet;
 import io.realm.mongodb.sync.SyncConfiguration;
 import io.realm.mongodb.sync.SyncSession;
 
 public class RealmHelper {
 
-    private static boolean logged = false;
+    private static boolean logged = true;
     private static Realm realm;
     private static User user;
-
     private static App app;
+
 
     public static void init(Context context) {
 
@@ -57,8 +62,9 @@ public class RealmHelper {
                 .build());
 
         user = app.currentUser();
+        if (user.getProviderType().equals("ANONYMOUS")) setLoggedUser(false);
+
         if (user != null) {
-            Log.i("USER", user.getId());
             Credentials credentials = Credentials.anonymous();
             app.loginAsync(credentials, result -> {
                 if (result.isSuccess()) {
@@ -68,60 +74,54 @@ public class RealmHelper {
                     SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
 
                                     (realm, subscriptions) -> {
+                                        Log.w("queryId", user.getId());
                                         String[] owners = new String[]{user.getId(), "default"};
                                         RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
                                         subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
                                     }
-                            ).waitForInitialRemoteData(2112, TimeUnit.MILLISECONDS)
+                            ).allowQueriesOnUiThread(true)
                             .allowWritesOnUiThread(true)
                             .build();
-
                     Realm.getInstanceAsync(config, new Realm.Callback() {
                         @Override
                         public void onSuccess(Realm realm) {
                             RealmHelper.realm = realm;
+                            realm.isAutoRefresh();
                             Log.v("QUICKSTART", "Successfully opened a realm.");
                         }
-                    });
 
+                        @Override
+                        public void onError(Throwable exception) {
+                            Log.e("QUICKSTART", "Failed to open a realm: " + exception.getMessage());
+                        }
+                    });
                 } else {
                     Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
                 }
             });
+
+        } else if (user.getProviderType().equals("ANONYMOUS")) {
+            // User is already anonymous, you can continue with Realm configuration here
+            setLoggedUser(false);
+
+            // Continue with your Realm configuration and subscription setup here
+        } else {
+            // User is already authenticated, you might want to setLoggedUser(true) here
+            setLoggedUser(true);
         }
     }
 
-    public static void login(String username, String password) {
+
+    public static void login(String username, String password) throws InterruptedException {
         Credentials credentials = Credentials.emailPassword(username, password);
         app.loginAsync(credentials, it -> {
             if (it.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully authenticated with user" + username);
                 setLoggedUser(true);
                 user = app.currentUser();
-                user.linkCredentialsAsync(Credentials.anonymous(), it1 -> {
-                    if (it1.isSuccess()) {
-                        Log.v("QUICKSTART", "Successfully linked anonymous account");
-                    } else {
-                        Log.e("QUICKSTART", "Failed to link anonymous account", it1.getError());
-                    }
-                });
-            } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + it.getError());
             }
         });
-//        AtomicReference<User> realmUser = new AtomicReference<User>();
-//        app.loginAsync(credentials, result -> {
-//            if (result.isSuccess()) {
-//                // TODO - ez nem fut le
-//                Log.v("QUICKSTART", "Successfully authenticated with user" + username);
-//                setLoggedUser(true);
-//                realmUser.set(result.get());
-//                user = realmUser.get();
-//            } else {
-//                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-//            }
-//        });
     }
+
 
     public static void logout() {
         user.logOutAsync(result -> {
@@ -151,6 +151,7 @@ public class RealmHelper {
     public static ObjectId addPack(String name) {
         Packs newPack = new Packs(name);
         newPack.setOwner_id(user.getId());
+        realm.refresh();
         realm.executeTransactionAsync(transactionRealm -> {
             transactionRealm.insert(newPack);
         });
@@ -243,6 +244,15 @@ public class RealmHelper {
         }
         return null;
     }
+
+//    public static void refreshRealm() {
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                realm.refresh();
+//            }
+//        });
+//    }
 }
 
 

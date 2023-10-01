@@ -88,11 +88,15 @@ public class LoginDialog extends DialogFragment {
 
                         Handler handler = new Handler(handlerThread.getLooper());
                         handler.post(() -> {
-                            RealmHelper.login(userName, password);
+                            try {
+                                RealmHelper.login(userName, password);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
 
                         Boolean logged = RealmHelper.getLoggedUser();
-                        for (int i = 0 ; i < 3; i++){
+                        for (int i = 0 ; i < 5; i++){
                             logged = RealmHelper.getLoggedUser();
                             Log.i("for", String.valueOf(i));
                             if (logged){

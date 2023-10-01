@@ -103,14 +103,18 @@ public class home extends Fragment {
     }
 
     public void change_scene(View view) {
+        // TODO - fix this shit
+
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
         Set<String> set = new HashSet<>();
         set = sh.getStringSet("packs", set);
+        Log.d("PACKS", set.toString());
         String[] pack_ids_string = set.toArray(new String[0]);
         List<ObjectId> pack_ids = new ArrayList<>();
         for (String id : pack_ids_string) {
             pack_ids.add(new ObjectId(id));
         }
+        Log.w("PACKSQuery", pack_ids.toString());
         List<Packs> packsList = RealmHelper.getPacks("_id", pack_ids);
         if (packsList == null) {
             packsList = new ArrayList<>();
@@ -126,7 +130,8 @@ public class home extends Fragment {
                 }
             }
         }
-
+        Log.w("DARE", dareQuestions.toString());
+        Log.w("TRUTH", truthQuestions.toString());
         List<String> players = query.player_down(view.getContext());
         boolean setting = settings.get_r_player(getActivity());
         Bundle set_bundle = new Bundle();

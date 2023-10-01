@@ -5,7 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,10 +21,10 @@ import androidx.navigation.Navigation;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
-import com.example.FvM.ui.home.ePlayerDialog;
 
 import org.bson.types.ObjectId;
-import org.w3c.dom.Text;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class packAddDialog extends DialogFragment {
 
@@ -58,9 +59,9 @@ public class packAddDialog extends DialogFragment {
                 LinearLayout userPacks = activity.findViewById(R.id.userPacks);
 
                 String name = nameField.getText().toString();
-                ObjectId packId;
                 if (id == null) {
-                    packId = RealmHelper.addPack(name);
+
+                    ObjectId packId = RealmHelper.addPack(name);
                     userPacks.addView(pack);
 
                     CheckBox editText = pack.findViewById(R.id.name);
@@ -78,7 +79,7 @@ public class packAddDialog extends DialogFragment {
                     delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            RealmHelper.deletePack(packId);
+                            RealmHelper.deletePack(packId.get());
                             LinearLayout parenttt = (LinearLayout) v.getParent().getParent();
                             parenttt.removeView((LinearLayout)v.getParent());
 

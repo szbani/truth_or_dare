@@ -72,7 +72,7 @@ public class packs extends Fragment {
         if (packsList == null) {
             packsList = new ArrayList<>();
         }
-//        Log.i("packlist", String.valueOf(packsList));
+        Log.i("packlist", String.valueOf(packsList));
         LinearLayout defaultPacks = binding.defPacks;
         LinearLayout userPacks = binding.userPacks;
         Boolean logged = RealmHelper.getLoggedUser();
@@ -129,7 +129,7 @@ public class packs extends Fragment {
                 userPacks.addView(userPack);
             }
         }
-
+        Log.w("usingpacks", packs.toString());
     }
 
     public void onPause() {
