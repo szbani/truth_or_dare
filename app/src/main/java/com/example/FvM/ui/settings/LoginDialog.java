@@ -25,6 +25,10 @@ import com.example.FvM.RealmHelper;
 
 import org.w3c.dom.Text;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -85,35 +89,39 @@ public class LoginDialog extends DialogFragment {
                     FrameLayout userContainer = getActivity().findViewById(R.id.user_view);
                     loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(view11 -> settings.logout(activity, fm));
                     try {
-                        RealmHelper.closeRealm();
-
-                        HandlerThread handlerThread = new HandlerThread("LoginThread");
-                        handlerThread.start();
-
-                        Handler handler = new Handler(handlerThread.getLooper());
-                        handler.post(() -> {
+                        CompletableFuture<Void> loginFuture = CompletableFuture.runAsync(() -> {
+                            try {
                                 RealmHelper.login(userName, password);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         });
 
+                        try {
+                            loginFuture.get(); // Wait for the login function to complete
+                        } catch (InterruptedException | ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
                         Boolean logged = RealmHelper.getLoggedUser();
-                        for (int i = 0 ; i < 5; i++){
+                        for (int i = 0; i < 5; i++) {
                             logged = RealmHelper.getLoggedUser();
                             Log.i("for", String.valueOf(i));
-                            if (logged){
+                            if (logged) {
                                 break;
                             }
                             try {
-                                sleep(1000);
+                                Thread.sleep(1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
-                        handlerThread.quit();
+                        RealmHelper.setRealm();
 
                         if (logged) {
                             userContainer.removeAllViews();
                             TextView userNameTextView = (TextView) loggedIn.findViewById(R.id.UserNameField);
-                            userNameTextView.setText("Felhasználó: "+userName);
+                            userNameTextView.setText("Felhasználó: " + userName);
                             userContainer.addView(loggedIn);
                             dismiss();
                         } else {

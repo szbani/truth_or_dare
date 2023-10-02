@@ -63,6 +63,46 @@ public class RealmHelper {
                 .build());
 
         user = app.currentUser();
+        if (user != null) {
+            setRealm();
+            Log.w("USER", String.valueOf(user.getId()));
+        } else // User is already anonymous, you can continue with Realm configuration here
+            // Continue with your Realm configuration and subscription setup here
+            // User is already authenticated, you might want to setLoggedUser(true) here
+            if (user == null) {
+                setLoggedUser(false);
+                Credentials credentials = Credentials.anonymous();
+                app.loginAsync(credentials, result -> {
+                    if (result.isSuccess()) {
+                        Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                        user = app.currentUser();
+
+                        setRealm();
+                    } else {
+                        Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+                    }
+                });
+
+            } else setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
+    }
+
+    public static void refreshRealm() {
+        realm.refresh();
+    }
+
+    public static void closeRealm() {
+        if (!realm.isClosed()) realm.close();
+
+    }
+
+    public static void setRealm() {
+        if (realm != null) {
+            realm.close();
+            realm = Realm.getDefaultInstance();
+            return;
+        }
+        Realm.removeDefaultConfiguration();
+
         SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
 
                         (realm, subscriptions) -> {
@@ -74,111 +114,43 @@ public class RealmHelper {
                 ).allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
                 .build();
-        Realm.getInstanceAsync(config, new Realm.Callback() {
-            @Override
-            public void onSuccess(Realm realm) {
-                RealmHelper.realm = realm;
-                realm.isAutoRefresh();
-                Log.v("QUICKSTART", "Successfully opened a realm.");
-            }
-
-            @Override
-            public void onError(Throwable exception) {
-                Log.e("QUICKSTART", "Failed to open a realm: " + exception.getMessage());
-            }
-        });
-
+        Realm.setDefaultConfiguration(config);
+        realm = Realm.getDefaultInstance();
+        Log.w("REALM", String.valueOf(Realm.getDefaultConfiguration()));
         Log.w("USER", String.valueOf(user.getId()));
-
-        if (user == null) {
-            setLoggedUser(false);
-            Credentials credentials = Credentials.anonymous();
-            app.loginAsync(credentials, result -> {
-                if (result.isSuccess()) {
-                    Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-                    user = app.currentUser();
-
-                    Realm.getInstanceAsync(config, new Realm.Callback() {
-                        @Override
-                        public void onSuccess(Realm realm) {
-                            RealmHelper.realm = realm;
-                            realm.isAutoRefresh();
-                            Log.v("QUICKSTART", "Successfully opened a realm.");
-                        }
-
-                        @Override
-                        public void onError(Throwable exception) {
-                            Log.e("QUICKSTART", "Failed to open a realm: " + exception.getMessage());
-                        }
-                    });
-                } else {
-                    Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-                }
-            });
-
-        } else if (user.getProviderType().equals("ANONYMOUS")) {
-            // User is already anonymous, you can continue with Realm configuration here
-            setLoggedUser(false);
-
-            // Continue with your Realm configuration and subscription setup here
-        } else {
-            // User is already authenticated, you might want to setLoggedUser(true) here
-            setLoggedUser(true);
-        }
-    }
-
-    public static void closeRealm() {
-        realm.close();
     }
 
     public static void login(String username, String password) {
-
         Credentials credentials = Credentials.emailPassword(username, password);
-        app.loginAsync(credentials, it -> {
-            if (it.isSuccess()) {
-                user = app.currentUser();
-                SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
-                                (realm, subscriptions) -> {
-                                    String[] owners = new String[]{user.getId(), "default"};
-                                    RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                                    subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                                }
-                        ).allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-                RealmHelper.realm = Realm.getInstance(config);
-            }
-        });
+        app.login(credentials);
+        user = app.currentUser();
+
         setLoggedUser(true);
     }
 
-
     public static void logout() {
-        if (realm != null) {
-            realm.close();
-        }
+//        if (realm != null) {
+//            realm.close();
+//        }
         user.logOutAsync(result -> {
             if (result.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully logged out.");
                 setLoggedUser(false);
-
-                SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
-
-                                (realm, subscriptions) -> {
-                                    Log.w("queryId", user.getId());
-                                    String[] owners = new String[]{user.getId(), "default"};
-                                    RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                                    subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                                }
-                        ).allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-
-                RealmHelper.realm = Realm.getInstance(config);
             } else {
                 Log.e("QUICKSTART", "Failed to log out user: " + result.getError());
             }
         });
+        Credentials credentials = Credentials.anonymous();
+        app.loginAsync(credentials, result -> {
+            if (result.isSuccess()) {
+                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                user = app.currentUser();
+                setRealm();
+            } else {
+                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+            }
+        });
+
     }
 
     public static boolean isLogged() {
@@ -249,21 +221,8 @@ public class RealmHelper {
     }
 
     public static RealmResults<Packs> getPacks() {
-        realm.close();
-
-        SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
-                        (realm, subscriptions) -> {
-                            Log.w("queryId", user.getId());
-                            String[] owners = new String[]{user.getId(), "default"};
-                            RealmQuery<Packs> PacksQuery = realm.where(Packs.class).in("owner_id", owners);
-                            subscriptions.addOrUpdate(Subscription.create("Packs", PacksQuery));
-                        }
-                ).allowQueriesOnUiThread(true)
-                .allowWritesOnUiThread(true)
-                .build();
-
-       RealmHelper.realm = Realm.getInstance(config);
-       Log.i("realm", realm.toString());
+        user = app.currentUser();
+        Log.i("realm", realm.toString());
         Log.w("USERID", user.getId());
         Log.w("USERIDAPP", app.currentUser().getId());
         try {
