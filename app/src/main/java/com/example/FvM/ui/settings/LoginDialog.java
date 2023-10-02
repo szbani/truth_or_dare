@@ -25,6 +25,9 @@ import com.example.FvM.RealmHelper;
 
 import org.w3c.dom.Text;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 public class LoginDialog extends DialogFragment {
 
@@ -82,17 +85,14 @@ public class LoginDialog extends DialogFragment {
                     FrameLayout userContainer = getActivity().findViewById(R.id.user_view);
                     loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(view11 -> settings.logout(activity, fm));
                     try {
+                        RealmHelper.closeRealm();
 
                         HandlerThread handlerThread = new HandlerThread("LoginThread");
                         handlerThread.start();
 
                         Handler handler = new Handler(handlerThread.getLooper());
                         handler.post(() -> {
-                            try {
                                 RealmHelper.login(userName, password);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
                         });
 
                         Boolean logged = RealmHelper.getLoggedUser();
