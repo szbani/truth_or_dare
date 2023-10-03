@@ -101,7 +101,7 @@ public class LoginDialog extends DialogFragment {
                         }
 
                         Boolean logged = RealmHelper.getLoggedUser();
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 3; i++) {
                             logged = RealmHelper.getLoggedUser();
                             Log.i("for", String.valueOf(i));
                             if (logged) {
