@@ -113,9 +113,9 @@ public class LoginDialog extends DialogFragment {
                                 e.printStackTrace();
                             }
                         }
-                        RealmHelper.setRealm();
 
                         if (logged) {
+                            RealmHelper.setRealm();
                             View loggedIn = getLayoutInflater().inflate(R.layout.logged_in, null);
                             FrameLayout userContainer = getActivity().findViewById(R.id.user_view);
                             loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(view11 -> settings.logout(activity, fm));

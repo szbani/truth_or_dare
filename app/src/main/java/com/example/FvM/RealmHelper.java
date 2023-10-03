@@ -10,6 +10,7 @@ import com.example.FvM.models.Questions;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,7 @@ import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
+import io.realm.mongodb.RealmResultTask;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.ClientResetRequiredError;
 import io.realm.mongodb.sync.DiscardUnsyncedChangesStrategy;
@@ -35,7 +37,6 @@ public class RealmHelper {
     private static boolean logged = true;
     private static Realm realm;
     private static User user;
-    private static User loggedUser;
     private static App app;
 
 
@@ -63,9 +64,10 @@ public class RealmHelper {
                 .build());
 
         user = app.currentUser();
+        setRealm();
+        setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
+
         if (user != null) {
-            setRealm();
-            Log.w("USER", String.valueOf(user.getId()));
         } else // User is already anonymous, you can continue with Realm configuration here
             // Continue with your Realm configuration and subscription setup here
             // User is already authenticated, you might want to setLoggedUser(true) here
@@ -83,17 +85,11 @@ public class RealmHelper {
                     }
                 });
 
-            } else setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
+            }
     }
 
 
-
     public static void setRealm() {
-        if (realm != null) {
-            realm.close();
-            realm = Realm.getDefaultInstance();
-            return;
-        }
         Realm.removeDefaultConfiguration();
 
         SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
@@ -122,9 +118,6 @@ public class RealmHelper {
     }
 
     public static void logout() {
-//        if (realm != null) {
-//            realm.close();
-//        }
         user.logOutAsync(result -> {
             if (result.isSuccess()) {
                 Log.v("QUICKSTART", "Successfully logged out.");
@@ -143,11 +136,13 @@ public class RealmHelper {
                 Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
             }
         });
-
     }
 
-    public static boolean isLogged() {
-        return !String.valueOf(app.currentUser().getProviderType()).equals("ANONYMOUS");
+    public static String getUsername() {
+        if (getLoggedUser()) {
+            return user.getProfile().getEmail();
+        }
+        return "";
     }
 
     public static void register(String username, String password) {
@@ -215,9 +210,6 @@ public class RealmHelper {
 
     public static RealmResults<Packs> getPacks() {
         user = app.currentUser();
-        Log.i("realm", realm.toString());
-        Log.w("USERID", user.getId());
-        Log.w("USERIDAPP", app.currentUser().getId());
         try {
             RealmResults<Packs> packs = realm.where(Packs.class).findAll();
             return packs;
@@ -227,15 +219,6 @@ public class RealmHelper {
         }
         return null;
     }
-
-//    public static RealmResults<Packs> getPacks(String queryParam, List<ObjectId> queryValue) {
-//        try {
-//            return realm.where(Packs.class).in(queryParam, ).findAll();
-//        } catch (Exception e) {
-//            Log.e("REALM", e.getMessage());
-//        }
-//        return null;
-//    }
 
     public static Packs getPack(ObjectId pack_id) {
         return realm.where(Packs.class).equalTo("_id", pack_id).findFirst();
@@ -253,33 +236,25 @@ public class RealmHelper {
 
 
     public static List<Packs> getPacks(String queryParam, List<ObjectId> queryValue) {
+        user = app.currentUser();
         try {
-            RealmQuery<Packs> query = realm.where(Packs.class);
+            List<Packs> result = new ArrayList<>();
             for (ObjectId id : queryValue) {
-                query.equalTo(queryParam, id);
+                RealmQuery<Packs> query = realm.where(Packs.class);
+                RealmQuery<Packs> subQuery = query.equalTo(queryParam, id);
+                List<Packs> pack = subQuery.findAll();
+                result.addAll(pack);
+                Log.w("PACKS", pack.toString());
             }
-            return query.findAll();
+            Log.w("PACKSALL", result.toString());
+            return result;
         } catch (Exception e) {
             Log.e("REALM", e.getMessage());
         }
         return null;
     }
 
-    public static String getUsername(){
-        if (getLoggedUser()){
-            return user.getProfile().getEmail();
-        }
-        return "";
-    }
 
-//    public static void refreshRealm() {
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                realm.refresh();
-//            }
-//        });
-//    }
 }
 
 
