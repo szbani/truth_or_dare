@@ -86,14 +86,7 @@ public class RealmHelper {
             } else setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
     }
 
-    public static void refreshRealm() {
-        realm.refresh();
-    }
 
-    public static void closeRealm() {
-        if (!realm.isClosed()) realm.close();
-
-    }
 
     public static void setRealm() {
         if (realm != null) {
@@ -270,6 +263,13 @@ public class RealmHelper {
             Log.e("REALM", e.getMessage());
         }
         return null;
+    }
+
+    public static String getUsername(){
+        if (getLoggedUser()){
+            return user.getProfile().getEmail();
+        }
+        return "";
     }
 
 //    public static void refreshRealm() {

@@ -85,9 +85,6 @@ public class LoginDialog extends DialogFragment {
                 } else if (password.length() < 6) {
                     Toast.makeText(getContext(), "Leagább 5 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
                 } else {
-                    View loggedIn = getLayoutInflater().inflate(R.layout.logged_in, null);
-                    FrameLayout userContainer = getActivity().findViewById(R.id.user_view);
-                    loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(view11 -> settings.logout(activity, fm));
                     try {
                         CompletableFuture<Void> loginFuture = CompletableFuture.runAsync(() -> {
                             try {
@@ -119,6 +116,10 @@ public class LoginDialog extends DialogFragment {
                         RealmHelper.setRealm();
 
                         if (logged) {
+                            View loggedIn = getLayoutInflater().inflate(R.layout.logged_in, null);
+                            FrameLayout userContainer = getActivity().findViewById(R.id.user_view);
+                            loggedIn.findViewById(R.id.logOut_btn).setOnClickListener(view11 -> settings.logout(activity, fm));
+
                             userContainer.removeAllViews();
                             TextView userNameTextView = (TextView) loggedIn.findViewById(R.id.UserNameField);
                             userNameTextView.setText("Felhasználó: " + userName);

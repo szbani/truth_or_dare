@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
@@ -46,16 +47,33 @@ public class settings extends Fragment {
             }
         });
         FrameLayout userContainer = view.findViewById(R.id.user_view);
+        View userField;
+        if (RealmHelper.getLoggedUser()){
+            userField = getLayoutInflater().inflate(R.layout.logged_in,null);
 
-        View userField = getLayoutInflater().inflate(R.layout.logged_out,null);
+            TextView userNameTextView = (TextView) userField.findViewById(R.id.UserNameField);
+            userNameTextView.setText("Felhasználó: "+RealmHelper.getUsername());
 
-        userField.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new LoginDialog().show(getChildFragmentManager(),"Login");
-            }
-        });
-        userContainer.addView(userField);
+            userField.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    logout(requireActivity(),getParentFragmentManager());
+                }
+            });
+            userContainer.addView(userField);
+
+        }else{
+            userField = getLayoutInflater().inflate(R.layout.logged_out,null);
+
+            userField.findViewById(R.id.logOut_btn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new LoginDialog().show(getChildFragmentManager(),"Login");
+                }
+            });
+            userContainer.addView(userField);
+        }
+
 
         return view;
     }
@@ -87,7 +105,8 @@ public class settings extends Fragment {
 
         userContainer.removeAllViews();
         userContainer.addView(loggedOut);
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        prefs.edit().remove("packs");
     }
 
     private static String TAG = "Debug";

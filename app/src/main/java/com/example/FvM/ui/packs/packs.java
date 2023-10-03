@@ -98,7 +98,7 @@ public class packs extends Fragment {
                     else {
                         packs.remove(String.valueOf(pack.get_id()));
                     }
-                    prefs.edit().putStringSet("pack", packs).apply();
+                    prefs.edit().putStringSet("packs", packs).apply();
                     Log.i("kurva", prefs.getStringSet("packs", packs).toString());
                 }
             });
