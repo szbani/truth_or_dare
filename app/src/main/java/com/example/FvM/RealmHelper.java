@@ -90,6 +90,12 @@ public class RealmHelper {
 
 
     public static void setRealm() {
+        if (realm != null) {
+            if (!realm.isEmpty()) {
+                realm.close();
+            }
+        }
+
         Realm.removeDefaultConfiguration();
 
         SyncConfiguration config = new SyncConfiguration.Builder(user).initialSubscriptions(
