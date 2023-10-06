@@ -28,6 +28,7 @@ import com.example.FvM.databinding.PacksFragmentBinding;
 import com.example.FvM.models.Packs;
 import com.example.FvM.ui.packs.packsDirections.ActionPacksToPackEdit;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +48,7 @@ public class packs extends Fragment {
         binding = PacksFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
         packs = new HashSet<>();
 
         navController = Navigation.findNavController(getParentFragment().getView());
@@ -76,11 +77,11 @@ public class packs extends Fragment {
         LinearLayout defaultPacks = binding.defPacks;
         LinearLayout userPacks = binding.userPacks;
         Boolean logged = RealmHelper.getLoggedUser();
+        packs = prefs.getStringSet("packs", null);
         for (Packs pack : packsList) {
-            packs = prefs.getStringSet("packs", packs);
             LinearLayout userPack = (LinearLayout) getLayoutInflater().inflate(R.layout.pack_temp, null);
             CheckBox nameField = (CheckBox) userPack.findViewById(R.id.name);
-
+            Log.i("packs", packs.toString());
             if (packs.contains(String.valueOf(pack.get_id()))) {
                 nameField.setChecked(true);
             }
@@ -92,14 +93,15 @@ public class packs extends Fragment {
             nameField.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    packs = prefs.getStringSet("packs", packs);
+                    packs = prefs.getStringSet("packs", null);
                     if (nameField.isChecked())
                         packs.add(String.valueOf(pack.get_id()));
                     else {
                         packs.remove(String.valueOf(pack.get_id()));
                     }
-                    prefs.edit().putStringSet("packs", packs).apply();
-                    Log.i("kurva", prefs.getStringSet("packs", packs).toString());
+                    prefs.edit().remove("packs").commit();
+                    prefs.edit().putStringSet("packs", packs).commit();
+                    Log.i("kurva", prefs.getStringSet("packs", null).toString());
                 }
             });
 

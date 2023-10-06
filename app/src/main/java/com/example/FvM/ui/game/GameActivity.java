@@ -27,7 +27,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected static List<String> K_f;
     protected static List<String> K_m;
     protected static List<String> players;
-    protected static Bundle settings;
     public static int player_num;
 
     private ActivityGameBinding binding;
@@ -55,7 +54,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         K_f = intent.getStringArrayListExtra("kerdesek_f");
         K_m = intent.getStringArrayListExtra("kerdesek_m");
         players = intent.getStringArrayListExtra("players");
-        settings = intent.getBundleExtra("settings");
         player_num = -1;
 
         //sensor

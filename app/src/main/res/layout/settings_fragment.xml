@@ -35,11 +35,6 @@
             android:text="@string/other" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/kimaradas"
-            style="@style/item_LVL_3"
-            android:text="@string/option2" />
-
-        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/random"
             style="@style/item_LVL_3"
             android:layout_width="match_parent"

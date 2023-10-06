@@ -2,9 +2,11 @@ package com.example.FvM.ui.game;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.audiofx.Equalizer;
 import android.util.Log;
 
 import com.example.FvM.R;
+import com.example.FvM.ui.settings.settings;
 
 import java.util.Random;
 
@@ -19,8 +21,10 @@ public class question_com {
 
     public question_com(Activity activity){
         //this.activity = activity;
-        ran_player = GameActivity.settings.getBoolean("p-order");
-//        Log.i("random players", String.valueOf(ran_player));
+        ran_player = settings.get_r_player(activity);
+
+        Log.i("random players", String.valueOf(ran_player));
+
         random = new Random();
         this.context = activity.getLayoutInflater().getContext();
     }
@@ -34,18 +38,17 @@ public class question_com {
     //játkos kiválasztása
     public static String player_valaszt(){
         try {
+            String player = "";
             if (GameActivity.players.size() > 1){
-                if (ran_player) return GameActivity.players.get(random.nextInt(GameActivity.players.size()));
+                if (ran_player) player = GameActivity.players.get(random.nextInt(GameActivity.players.size()));
                 else {
                     GameActivity.player_num++;
                     if (GameActivity.player_num >= GameActivity.players.size()) GameActivity.player_num = 0;
-                    return GameActivity.players.get(GameActivity.player_num);
+                    player = GameActivity.players.get(GameActivity.player_num);
                 }
                 //random.nextInt(GameActivity.players.size()
             }
-            else {
-                return "";
-            }
+            return player;
         }catch (Exception e){
             Log.e("Exception","(player_valaszt)hiba: ");
         }

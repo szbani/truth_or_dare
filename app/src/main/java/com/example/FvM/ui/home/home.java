@@ -133,16 +133,12 @@ public class home extends Fragment {
         Log.w("DARE", dareQuestions.toString());
         Log.w("TRUTH", truthQuestions.toString());
         List<String> players = query.player_down(view.getContext());
-        boolean setting = settings.get_r_player(getActivity());
-        Bundle set_bundle = new Bundle();
-        set_bundle.putBoolean("p-order", setting);
 
         Intent intent = new Intent(getContext(), GameActivity.class);
 
         intent.putStringArrayListExtra("kerdesek_f", truthQuestions);
         intent.putStringArrayListExtra("kerdesek_m", dareQuestions);
         intent.putStringArrayListExtra("players", (ArrayList<String>) players);
-        intent.putExtra("settings", set_bundle);
         startActivity(intent);
     }
 

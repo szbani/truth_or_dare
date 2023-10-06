@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,8 +42,17 @@ public class query{
             while((player = reader.readLine())!= null){
                 list.add(player);
             }
+        }catch (FileNotFoundException e){
+            try {
+                File file = new File(context.getFilesDir().getPath(),"players.txt");
+                FileWriter fileWriter = new FileWriter(file,true);
+                BufferedWriter writer = new BufferedWriter(fileWriter);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+//            Log.e("exception", "nem sikerult a fajl olvasasa" + e);
         }catch (IOException e){
-            Log.e("exception", "nem sikerult a fajl olvasasa" + e);
+            e.printStackTrace();
         }
         return list;
     }

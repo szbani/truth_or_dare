@@ -35,10 +35,11 @@ public class settings extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = SettingsFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        SwitchCompat sw = (SwitchCompat) binding.random;
-        sw.setChecked(get_r_player(getActivity()));
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        SwitchCompat swRandom = (SwitchCompat) binding.random;
+        swRandom.setChecked(get_r_player(getActivity()));
+        swRandom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 set_r_player(b);
@@ -72,10 +73,8 @@ public class settings extends Fragment {
             userContainer.addView(userField);
         }
 
-
         return view;
     }
-
 
     public  void  set_r_player(boolean b){
         prefs.edit().putBoolean("r_player", b).apply();
