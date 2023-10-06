@@ -64,28 +64,25 @@ public class RealmHelper {
                 .build());
 
         user = app.currentUser();
-        setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
 
         if (user != null) {
             setRealm();
-        } else // User is already anonymous, you can continue with Realm configuration here
-            // Continue with your Realm configuration and subscription setup here
-            // User is already authenticated, you might want to setLoggedUser(true) here
-            if (user == null) {
-                setLoggedUser(false);
-                Credentials credentials = Credentials.anonymous();
-                app.loginAsync(credentials, result -> {
-                    if (result.isSuccess()) {
-                        Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-                        user = app.currentUser();
+            setLoggedUser(!user.getProviderType().toString().equals("ANONYMOUS"));
+        } else {
+            setLoggedUser(false);
+            Credentials credentials = Credentials.anonymous();
+            app.loginAsync(credentials, result -> {
+                if (result.isSuccess()) {
+                    Log.v("QUICKSTART", "Successfully authenticated anonymously.");
+                    user = app.currentUser();
 
-                        setRealm();
-                    } else {
-                        Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-                    }
-                });
+                    setRealm();
+                } else {
+                    Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
+                }
+            });
+        }
 
-            }
     }
 
 
