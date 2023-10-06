@@ -79,7 +79,7 @@ public class RegisterDialog extends DialogFragment {
                             Toast.makeText(getContext(), "Nincs megadva Email", Toast.LENGTH_SHORT).show();
                         } else if (password.equals(password2)) {
                             if (password.length() < 6) {
-                                Toast.makeText(getContext(), "Leagább 5 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Leagább 6 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
                             } else {
                                 try {
                                     RealmHelper.register(userName, password);

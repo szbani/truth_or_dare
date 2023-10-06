@@ -1,6 +1,7 @@
 package com.example.FvM.ui.settings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -25,8 +25,6 @@ import com.example.FvM.databinding.SettingsFragmentBinding;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import io.realm.Realm;
 
 public class settings extends Fragment {
 
@@ -105,8 +103,7 @@ public class settings extends Fragment {
 
         userContainer.removeAllViews();
         userContainer.addView(loggedOut);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        prefs.edit().remove("packs");
+
     }
 
     private static String TAG = "Debug";
