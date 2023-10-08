@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.FvM.R;
 import com.example.FvM.RealmHelper;
@@ -116,30 +117,35 @@ public class home extends Fragment {
         }
         Log.w("PACKSQuery", pack_ids.toString());
         List<Packs> packsList = RealmHelper.getPacks("_id", pack_ids);
-        if (packsList == null) {
-            packsList = new ArrayList<>();
-        }
-        ArrayList<String> dareQuestions = new ArrayList<>();
-        ArrayList<String> truthQuestions = new ArrayList<>();
-        for (Packs pack : packsList) {
-            for (Questions question : pack.getQuestions()) {
-                if (question.getCategory().equals(Category.Dare.name())) {
-                    dareQuestions.add(question.getQuestion());
-                } else {
-                    truthQuestions.add(question.getQuestion());
+        if (packsList != null && !packsList.isEmpty()) {
+            ArrayList<String> dareQuestions = new ArrayList<>();
+            ArrayList<String> truthQuestions = new ArrayList<>();
+            for (Packs pack : packsList) {
+                for (Questions question : pack.getQuestions()) {
+                    if (question.getCategory().equals(Category.Dare.name())) {
+                        dareQuestions.add(question.getQuestion());
+                    } else {
+                        truthQuestions.add(question.getQuestion());
+                    }
                 }
             }
+            if (dareQuestions.size() < 3 || truthQuestions.size() < 3){
+                Toast.makeText(getContext(), "Nincs elegendő kérdés a kiválasztott packokban.", Toast.LENGTH_SHORT).show();
+            }else {
+                Log.w("DARE", dareQuestions.toString());
+                Log.w("TRUTH", truthQuestions.toString());
+                List<String> players = query.player_down(view.getContext());
+
+                Intent intent = new Intent(getContext(), GameActivity.class);
+
+                intent.putStringArrayListExtra("kerdesek_f", truthQuestions);
+                intent.putStringArrayListExtra("kerdesek_m", dareQuestions);
+                intent.putStringArrayListExtra("players", (ArrayList<String>) players);
+                startActivity(intent);
+            }
+        }else{
+            Toast.makeText(getContext(), "Nincs kiválasztva pack", Toast.LENGTH_SHORT).show();
         }
-        Log.w("DARE", dareQuestions.toString());
-        Log.w("TRUTH", truthQuestions.toString());
-        List<String> players = query.player_down(view.getContext());
-
-        Intent intent = new Intent(getContext(), GameActivity.class);
-
-        intent.putStringArrayListExtra("kerdesek_f", truthQuestions);
-        intent.putStringArrayListExtra("kerdesek_m", dareQuestions);
-        intent.putStringArrayListExtra("players", (ArrayList<String>) players);
-        startActivity(intent);
     }
 
     public static void playerlist(FragmentManager fm, Activity activity) {

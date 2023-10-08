@@ -77,7 +77,7 @@ public class packs extends Fragment {
         LinearLayout defaultPacks = binding.defPacks;
         LinearLayout userPacks = binding.userPacks;
         Boolean logged = RealmHelper.getLoggedUser();
-        packs = prefs.getStringSet("packs", null);
+        packs = prefs.getStringSet("packs", packs);
         for (Packs pack : packsList) {
             LinearLayout userPack = (LinearLayout) getLayoutInflater().inflate(R.layout.pack_temp, null);
             CheckBox nameField = (CheckBox) userPack.findViewById(R.id.name);
@@ -101,7 +101,7 @@ public class packs extends Fragment {
                     }
                     prefs.edit().remove("packs").commit();
                     prefs.edit().putStringSet("packs", packs).commit();
-                    Log.i("kurva", prefs.getStringSet("packs", null).toString());
+                    Log.i("kurva", prefs.getStringSet("packs", packs).toString());
                 }
             });
 
