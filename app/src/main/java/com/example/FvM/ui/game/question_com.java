@@ -16,7 +16,6 @@ public class question_com {
 
     private static Random random;
     private static boolean ran_player;
-    //private final Activity activity;
     private final Context context;
 
     public question_com(Activity activity){

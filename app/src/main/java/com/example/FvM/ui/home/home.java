@@ -50,20 +50,6 @@ public class home extends Fragment {
             @Override
 
             public void onClick(View view) {
-
-
-//                ObjectId asd = RealmHelper.addPack("Pack1");
-//                Log.i("PACK_ID", asd.toString());
-//
-//                Packs pack = RealmHelper.getPack(new ObjectId("650f1ad58e03896796e541c5"));
-//                Log.i("PACK_ID", pack.toString());
-//                Questions questions = new Questions();
-//                questions.setQuestion("asd");
-//                questions.setCategory(Category.Dare.name());
-//
-//                RealmHelper.addQuestion(pack, questions);
-
-
                 change_scene(view);
 
             }
@@ -104,7 +90,6 @@ public class home extends Fragment {
     }
 
     public void change_scene(View view) {
-        // TODO - fix this shit
 
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
         Set<String> set = new HashSet<>();

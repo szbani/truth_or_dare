@@ -33,12 +33,10 @@ import io.realm.mongodb.sync.SyncConfiguration;
 import io.realm.mongodb.sync.SyncSession;
 
 public class RealmHelper {
-
     private static boolean logged = true;
     private static Realm realm;
     private static User user;
     private static App app;
-
 
     public static void init(Context context) {
 
@@ -108,8 +106,6 @@ public class RealmHelper {
                 .build();
         Realm.setDefaultConfiguration(config);
         realm = Realm.getDefaultInstance();
-        Log.w("REALM", String.valueOf(Realm.getDefaultConfiguration()));
-        Log.w("USER", String.valueOf(user.getId()));
     }
 
     public static void login(String username, String password) {
@@ -161,9 +157,6 @@ public class RealmHelper {
     public static ObjectId addPack(String name) {
         Packs newPack = new Packs(name);
         newPack.setOwner_id(user.getId());
-        Log.i("PACK", newPack.getOwner_id());
-        Log.i("PACK", newPack.getName());
-        Log.i("REALM", realm.toString());
         realm.executeTransactionAsync(transactionRealm -> {
             transactionRealm.insert(newPack);
         });
@@ -178,7 +171,6 @@ public class RealmHelper {
     }
 
     public static void addQuestion(ObjectId id, Questions question) {
-//        Log.v("PACK", pack.toString());
         Packs pack = getPack(id);
         realm.executeTransaction(transactionRealm -> {
             pack.addQuestion(question);
@@ -196,7 +188,6 @@ public class RealmHelper {
     public static void updateQuestion(ObjectId pack_id, ObjectId question_id, String question) {
         Packs pack = getPack(pack_id);
         Questions question_obj = pack.getQuestions().where().equalTo("_id", question_id).findFirst();
-        Log.i("qOBJ", String.valueOf(question_obj));
         realm.executeTransaction(transactionRealm -> {
             pack.setQuestion(question_obj, question);
             transactionRealm.copyToRealmOrUpdate(pack);
@@ -214,8 +205,7 @@ public class RealmHelper {
     public static RealmResults<Packs> getPacks() {
         user = app.currentUser();
         try {
-            RealmResults<Packs> packs = realm.where(Packs.class).findAll();
-            return packs;
+            return realm.where(Packs.class).findAll();
 
         } catch (Exception e) {
             Log.e("REALM", e.getMessage());
@@ -247,9 +237,7 @@ public class RealmHelper {
                 RealmQuery<Packs> subQuery = query.equalTo(queryParam, id);
                 List<Packs> pack = subQuery.findAll();
                 result.addAll(pack);
-                Log.w("PACKS", pack.toString());
             }
-            Log.w("PACKSALL", result.toString());
             return result;
         } catch (Exception e) {
             Log.e("REALM", e.getMessage());

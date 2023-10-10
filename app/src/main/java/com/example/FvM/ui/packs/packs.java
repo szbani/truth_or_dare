@@ -81,7 +81,6 @@ public class packs extends Fragment {
         for (Packs pack : packsList) {
             LinearLayout userPack = (LinearLayout) getLayoutInflater().inflate(R.layout.pack_temp, null);
             CheckBox nameField = (CheckBox) userPack.findViewById(R.id.name);
-            Log.i("packs", packs.toString());
             if (packs.contains(String.valueOf(pack.get_id()))) {
                 nameField.setChecked(true);
             }
@@ -101,7 +100,6 @@ public class packs extends Fragment {
                     }
                     prefs.edit().remove("packs").commit();
                     prefs.edit().putStringSet("packs", packs).commit();
-                    Log.i("kurva", prefs.getStringSet("packs", packs).toString());
                 }
             });
 
@@ -131,7 +129,6 @@ public class packs extends Fragment {
                 userPacks.addView(userPack);
             }
         }
-        Log.w("usingpacks", packs.toString());
     }
 
     public void onPause() {
@@ -141,20 +138,5 @@ public class packs extends Fragment {
         userPacks.removeAllViews();
         defaultPacks.removeAllViews();
     }
-
-
-//    public void packs_Click() {
-//        packs = new HashSet<>();
-//        for (int i = 0; i < binding.defPacks.getChildCount(); i++) {
-//            CheckBox checkBox = (CheckBox) binding.defPacks.getChildAt(i);
-//            if (checkBox.isChecked()) {
-//                String name = checkBox.get;
-//                packs.add();
-//            }
-//
-//        }
-//        prefs.edit().putStringSet("packs", packs).apply();
-//    }
-
 }
 

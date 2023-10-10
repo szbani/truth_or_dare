@@ -50,7 +50,6 @@ public class query{
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-//            Log.e("exception", "nem sikerult a fajl olvasasa" + e);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -70,10 +69,8 @@ public class query{
             while((currentline = reader.readLine()) != null){
                 if (i != id && !currentline.equals("")) {
                     list.add(currentline);
-                    //Log.e("Sorok", "lista sor: "+ list);
                 }
                 i++;
-                //Log.e("exception", "ennyiszer futott le " + i);
             }
             for (int k = 0; k < list.size(); k++){
                 writer.write(list.get(k));
