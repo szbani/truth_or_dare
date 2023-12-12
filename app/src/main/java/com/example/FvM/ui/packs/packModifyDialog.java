@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -74,6 +75,13 @@ public class packModifyDialog extends DialogFragment {
         builder.setPositiveButton("kész", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if (questionField.getText().toString().length() < 3) {
+                    Toast.makeText(activity, "Nem elég hosszó a kérdés", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if (questionField.getText().toString().length() > 100) {
+                    Toast.makeText(activity, "Túl hosszú a kérdés", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 LinearLayout layout;
                 if (finalQId == null) {
@@ -98,7 +106,7 @@ public class packModifyDialog extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             LinearLayout parent = (LinearLayout) v.getParent();
-                            new packModifyDialog(id.toString(),questions,(TextView)parent.findViewById(R.id.name)).show(fm, "editQuestion");
+                            new packModifyDialog(id.toString(), questions, (TextView) parent.findViewById(R.id.name)).show(fm, "editQuestion");
                         }
                     });
 

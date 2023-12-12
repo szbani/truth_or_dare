@@ -80,8 +80,8 @@ public class LoginDialog extends DialogFragment {
                 userName = String.valueOf(user.getText());
                 password = String.valueOf(pw1.getText());
 
-                if (userName.isEmpty()) {
-                    Toast.makeText(getContext(), "Nincs megadva Email", Toast.LENGTH_SHORT).show();
+                if (userName.isEmpty() || userName.length() < 4) {
+                    Toast.makeText(getContext(), "Nem elég hosszú a felhasználónév", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6) {
                     Toast.makeText(getContext(), "Leagább 5 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
                 } else {

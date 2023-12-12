@@ -32,8 +32,9 @@
     <string name="dialog_name">Név</string>
     <string name="dialog_login">Bejelentkezés</string>
     <string name="dialog_register">Regisztráció</string>
-    <string name="username">Email</string>
+    <string name="username">Felhasználónév</string>
     <string name="password">Jelszó</string>
+    <string name="password2">Jelszó mégegyszer</string>
 
     <string-array name="dialog_gender">
         <item>Fiú</item>

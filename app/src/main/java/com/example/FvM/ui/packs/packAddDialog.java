@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
@@ -55,11 +56,15 @@ public class packAddDialog extends DialogFragment {
         builder.setPositiveButton("Kész", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if (nameField.getText().toString().isEmpty() || nameField.getText().toString().length() < 3){
+                    Toast.makeText(activity, "Nem elég hosszó a pack neve", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 View pack = inflater.inflate(R.layout.pack_temp,null);
                 LinearLayout userPacks = activity.findViewById(R.id.userPacks);
 
                 String name = nameField.getText().toString();
-                if (id == null) {
+                if (id == null ) {
 
                     ObjectId packId = RealmHelper.addPack(name);
                     userPacks.addView(pack);

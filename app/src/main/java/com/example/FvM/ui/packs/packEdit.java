@@ -31,6 +31,8 @@ public class packEdit extends Fragment {
     private String name;
     private String id;
 
+    private NavController navController;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -42,8 +44,7 @@ public class packEdit extends Fragment {
         TextView pageName = view.findViewById(R.id.packNameTextView);
         pageName.setText(name);
 
-        NavController navController = Navigation.findNavController(getParentFragment().getView());
-
+        navController = Navigation.findNavController(getParentFragment().getView());
         view.findViewById(R.id.back_pack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +98,14 @@ public class packEdit extends Fragment {
             });
 
         }
-
-
         return view;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (RealmHelper.getLoggedUser() == false){
+            navController.navigate(R.id.action_packEdit_to_packs);
+        }
     }
 }

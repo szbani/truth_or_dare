@@ -75,8 +75,8 @@ public class RegisterDialog extends DialogFragment {
                         password = String.valueOf(pw1.getText());
                         password2 = String.valueOf(pw2.getText());
 
-                        if (userName.isEmpty()) {
-                            Toast.makeText(getContext(), "Nincs megadva Email", Toast.LENGTH_SHORT).show();
+                        if (userName.isEmpty() || userName.length() < 4) {
+                            Toast.makeText(getContext(),  "Nem elég hosszó felhasználónév", Toast.LENGTH_SHORT).show();
                         } else if (password.equals(password2)) {
                             if (password.length() < 6) {
                                 Toast.makeText(getContext(), "Leagább 6 karakter hosszú kell legyen a jelszó", Toast.LENGTH_SHORT).show();
