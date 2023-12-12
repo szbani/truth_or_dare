@@ -92,7 +92,7 @@ public class packs extends Fragment {
             nameField.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    packs = prefs.getStringSet("packs", null);
+                    packs = prefs.getStringSet("packs", new HashSet<>());
                     if (nameField.isChecked())
                         packs.add(String.valueOf(pack.get_id()));
                     else {

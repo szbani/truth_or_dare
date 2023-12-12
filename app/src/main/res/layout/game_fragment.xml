@@ -5,29 +5,16 @@
     android:id="@+id/game_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_game">
+    android:background="#40FFFFFF">
 
     <TextView
         android:id="@+id/player_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
         android:textColor="#000000"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/game_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.774"
-        tools:text="Sample" />
-
-    <TextView
-        android:id="@+id/game_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="300dp"
-        android:textAlignment="textStart"
-        android:textColor="#000000"
-        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
